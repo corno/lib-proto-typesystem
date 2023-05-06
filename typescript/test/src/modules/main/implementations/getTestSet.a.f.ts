@@ -10,13 +10,6 @@ import { A } from "../api.generated"
 
 export const $$: A.getTestSet = ($) => {
 
-    g_pub.$b.generateTypescript()(
-        {
-            'path': pd.a([$.testDirectory, "Foo.ts"]),
-            'data': g_pub.$b.resolve()(d_data),
-        },
-        null,
-    )
     return pa.asyncValue({
         elements: pm.wrapRawDictionary({})
     })

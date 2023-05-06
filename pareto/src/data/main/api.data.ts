@@ -7,9 +7,5 @@ const d = pd.d
 
 export const $: g_project.T.ModuleDefinition.api.root<pd.SourceLocation> = {
     'algorithms': d({
-        "generateTypescript": algorithm(procedure("this", {}, "GenerateTypescript"), {}, dependent(null, {
-            "createFile": procedure("fp", {}, "CreateFile"),
-            "generateTypescript": procedure("2typescript", {}, "Generate")
-        }, {})),
     }),
 }

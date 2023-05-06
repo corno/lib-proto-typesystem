@@ -8,7 +8,6 @@ const d = pd.d
 
 export const $: g_project.T.ModuleDefinition.api.root<pd.SourceLocation> = {
     'algorithms': d({
-        "generateTypescript": algorithm(procedure("main", {}, "GenerateTypescript")),
         "resolve": algorithm(sfunction("resolve", {}, "Resolve"), { "Annotations": "GAnnotations" }),
     })
 }

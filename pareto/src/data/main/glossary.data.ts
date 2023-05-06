@@ -14,10 +14,6 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
     'root': {
         'namespaces': d({}),
         'types': d({
-            "GenerateTypescriptParameters": type(group({
-                "path": member(ref(externalTypeReference("common", "Path"))),
-                "data": member(ref(externalTypeReference("model", "Root")))
-            })),
         }),
     },
     'asynchronous': {
@@ -28,10 +24,8 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
     },
     'synchronous': {
         'interfaces': d({
-            "nothing": sInterface(['group', { 'members': pd.d({}) }])
         }),
         'algorithms': d({
-            "GenerateTypescript": procedure(data(typeReference("GenerateTypescriptParameters")), sInterfaceReference("nothing")),
         }),
 
     },
