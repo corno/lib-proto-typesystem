@@ -48,7 +48,7 @@ export namespace N {
         export namespace T {}
     }
     
-    export namespace Namespace {
+    export namespace Local_$_$Namespace {
         
         export namespace N {
             
@@ -62,23 +62,7 @@ export namespace N {
                             
                             export namespace D {
                                 
-                                export namespace N {
-                                    
-                                    export namespace TU {
-                                        
-                                        export namespace N {
-                                            
-                                            export namespace local {
-                                                
-                                                export namespace N {}
-                                                
-                                                export namespace T {}
-                                            }
-                                        }
-                                        
-                                        export namespace T {}
-                                    }
-                                }
+                                export namespace N {}
                                 
                                 export namespace T {}
                             }
@@ -117,13 +101,66 @@ export namespace N {
         export namespace T {}
     }
     
-    export namespace Namespace_$_$Selection {
+    export namespace Namespace_$_$2 {
+        
+        export namespace N {
+            
+            export namespace TU {
+                
+                export namespace N {
+                    
+                    export namespace local {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                    
+                    export namespace parent_$_$sibling {
+                        
+                        export namespace N {
+                            
+                            export namespace G {
+                                
+                                export namespace N {
+                                    
+                                    export namespace namespace {
+                                        
+                                        export namespace N {}
+                                        
+                                        export namespace T {}
+                                    }
+                                }
+                                
+                                export namespace T {}
+                            }
+                        }
+                        
+                        export namespace T {}
+                    }
+                }
+                
+                export namespace T {}
+            }
+        }
+        
+        export namespace T {}
+    }
+    
+    export namespace Namespace_$_$Selection_$_$Tail {
         
         export namespace N {
             
             export namespace G {
                 
                 export namespace N {
+                    
+                    export namespace namespace {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
                     
                     export namespace tail {
                         
@@ -335,6 +372,13 @@ export namespace N {
                                 
                                 export namespace N {
                                     
+                                    export namespace cyclic_$_$sibling {
+                                        
+                                        export namespace N {}
+                                        
+                                        export namespace T {}
+                                    }
+                                    
                                     export namespace external {
                                         
                                         export namespace N {
@@ -349,11 +393,25 @@ export namespace N {
                                                         
                                                         export namespace T {}
                                                     }
+                                                    
+                                                    export namespace _$ltype {
+                                                        
+                                                        export namespace N {}
+                                                        
+                                                        export namespace T {}
+                                                    }
                                                 }
                                                 
                                                 export namespace T {}
                                             }
                                         }
+                                        
+                                        export namespace T {}
+                                    }
+                                    
+                                    export namespace sibling {
+                                        
+                                        export namespace N {}
                                         
                                         export namespace T {}
                                     }
@@ -436,70 +494,151 @@ export namespace T {
         
         export namespace parameters {
             
-            export type D<GAnnotation> = T.Type<GAnnotation>
+            export type annotation<GAnnotation> = GAnnotation
+            
+            export namespace dictionary {
+                
+                export type D<GAnnotation> = T.Type<GAnnotation>
+            }
+            
+            export type dictionary<GAnnotation> = pt.Dictionary<T.Type<GAnnotation>>
         }
         
-        export type parameters<GAnnotation> = pt.Dictionary<T.Type<GAnnotation>>
+        export type parameters<GAnnotation> = {
+            readonly 'annotation': GAnnotation
+            readonly 'dictionary': pt.Dictionary<T.Type<GAnnotation>>
+        }
         
         export type type__parameters<GAnnotation> = T.Type__Parameters<GAnnotation>
     }
     
     export type Function__Declaration<GAnnotation> = {
         readonly 'context': T.Type<GAnnotation>
-        readonly 'parameters': pt.Dictionary<T.Type<GAnnotation>>
+        readonly 'parameters': {
+            readonly 'annotation': GAnnotation
+            readonly 'dictionary': pt.Dictionary<T.Type<GAnnotation>>
+        }
         readonly 'type parameters': T.Type__Parameters<GAnnotation>
     }
     
-    export namespace Namespace {
+    export namespace Local__Namespace {
         
         export namespace namespaces {
             
-            export namespace D {
+            export type annotation<GAnnotation> = GAnnotation
+            
+            export namespace dictionary {
                 
-                export type local<GAnnotation> = T.Namespace<GAnnotation>
+                export type D<GAnnotation> = T.Namespace__2<GAnnotation>
             }
             
-            export type D<GAnnotation> = 
-                | ['local', T.Namespace<GAnnotation>]
+            export type dictionary<GAnnotation> = pt.Dictionary<T.Namespace__2<GAnnotation>>
         }
         
-        export type namespaces<GAnnotation> = pt.Dictionary<
-            | ['local', T.Namespace<GAnnotation>]
-        >
+        export type namespaces<GAnnotation> = {
+            readonly 'annotation': GAnnotation
+            readonly 'dictionary': pt.Dictionary<T.Namespace__2<GAnnotation>>
+        }
         
         export type parameters<GAnnotation> = T.Type__Parameters<GAnnotation>
         
         export namespace types {
             
-            export type D<GAnnotation> = T.Type<GAnnotation>
+            export type annotation<GAnnotation> = GAnnotation
+            
+            export namespace dictionary {
+                
+                export type D<GAnnotation> = T.Type<GAnnotation>
+            }
+            
+            export type dictionary<GAnnotation> = pt.Dictionary<T.Type<GAnnotation>>
         }
         
-        export type types<GAnnotation> = pt.Dictionary<T.Type<GAnnotation>>
+        export type types<GAnnotation> = {
+            readonly 'annotation': GAnnotation
+            readonly 'dictionary': pt.Dictionary<T.Type<GAnnotation>>
+        }
     }
     
-    export type Namespace<GAnnotation> = {
-        readonly 'namespaces': pt.Dictionary<
-            | ['local', T.Namespace<GAnnotation>]
-        >
+    export type Local__Namespace<GAnnotation> = {
+        readonly 'namespaces': {
+            readonly 'annotation': GAnnotation
+            readonly 'dictionary': pt.Dictionary<T.Namespace__2<GAnnotation>>
+        }
         readonly 'parameters': T.Type__Parameters<GAnnotation>
-        readonly 'types': pt.Dictionary<T.Type<GAnnotation>>
+        readonly 'types': {
+            readonly 'annotation': GAnnotation
+            readonly 'dictionary': pt.Dictionary<T.Type<GAnnotation>>
+        }
     }
     
-    export namespace Namespace__Selection {
+    export namespace Namespace__2 {
+        
+        export type local<GAnnotation> = T.Local__Namespace<GAnnotation>
+        
+        export namespace parent__sibling {
+            
+            export namespace namespace {
+                
+                export type annotation<GAnnotation> = GAnnotation
+                
+                export type key<GAnnotation> = string
+            }
+            
+            export type namespace<GAnnotation> = {
+                readonly 'annotation': GAnnotation
+                readonly 'key': string
+            }
+        }
+        
+        export type parent__sibling<GAnnotation> = {
+            readonly 'namespace': {
+                readonly 'annotation': GAnnotation
+                readonly 'key': string
+            }
+        }
+    }
+    
+    export type Namespace__2<GAnnotation> = 
+        | ['local', T.Local__Namespace<GAnnotation>]
+        | ['parent sibling', {
+            readonly 'namespace': {
+                readonly 'annotation': GAnnotation
+                readonly 'key': string
+            }
+        }]
+    
+    export namespace Namespace__Selection__Tail {
+        
+        export namespace namespace {
+            
+            export type annotation<GAnnotation> = GAnnotation
+            
+            export type key<GAnnotation> = string
+        }
+        
+        export type namespace<GAnnotation> = {
+            readonly 'annotation': GAnnotation
+            readonly 'key': string
+        }
         
         export namespace tail {
             
-            export type O<GAnnotation> = T.Namespace__Selection<GAnnotation>
+            export type O<GAnnotation> = T.Namespace__Selection__Tail<GAnnotation>
         }
         
-        export type tail<GAnnotation> = [ false ] | [ true, T.Namespace__Selection<GAnnotation>]
+        export type tail<GAnnotation> = [ false ] | [ true, T.Namespace__Selection__Tail<GAnnotation>]
     }
     
-    export type Namespace__Selection<GAnnotation> = {
-        readonly 'tail': [ false ] | [ true, T.Namespace__Selection<GAnnotation>]
+    export type Namespace__Selection__Tail<GAnnotation> = {
+        readonly 'namespace': {
+            readonly 'annotation': GAnnotation
+            readonly 'key': string
+        }
+        readonly 'tail': [ false ] | [ true, T.Namespace__Selection__Tail<GAnnotation>]
     }
     
-    export type Root<GAnnotation> = T.Namespace<GAnnotation>
+    export type Root<GAnnotation> = T.Local__Namespace<GAnnotation>
     
     export namespace Type {
         
@@ -525,10 +664,20 @@ export namespace T {
         
         export namespace group {
             
-            export type D<GAnnotation> = T.Type<GAnnotation>
+            export type annotation<GAnnotation> = GAnnotation
+            
+            export namespace dictionary {
+                
+                export type D<GAnnotation> = T.Type<GAnnotation>
+            }
+            
+            export type dictionary<GAnnotation> = pt.Dictionary<T.Type<GAnnotation>>
         }
         
-        export type group<GAnnotation> = pt.Dictionary<T.Type<GAnnotation>>
+        export type group<GAnnotation> = {
+            readonly 'annotation': GAnnotation
+            readonly 'dictionary': pt.Dictionary<T.Type<GAnnotation>>
+        }
         
         export namespace _lnull {}
         
@@ -555,26 +704,88 @@ export namespace T {
         
         export namespace tagged__union {
             
-            export type D<GAnnotation> = T.Type<GAnnotation>
+            export type annotation<GAnnotation> = GAnnotation
+            
+            export namespace dictionary {
+                
+                export type D<GAnnotation> = T.Type<GAnnotation>
+            }
+            
+            export type dictionary<GAnnotation> = pt.Dictionary<T.Type<GAnnotation>>
         }
         
-        export type tagged__union<GAnnotation> = pt.Dictionary<T.Type<GAnnotation>>
+        export type tagged__union<GAnnotation> = {
+            readonly 'annotation': GAnnotation
+            readonly 'dictionary': pt.Dictionary<T.Type<GAnnotation>>
+        }
         
         export namespace type__reference {
             
+            export namespace cyclic__sibling {
+                
+                export type annotation<GAnnotation> = GAnnotation
+                
+                export type key<GAnnotation> = string
+            }
+            
+            export type cyclic__sibling<GAnnotation> = {
+                readonly 'annotation': GAnnotation
+                readonly 'key': string
+            }
+            
             export namespace external {
                 
-                export type namespaces<GAnnotation> = T.Namespace__Selection<GAnnotation>
+                export type namespaces<GAnnotation> = T.Namespace__Selection__Tail<GAnnotation>
+                
+                export namespace _ltype {
+                    
+                    export type annotation<GAnnotation> = GAnnotation
+                    
+                    export type key<GAnnotation> = string
+                }
+                
+                export type _ltype<GAnnotation> = {
+                    readonly 'annotation': GAnnotation
+                    readonly 'key': string
+                }
             }
             
             export type external<GAnnotation> = {
-                readonly 'namespaces': T.Namespace__Selection<GAnnotation>
+                readonly 'namespaces': T.Namespace__Selection__Tail<GAnnotation>
+                readonly 'type': {
+                    readonly 'annotation': GAnnotation
+                    readonly 'key': string
+                }
+            }
+            
+            export namespace sibling {
+                
+                export type annotation<GAnnotation> = GAnnotation
+                
+                export type key<GAnnotation> = string
+            }
+            
+            export type sibling<GAnnotation> = {
+                readonly 'annotation': GAnnotation
+                readonly 'key': string
             }
         }
         
         export type type__reference<GAnnotation> = 
+            | ['cyclic sibling', {
+                readonly 'annotation': GAnnotation
+                readonly 'key': string
+            }]
             | ['external', {
-                readonly 'namespaces': T.Namespace__Selection<GAnnotation>
+                readonly 'namespaces': T.Namespace__Selection__Tail<GAnnotation>
+                readonly 'type': {
+                    readonly 'annotation': GAnnotation
+                    readonly 'key': string
+                }
+            }]
+            | ['sibling', {
+                readonly 'annotation': GAnnotation
+                readonly 'key': string
             }]
         
         export namespace value__function {
@@ -598,7 +809,10 @@ export namespace T {
         | ['array', T.Type<GAnnotation>]
         | ['boolean', null]
         | ['dictionary', T.Type<GAnnotation>]
-        | ['group', pt.Dictionary<T.Type<GAnnotation>>]
+        | ['group', {
+            readonly 'annotation': GAnnotation
+            readonly 'dictionary': pt.Dictionary<T.Type<GAnnotation>>
+        }]
         | ['null', null]
         | ['number', null]
         | ['optional', T.Type<GAnnotation>]
@@ -606,10 +820,25 @@ export namespace T {
             readonly 'declaration': T.Function__Declaration<GAnnotation>
         }]
         | ['string', null]
-        | ['tagged union', pt.Dictionary<T.Type<GAnnotation>>]
+        | ['tagged union', {
+            readonly 'annotation': GAnnotation
+            readonly 'dictionary': pt.Dictionary<T.Type<GAnnotation>>
+        }]
         | ['type reference', 
+            | ['cyclic sibling', {
+                readonly 'annotation': GAnnotation
+                readonly 'key': string
+            }]
             | ['external', {
-                readonly 'namespaces': T.Namespace__Selection<GAnnotation>
+                readonly 'namespaces': T.Namespace__Selection__Tail<GAnnotation>
+                readonly 'type': {
+                    readonly 'annotation': GAnnotation
+                    readonly 'key': string
+                }
+            }]
+            | ['sibling', {
+                readonly 'annotation': GAnnotation
+                readonly 'key': string
             }]
         ]
         | ['value function', {
@@ -619,10 +848,20 @@ export namespace T {
     
     export namespace Type__Parameters {
         
-        export namespace D {}
+        export type annotation<GAnnotation> = GAnnotation
         
-        export type D<GAnnotation> = null
+        export namespace dictionary {
+            
+            export namespace D {}
+            
+            export type D<GAnnotation> = null
+        }
+        
+        export type dictionary<GAnnotation> = pt.Dictionary<null>
     }
     
-    export type Type__Parameters<GAnnotation> = pt.Dictionary<null>
+    export type Type__Parameters<GAnnotation> = {
+        readonly 'annotation': GAnnotation
+        readonly 'dictionary': pt.Dictionary<null>
+    }
 }

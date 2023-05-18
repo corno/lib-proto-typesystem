@@ -13,8 +13,8 @@ export const $: g_project.T.Module<pd.SourceLocation> = {
         'glossary': {
             'root': glossary,
             'imports': d({
-                "unresolved": sibling("unresolved"),
-                "resolved": sibling("possiblyresolved"),
+                "in": sibling("unresolved"),
+                "out": sibling("resolved"),
             }),
 
         },

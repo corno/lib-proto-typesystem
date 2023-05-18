@@ -10,6 +10,8 @@ import { A } from "../api.generated"
 
 export const $$: A.getTestSet = ($) => {
 
+    g_pub.$b.resolve()(d_data)
+
     return pa.asyncValue({
         elements: pm.wrapRawDictionary({})
     })

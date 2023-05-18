@@ -1,85 +1,52 @@
 import * as pd from 'pareto-core-data'
+import * as pv from 'pareto-core-dev'
+import * as pl from 'pareto-core-lib'
 
-import * as g_liana from "lib-liana/dist/main"
+import * as g_pareto_lang_data_settings from "lib-pareto-lang-data/dist/submodules/2submodules"
+import * as g_pareto_lang_data from "lib-pareto-lang-data"
 
-import { $ as d_lowlevel_typesystem } from "./models/model.data"
+import { $ as d_model } from "./models/model.data"
 
-export const $: g_liana.T.CompileParameters<pd.SourceLocation> = {
-    'outputs': pd.a([
-        {
-            'path': pd.a([`../../pareto/src/data/submodules/resolved/glossary.generated.ts`]),
-            'data': ['liana', {
-                'settings': {
-                    'annotations': false,
-                    'datamodel': [true, {
-                        'constraints mapping': {
-                            'terminal values': true,
-                            'constraints': [true, ['required', null]]
-                        },
-                    }],
-                    'visitor interface': [false],
-                    'algorithms': {
-                        'serialize': [false],
-                    },
-                },
-                'mapped library': {
-                    'library': d_lowlevel_typesystem,
+const d = pd.d
+const a = pd.a
 
-                    'terminal mapping': pd.d({
-                        "identifier": ['string', null],
-                    }),
-                },
-            }]
-        },
-        {
-            'path': pd.a([`../../pareto/src/data/submodules/possiblyresolved/glossary.generated.ts`]),
-            'data': ['liana', {
-                'settings': {
-                    'annotations': true,
-                    'datamodel': [true, {
-                        'constraints mapping': {
-                            'terminal values': true,
-                            'constraints': [true, ['optional', null]]
-                        },
-                    }],
-                    'visitor interface': [false],
-                    'algorithms': {
-                        'serialize': [false],
-                    },
-                },
-                'mapped library': {
-                    'library': d_lowlevel_typesystem,
+export const $: g_pareto_lang_data_settings.T.GenerateSubmodulesParameters = {
+    'path': a([`../../pareto/src/data/submodules`]),
+    'data': {
+        'library': g_pareto_lang_data.$b.resolve({
+            'onError': ($) => {
+                pl.cc($.message, ($) => {
+                    switch ($[0]) {
+                        case 'no such entry':
+                            pl.ss($, ($) => {
+                                pv.logDebugMessage(`no such entry: ${$.key}`)
 
-                    'terminal mapping': pd.d({
-                        "identifier": ['string', null],
-                    }),
-                },
-            }]
-        },
-        {
-            'path': pd.a([`../../pareto/src/data/submodules/unresolved/glossary.generated.ts`]),
-            'data': ['liana', {
-                'settings': {
-                    'annotations': true,
-                    'datamodel': [true, {
-                        'constraints mapping': {
-                            'terminal values': true,
-                            'constraints': [false]
-                        },
-                    }],
-                    'visitor interface': [false],
-                    'algorithms': {
-                        'serialize': [false],
-                    },
-                },
-                'mapped library': {
-                    'library': d_lowlevel_typesystem,
+                            })
+                            break
+                        case 'not the right state':
+                            pl.ss($, ($) => {
+                                pv.logDebugMessage(`not the right state: ${$.found}`)
 
-                    'terminal mapping': pd.d({
-                        "identifier": ['string', null],
-                    }),
-                },
-            }]
-        },
-    ])
+                            })
+                            break
+                        default: pl.au($[0])
+                    }
+                })
+            }
+        })({
+            'imports': d({}),
+            'root': {
+                'type library': d_model,
+                'root': {
+                    'annotation': pd.getLocationInfo(0),
+                    'key': "Root"
+                }
+            }
+        })['type library'],
+        'atom mappings': d({
+            "identifier": ['string', null],
+            "text": ['string', null],
+        })
+    }
+
 }

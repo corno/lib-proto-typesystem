@@ -1,121 +1,105 @@
 import * as pd from 'pareto-core-data'
 
-import * as g_liana from "lib-liana/dist/submodules/liana"
+import * as g_pareto_lang_data from "lib-pareto-lang-data/dist/submodules/unresolved"
+
 import {
-    array,
-    resolvedSiblingComponent, dictionary,
+    array, constrainedDictionary,
+    dictionary,
     globalType,
-    group, t_grp,
-    option, optional, prop, taggedUnion,
-    t_tu, tempTypeSelection, thisCyclic, aLookup,
-    resolvedValueReference, valSel, globalTypeSelection, pNonCyclicLookup, lparameter, terminal, s_group, lookupReference, thisNonCyclic, pCyclicLookup
-} from "lib-liana/dist/submodules/liana/shorthands"
+    group,
+    state,
+    optional,
+    prop,
+    t_grp,
+    t_sg,
+    stateGroup,
+    typeSelection,
+    component,
+    typeRef,
+    cyclicReference,
+    lookupReference,
+    dictionaryReference,
+    typeLibrary,
+} from "lib-pareto-lang-data/dist/submodules/unresolved/shorthands"
 
-const d = pd.d
-
-
-export const $: g_liana.T.Type__Library<pd.SourceLocation> = {
-    'imports': d({
-    }),
-    'labels': {
-        'atom types': d({
-            "identifier": null,
-        }),
+export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibrary(
+    {
     },
-    'global types': d({
+    {
+        "identifier": null,
+    },
+    {
         "Type Parameters": globalType(
-            {
-                "definitions": pNonCyclicLookup(globalTypeSelection("Definition")),
-            },
             dictionary(group({}))
         ),
-        "Namespace": globalType(
-            {
-                "definitions": pNonCyclicLookup(globalTypeSelection("Definition")),
-            },
+        "Function Declaration": globalType(
             group({
-                "namespaces": prop(dictionary(taggedUnion({
-                    "local": option(resolvedSiblingComponent("Namespace", {})),
-                }))),
-                "parameters": prop(resolvedSiblingComponent("Type Parameters", {})),
-                "types": prop(dictionary(resolvedSiblingComponent("Type", {}))),
+                "type parameters": prop(component(typeRef("Type Parameters"))),
+                "context": prop(component(typeRef("Type", true))),
+                "parameters": prop(dictionary(component(typeRef("Type", true)))),
+            })
+        ),
+        "Namespace 2": globalType(
+            stateGroup({
+                "parent sibling": state(group({
+                    "namespace": prop(lookupReference(typeRef("Namespace 2", true))),
+                })),
+                "local": state(component(typeRef("Local Namespace", true))),
+            })
+        ),
+        "Local Namespace": globalType(
+            group({
+                "namespaces": prop(dictionary(component(typeRef("Namespace 2")))),
+                "parameters": prop(component(typeRef("Type Parameters"))),
+                "types": prop(dictionary(component(typeRef("Type", true)))),
             }),
         ),
-        "Namespace Selection": globalType(
-            {
-
-            },
-            group({
-                //"namespace": prop(lookupReference(lparameter("namespaces"), tempTypeSelection("Namespace"))),
-                "tail": prop(optional(resolvedSiblingComponent("Namespace Selection", {})))
-            })
-        ),
-        "Function Declaration": globalType(
-            {},
-            group({
-                "type parameters": prop(resolvedSiblingComponent("Type Parameters", {
-                    "global types": aLookup(lparameter("global types"))
-                })),
-                "context": prop(resolvedSiblingComponent("Type", {
-                    "global types": aLookup(lparameter("global types"))
-                })),
-                "parameters": prop(dictionary(resolvedSiblingComponent("Type", {}))),
-            })
-        ),
         "Type": globalType(
-            {
-                "definitions": pNonCyclicLookup(globalTypeSelection("Definition")),
-                "resolved siblings": pNonCyclicLookup(globalTypeSelection("Type")),
-                "cyclic siblings": pCyclicLookup(globalTypeSelection("Type")),
-            },
-            taggedUnion({
-                "address function": option(group({
-                    "declaration": prop(resolvedSiblingComponent("Function Declaration", {})),
-                    "return type": prop(resolvedSiblingComponent("Type", {
-                        "global types": aLookup(lparameter("global types"))
+            stateGroup({
+                "address function": state(group({
+                    "declaration": prop(component(typeRef("Function Declaration"))),
+                    "return type": prop(component(typeRef("Type", true))),
+                })),
+                "array": state(component(typeRef("Type", true))),
+                "boolean": state(group({})),
+                "dictionary": state(component(typeRef("Type", true))),
+                "group": state(dictionary(component(typeRef("Type", true)))),
+                "null": state(group({})),
+                "number": state(group({})),
+                "optional": state(component(typeRef("Type", true))),
+                "procedure": state(group({
+                    "declaration": prop(component(typeRef("Function Declaration"))),
+                })),
+                "string": state(group({})),
+                "tagged union": state(dictionary(component(typeRef("Type", true)))),
+                "type reference": state(stateGroup({
+                    "external": state(group({
+                        "namespaces": prop(component(typeRef("Namespace Selection Tail", true))),
+                        "type": prop(dictionaryReference(typeSelection("Local Namespace", t_grp("types"))))
                     })),
+                    "sibling": state(lookupReference(typeRef("Type", true))),
+                    "cyclic sibling": state(cyclicReference(typeRef("Type", true))),
                 })),
-                "array": option(resolvedSiblingComponent("Type", {
-                    "global types": aLookup(lparameter("global types"))
-                })),
-                "boolean": option(group({})),
-                "dictionary": option(resolvedSiblingComponent("Type", {
-                    "global types": aLookup(lparameter("global types"))
-                })),
-                "group": option(dictionary(resolvedSiblingComponent("Type", {
-                    "global types": aLookup(lparameter("global types"))
-                }))),
-                "null": option(group({})),
-                "number": option(group({})),
-                "optional": option(resolvedSiblingComponent("Type", {
-                    "global types": aLookup(lparameter("global types"))
-                })),
-                "procedure": option(group({
-                    "declaration": prop(resolvedSiblingComponent("Function Declaration", {})),
-                })),
-                "string": option(group({})),
-                "tagged union": option(dictionary(resolvedSiblingComponent("Type", {
-                    "global types": aLookup(lparameter("global types"))
-                }))),
-                "type reference": option(taggedUnion({
-                    "external": option(group({
-                        "namespaces": prop(resolvedSiblingComponent("Namespace Selection", {})),
-                        //"type": prop(resolvedValueReference(valSel("namespaces", s_group("types")), tempTypeSelection("Type")))
-                    })),
-                    //     "sibling": option(lookupReference(lparameter("resolved siblings"), tempTypeSelection("Type"))),
-                    //     "cyclic sibling": option(lookupReference(lparameter("cyclic siblings"), tempTypeSelection("Type"))),
-                })),
-                "value function": option(group({
-                    "declaration": prop(resolvedSiblingComponent("Function Declaration", {})),
-                    "return type": prop(resolvedSiblingComponent("Type", {
-                        "global types": aLookup(lparameter("global types"))
-                    })),
+                "value function": state(group({
+                    "declaration": prop(component(typeRef("Function Declaration"))),
+                    "return type": prop(component(typeRef("Type", true))),
                 })),
             })
         ),
+        "Namespace Selection Tail": globalType(
+            group({
+                "namespace": prop(dictionaryReference(typeSelection("Local Namespace", t_grp("namespaces")))),
+                "tail": prop(optional(component(typeRef("Namespace Selection Tail", true))))
+            })
+        ),
+        // "Namespace Selection": globalType(
+        //     group({
+        //         "namespace": prop(resolvedReference(lookup(typeRef("Local Namespace")))),
+        //         "tail": prop(optional(component(typeRef("Namespace Selection Tail"))))
+        //     })
+        // ),
         "Root": globalType(
-            {},
-            resolvedSiblingComponent("Namespace", {}),
+            component(typeRef("Local Namespace")),
         )
-    }),
-}
+    }
+)

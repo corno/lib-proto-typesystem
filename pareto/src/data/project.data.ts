@@ -17,7 +17,7 @@ import { $ as d_serialize } from "./submodules/serialize/module.data"
 import { external, submodule, tempSubmodule, this_ } from "lib-pareto-typescript-project/dist/submodules/project/shorthands"
 
 
-export const $: g_project.T.Project<pd.SourceLocation> = {
+export const $: g_project.T.Project<pd.SourceLocation | null> = {
     'author': "Corno",
     'description': "the typesystem for the imperative Proto language",
     'license': "TBD",
