@@ -16,12 +16,14 @@ export const $: g_project.T.Module<pd.SourceLocation> = {
                 "model": sibling("resolved"),
                 "fp": external("lib-fountain-pen"),
             }),
-
         },
         'api': {
             'root': api,
             'imports': d({
                 "this": this_(),
+                "typescript": external("res-typescript"),
+                "foreach": external("res-pareto-foreach"),
+                "dictionary": external("res-pareto-dictionary"),
             }),
         },
     },

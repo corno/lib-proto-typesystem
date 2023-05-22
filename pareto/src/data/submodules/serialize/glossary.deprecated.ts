@@ -12,7 +12,6 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
     }),
 
         'glossary parameters': d({
-            "Annotation": null,
         }),
 
         'root': {

@@ -10,7 +10,15 @@ import { A } from "../api.generated"
 
 export const $$: A.getTestSet = ($) => {
 
-    g_pub.$b.resolve()(d_data)
+    const res = g_pub.$b.resolve()(d_data)
+
+    g_pub.$b.serializeToFileSystem()(
+        {
+            'data': res,
+            'path': pd.a([$.testDirectory, "typesystem.ts"])
+        },
+        null,
+    )
 
     return pa.asyncValue({
         elements: pm.wrapRawDictionary({})

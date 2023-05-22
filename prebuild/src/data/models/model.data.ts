@@ -20,6 +20,8 @@ import {
     lookupReference,
     dictionaryReference,
     typeLibrary,
+    constraint,
+    dictionaryConstraint,
 } from "lib-pareto-lang-data/dist/submodules/unresolved/shorthands"
 
 export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibrary(
@@ -29,8 +31,12 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
         "identifier": null,
     },
     {
+        "Aggregated Type Parameters": globalType(dictionary(group({}))),
         "Type Parameters": globalType(
-            dictionary(group({}))
+            group({
+                "local": prop(dictionary(group({}))),
+                "aggregated": prop(component(typeRef("Aggregated Type Parameters")))
+            })
         ),
         "Function Declaration": globalType(
             group({
@@ -72,10 +78,12 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
                 })),
                 "string": state(group({})),
                 "tagged union": state(dictionary(component(typeRef("Type", true)))),
+                "type parameter": state(dictionaryReference(typeSelection("Aggregated Type Parameters"))),
                 "type reference": state(stateGroup({
                     "external": state(group({
-                        "namespaces": prop(component(typeRef("Namespace Selection Tail", true))),
-                        "type": prop(dictionaryReference(typeSelection("Local Namespace", t_grp("types"))))
+                        "namespaces": prop(component(typeRef("Namespace Selection", true))),
+                        "type": prop(dictionaryReference(typeSelection("Local Namespace", t_grp("types")))),
+
                     })),
                     "sibling": state(lookupReference(typeRef("Type", true))),
                     "cyclic sibling": state(cyclicReference(typeRef("Type", true))),
@@ -86,16 +94,25 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
                 })),
             })
         ),
-        "Namespace Selection Tail": globalType(
+        "Type Arguments": globalType(constrainedDictionary(
+            {
+                "parameter": dictionaryConstraint(typeSelection("Type Parameters", t_grp("local")), true),
+            },
+            group({
+                //link to parameter
+                "type": prop(component(typeRef("Type", true))),
+            }))),
+        "Namespace Selection": globalType(
             group({
                 "namespace": prop(dictionaryReference(typeSelection("Local Namespace", t_grp("namespaces")))),
-                "tail": prop(optional(component(typeRef("Namespace Selection Tail", true))))
+                "arguments": prop(component(typeRef("Type Arguments"))),
+                "tail": prop(optional(component(typeRef("Namespace Selection", true))))
             })
         ),
         // "Namespace Selection": globalType(
         //     group({
         //         "namespace": prop(resolvedReference(lookup(typeRef("Local Namespace")))),
-        //         "tail": prop(optional(component(typeRef("Namespace Selection Tail"))))
+        //         "tail": prop(optional(component(typeRef("Namespace Selection"))))
         //     })
         // ),
         "Root": globalType(

@@ -1,11 +1,13 @@
 import * as pt from 'pareto-core-types'
 
+import * as g_dictionary from "res-pareto-dictionary"
 import * as g_resolve from "res-pareto-resolve"
 import * as g_this from "./glossary"
 
 export namespace D {
     
     export type resolve<GAnnotation> = {
+        readonly 'mergeAndIgnore': g_dictionary.SYNC.A.F.MergeAndIgnore
         readonly 'resolveDictionary': g_resolve.SYNC.A.F.SafeResolveDictionary
     }
 }

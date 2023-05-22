@@ -9,9 +9,11 @@ const d = pd.d
 export const $: g_project.T.ModuleDefinition.api.root<pd.SourceLocation> = {
     'algorithms': d({
         "resolve": algorithm(sfunction("this", {}, "Resolve"), { "Annotation": "Annotation" }, dependent(null, {
-            "resolveDictionary": sfunction("resolve", {}, "SafeResolveDictionary")
+            "resolveDictionary": sfunction("resolve", {}, "SafeResolveDictionary"),
+            "mergeAndIgnore": sfunction("dictionary", {}, "MergeAndIgnore"),
+
         }, {
-            "onError": sSideEffect("this", { "Annotation": "Annotation" }, "OnError")
+            "onError": sSideEffect("this", { "Annotation": "Annotation" }, "OnError"),
         }))
     }),
 }

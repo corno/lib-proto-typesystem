@@ -6,9 +6,15 @@ import {
     aInterfaceMethod,
     constructor, data, externalTypeReference,
     glossaryParameter,
+    group,
     imp,
+    member,
     procedure,
+    ref,
+    sExternalInterfaceReference,
+    sInterface,
     sInterfaceReference,
+    type,
     typeReference
 } from "lib-pareto-typescript-project/dist/submodules/glossary/shorthands"
 
@@ -26,6 +32,10 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
     'root': {
         'namespaces': d({}),
         'types': d({
+            "SerializeToFileSystemParameters": type(group({
+                "path": member(ref(externalTypeReference("common", "Path"))),
+                "data": member(ref(externalTypeReference("model", "Root"))),
+            }))
         }),
     },
     'asynchronous': {
@@ -35,8 +45,11 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
         }),
     },
     'synchronous': {
-        'interfaces': d({}),
+        'interfaces': d({
+            "nothing": sInterface(['group', { 'members': d({}) }])
+        }),
         'algorithms': d({
+            "SerializeToFileSystem": procedure(data(typeReference("SerializeToFileSystemParameters")), sInterfaceReference("nothing")),
         }),
 
     },

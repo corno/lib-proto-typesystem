@@ -1,6 +1,7 @@
 import * as pl from 'pareto-core-lib'
 import * as pd from 'pareto-core-dev'
 import * as pt from 'pareto-core-types'
+import * as pm from 'pareto-core-map'
 
 import * as g_this from "../glossary"
 import * as g_in from "../../unresolved"
@@ -57,10 +58,80 @@ function mapOptional2NonOptional<T, RT>(
     return pl.optional($, ($): RT => a($), () => pl.panic("SFSDSFDF"))
 }
 
-export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
-    readonly 'onError': g_this.SYNC.I.OnError<Annotation>
-}) => {
+namespace Resolve {
 
+    export type Function__Declaration<Annotation> = (
+        $: g_in.T.Function__Declaration<Annotation>,
+        $p: {
+            'resolved namespaces': g_out.T.Local__Namespace.namespaces,
+            'resolved sibling types': pt.Lookup<g_out.T.Type>,
+            'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
+            'type parameters': g_out.T.Type__Parameters,
+        },
+    ) => g_out.T.Function__Declaration
+
+    export type Local__Namespace<Annotation> = (
+        $: g_in.T.Local__Namespace<Annotation>,
+        $p: {
+            'resolved sibling namespaces': pt.OptionalValue<pt.Lookup<g_out.T.Namespace__2>>,
+            'parent type parameters': pt.OptionalValue<g_out.T.Aggregated__Type__Parameters>,
+
+        },
+    ) => g_out.T.Local__Namespace
+
+    export type Namespace__2<Annotation> = (
+        $: g_in.T.Namespace__2<Annotation>,
+        $p: {
+            'resolved parent sibling namespaces': pt.OptionalValue<pt.Lookup<g_out.T.Namespace__2>>,
+        },
+    ) => g_out.T.Namespace__2
+
+    export type Namespace__Selection<Annotation> = (
+        $: g_in.T.Namespace__Selection<Annotation>,
+        $p: {
+            'resolved namespaces': g_out.T.Local__Namespace.namespaces,
+            'resolved sibling types': pt.Lookup<g_out.T.Type>,
+            'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
+            'type parameters': g_out.T.Type__Parameters,
+        },
+    ) => ReturningType<g_out.T.Namespace__Selection, g_out.T.Local__Namespace>
+
+    //export type Namespace__Selection = (
+    //     $: g_in.T.Namespace__Selection<Annotation>,
+    //     $p: {
+    //         'resolved sibling namespaces': pt.Lookup<g_out.T.Namespace__2>,
+    //     },
+    // ) => ReturningType<g_out.T.Namespace__Selection, null>
+    export type Type<Annotation> = (
+        $: g_in.T.Type<Annotation>,
+        $p: {
+            'resolved namespaces': g_out.T.Local__Namespace.namespaces,
+            'resolved sibling types': pt.Lookup<g_out.T.Type>,
+            'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
+            'type parameters': g_out.T.Type__Parameters,
+        },
+    ) => g_out.T.Type
+
+    export type Type__Parameters<Annotation> = (
+        $: g_in.T.Type__Parameters<Annotation>,
+        $p: {
+            'parent type parameters': pt.OptionalValue<g_out.T.Aggregated__Type__Parameters>,
+        }
+    ) => g_out.T.Type__Parameters
+
+}
+
+type Res<Annotation> = {
+    Function__Declaration: Resolve.Function__Declaration<Annotation>
+    Local__Namespace: Resolve.Local__Namespace<Annotation>
+}
+
+function resolve<Annotation>(
+    $d: D.resolve<Annotation>,
+    $se: {
+        onError: g_this.SYNC.I.OnError<Annotation>
+    }
+): Res<Annotation> {
 
     function getEntry<T>($: pt.Lookup<T>, key: string, annotation: Annotation): T {
         return $.__getEntry(
@@ -114,76 +185,47 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
     }
 
 
-    type Map_Function__Declaration = (
-        $: g_in.T.Function__Declaration<Annotation>,
-        $p: {
-            'resolved namespaces': g_out.T.Local__Namespace.namespaces,
-            'resolved sibling types': pt.Lookup<g_out.T.Type>,
-            'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
-        },
-    ) => g_out.T.Function__Declaration
-
-    type Map_Local__Namespace = (
-        $: g_in.T.Local__Namespace<Annotation>,
-        $p: {
-            'resolved sibling namespaces': pt.OptionalValue<pt.Lookup<g_out.T.Namespace__2>>,
-        },
-    ) => g_out.T.Local__Namespace
-
-    type Map_Namespace__2 = (
-        $: g_in.T.Namespace__2<Annotation>,
-        $p: {
-            'resolved parent sibling namespaces': pt.OptionalValue<pt.Lookup<g_out.T.Namespace__2>>,
-        },
-    ) => g_out.T.Namespace__2
-
-    type Map_Namespace__Selection__Tail = (
-        $: g_in.T.Namespace__Selection__Tail<Annotation>,
-        $p: {
-            'namespaces': g_out.T.Local__Namespace.namespaces,
-        },
-    ) => ReturningType<g_out.T.Namespace__Selection__Tail, g_out.T.Local__Namespace>
-
-    // type Map_Namespace__Selection = (
-    //     $: g_in.T.Namespace__Selection<Annotation>,
-    //     $p: {
-    //         'resolved sibling namespaces': pt.Lookup<g_out.T.Namespace__2>,
-    //     },
-    // ) => ReturningType<g_out.T.Namespace__Selection, null>
-    type Map_Type = (
-        $: g_in.T.Type<Annotation>,
-        $p: {
-            'resolved namespaces': g_out.T.Local__Namespace.namespaces,
-            'resolved sibling types': pt.Lookup<g_out.T.Type>,
-            'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
-        },
-    ) => g_out.T.Type
-    type Map_Type__Parameters = ($: g_in.T.Type__Parameters<Annotation>) => g_out.T.Type__Parameters
-
-    const map_Function__Declaration: Map_Function__Declaration = ($, $p) => {
+    const Function__Declaration: Resolve.Function__Declaration<Annotation> = ($, $p) => {
+        const $tp = Type__Parameters(
+            $['type parameters'],
+            {
+                'parent type parameters': [true, $p['type parameters'].aggregated]
+            }
+        )
         return {
-            'type parameters': map_Type__Parameters($['type parameters']),
-            'context': map_Type(
+            'type parameters': $tp,
+            'context': Type(
                 $.context,
-                $p,
+                {
+                    'resolved namespaces': $p['resolved namespaces'],
+                    'cyclic sibling types': $p['cyclic sibling types'],
+                    'resolved sibling types': $p['resolved sibling types'],
+                    'type parameters': $tp
+                },
             ),
-            'parameters': $.parameters.dictionary.map(($) => map_Type(
+            'parameters': $.parameters.dictionary.map(($) => Type(
                 $,
-                $p
+                {
+                    'resolved namespaces': $p['resolved namespaces'],
+                    'cyclic sibling types': $p['cyclic sibling types'],
+                    'resolved sibling types': $p['resolved sibling types'],
+                    'type parameters': $tp
+                },
             ))
         }
     }
 
-    const map_Local__Namespace: Map_Local__Namespace = ($, $p) => {
+    const Local__Namespace: Resolve.Local__Namespace<Annotation> = ($, $p) => {
         const v_namespaces: g_out.T.Local__Namespace.namespaces = $d.resolveDictionary($.namespaces.dictionary, {
             'map': ($, $l): g_out.T.Local__Namespace.namespaces.D => {
                 return pl.cc($.value, ($) => {
 
                     switch ($[0]) {
-                        case 'local': return pl.ss($, ($): g_out.T.Local__Namespace.namespaces.D => ['local', map_Local__Namespace(
+                        case 'local': return pl.ss($, ($): g_out.T.Local__Namespace.namespaces.D => ['local', Local__Namespace(
                             $,
                             {
                                 'resolved sibling namespaces': [true, $l['non circular siblings']],
+                                'parent type parameters': $p['parent type parameters'],
                             }
                         )])
                         case 'parent sibling': return pl.ss($, ($): g_out.T.Local__Namespace.namespaces.D => ['parent sibling', pl.cc($, ($): g_out.T.Namespace__2.parent__sibling => {
@@ -201,58 +243,71 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
                 })
             }
         })
+        const $v_parameters = Type__Parameters(
+            $.parameters,
+            {
+                'parent type parameters': $p['parent type parameters'],
+            }
+        )
         return {
             'namespaces': v_namespaces,
-            'parameters': $.parameters.dictionary.map(($) => null),
-            'types': $d.resolveDictionary($.types.dictionary, { 'map': (($, $l) => map_Type($.value, {
-                'resolved namespaces': v_namespaces,
-                'cyclic sibling types': $l['all siblings'],
-                'resolved sibling types': $l['non circular siblings'],
-            }))})
+            'parameters': $v_parameters,
+            'types': $d.resolveDictionary($.types.dictionary, {
+                'map': (($, $l) => Type($.value, {
+                    'resolved namespaces': v_namespaces,
+                    'cyclic sibling types': $l['all siblings'],
+                    'resolved sibling types': $l['non circular siblings'],
+                    'type parameters': $v_parameters,
+                }))
+            })
         }
     }
 
-    const map_Type: Map_Type = ($, $p) => {
+    const Type: Resolve.Type<Annotation> = ($, $p) => {
         switch ($[0]) {
             case 'address function': return pl.ss($, ($) => ['address function', {
-                'declaration': map_Function__Declaration(
+                'declaration': Function__Declaration(
                     $.declaration,
                     $p,
                 ),
-                'return type': map_Type($['return type'], $p)
+                'return type': Type($['return type'], $p)
             }])
-            case 'array': return pl.ss($, ($) => ['array', map_Type($, $p)])
+            case 'array': return pl.ss($, ($) => ['array', Type($, $p)])
             case 'boolean': return pl.ss($, ($) => ['boolean', null])
-            case 'dictionary': return pl.ss($, ($) => map_Type($, $p))
-            case 'group': return pl.ss($, ($) => ['group', $.dictionary.map(($) => map_Type($, $p))])
+            case 'dictionary': return pl.ss($, ($) => ['dictionary', Type($, $p)])
+            case 'group': return pl.ss($, ($) => ['group', $.dictionary.map(($) => Type($, $p))])
             case 'null': return pl.ss($, ($) => ['null', null])
             case 'number': return pl.ss($, ($) => ['number', null])
-            case 'optional': return pl.ss($, ($) => ['optional', map_Type($, $p)])
+            case 'optional': return pl.ss($, ($) => ['optional', Type($, $p)])
             case 'procedure': return pl.ss($, ($) => ['procedure', {
-                'declaration': map_Function__Declaration(
+                'declaration': Function__Declaration(
                     $.declaration,
                     $p,
                 )
             }])
             case 'string': return pl.ss($, ($) => ['string', null])
-            case 'tagged union': return pl.ss($, ($) => ['tagged union', $.dictionary.map(($) => map_Type($, $p))])
+            case 'tagged union': return pl.ss($, ($) => ['tagged union', $.dictionary.map(($) => Type($, $p))])
+            case 'type parameter': return pl.ss($, ($) => ['type parameter', getAnnotatedEntry($p['type parameters'].aggregated, $)])
             case 'type reference': return pl.ss($, ($) => ['type reference', pl.cc($, ($): g_out.T.Type.type__reference => {
                 switch ($[0]) {
                     case 'cyclic sibling': return pl.ss($, ($) => ['cyclic sibling', getAnnotatedEntry($p['cyclic sibling types'], $)])
                     case 'external': return pl.ss($, ($) => {
-                        pd.logDebugMessage(`>>>>>> ${$.type.key}`)
-                        const v_namespaces = map_Namespace__Selection__Tail(
+                        const v_namespaces = Namespace__Selection(
                             $.namespaces,
                             {
-                                'namespaces': $p['resolved namespaces']
+                                'resolved namespaces': $p['resolved namespaces'],
+                                'cyclic sibling types': $p['cyclic sibling types'],
+                                'resolved sibling types': $p['resolved sibling types'],
+                                'type parameters': $p['type parameters'],
                             }
                         )
                         return ['external', {
                             'namespaces': v_namespaces.content,
+
                             'type': getAnnotatedEntry(
                                 v_namespaces.result.types,
                                 $.type,
-                            )
+                            ),
                         }]
                     })
                     case 'sibling': return pl.ss($, ($) => ['sibling', getAnnotatedEntry($p['resolved sibling types'], $)])
@@ -261,21 +316,33 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
             })
             ])
             case 'value function': return pl.ss($, ($) => ['value function', {
-                'declaration': map_Function__Declaration(
+                'declaration': Function__Declaration(
                     $.declaration,
                     $p,
                 ),
-                'return type': map_Type($['return type'], $p)
+                'return type': Type($['return type'], $p)
             }])
             default: return pl.au($[0])
         }
     }
 
-    const map_Type__Parameters: Map_Type__Parameters = ($) => $.dictionary.map(($) => null)
+    const Type__Parameters: Resolve.Type__Parameters<Annotation> = ($, $p) => {
+        return {
+            'local': $.local.dictionary.map(($) => null),
+            'aggregated': $d.mergeAndIgnore({
+                'primary': $.local.dictionary,
+                'secondary': pl.optional(
+                    $p['parent type parameters'],
+                    ($) => $,
+                    () => pm.wrapRawDictionary({}),
+                )
+            }).map(($) => null)
+        }
+    }
 
 
-    const map_Namespace__Selection__Tail: Map_Namespace__Selection__Tail = ($, $p) => {
-        const v_namespace = getAnnotatedEntry($p.namespaces, $.namespace)
+    const Namespace__Selection: Resolve.Namespace__Selection<Annotation> = ($, $p) => {
+        const v_namespace = getAnnotatedEntry($p['resolved namespaces'], $.namespace)
 
         function getSubnamespaces($: g_out.T.Namespace__2): g_out.T.Local__Namespace.namespaces {
             switch ($[0]) {
@@ -299,8 +366,11 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
             $.tail,
             getLocalNamespace(v_namespace.referent),
             ($) => {
-                const xx = map_Namespace__Selection__Tail($.content, {
-                    'namespaces': r_subnamespaces,
+                const xx = Namespace__Selection($.content, {
+                    'resolved namespaces': $p['resolved namespaces'],
+                    'cyclic sibling types': $p['cyclic sibling types'],
+                    'resolved sibling types': $p['resolved sibling types'],
+                    'type parameters': $p['type parameters'],
                 })
                 return {
                     'content': xx.content,
@@ -312,12 +382,52 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
         return {
             'content': {
                 'namespace': v_namespace,
+                
+                'arguments': $.arguments.dictionary.__mapWithKey<g_out.T.Type__Arguments.D>(($, key) => {
+                    return {
+                        'constraints': {
+                            'parameter': getEntry(
+                                pl.cc(v_namespace.referent, ($) => {
+                                    switch ($[0]) {
+                                        case 'local': return pl.ss($, ($) => $.parameters.local)
+                                        case 'parent sibling': return pl.ss($, ($) => pl.panic(`FIXME: Proper error message`))
+                                        default: return pl.au($[0])
+                                    }
+                                }),
+                                key,
+                                $.annotation,
+                            )
+                        },
+                        'content': {
+                            'type': Type(
+                                $.content.type,
+                                {
+                                    'resolved namespaces': $p['resolved namespaces'],
+                                    'cyclic sibling types': $p['cyclic sibling types'],
+                                    'resolved sibling types': $p['resolved sibling types'],
+                                    'type parameters': $p['type parameters'],
+                                }
+                            )
+                        }
+                    }
+                }),
                 'tail': v_tail.content
             },
             'result': v_tail.result,
         }
     }
-    // const map_Namespace__Selection: Map_Namespace__Selection = ($, $p) => {
+    return {
+        Function__Declaration: Function__Declaration,
+        Local__Namespace: Local__Namespace,
+    }
+}
+
+export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
+    readonly 'onError': g_this.SYNC.I.OnError<Annotation>
+}) => {
+
+
+    // const Namespace__Selection: Resolve.Namespace__Selection = ($, $p) => {
     //     const v_namespace = getAnnotatedEntry($p['resolved sibling namespaces'], $.namespace)
 
     //     function getLocalNamespace($: g_out.T.Namespace__2): g_out.T.Local__Namespace {
@@ -334,7 +444,7 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
     //         v_namespace,
     //         ($) => {
     //             return {
-    //                 'content': map_Namespace__Selection__Tail($, {
+    //                 'content': Namespace__Selection($, {
     //                     'namespaces': r_subnamespaces,
     //                 }),
     //                 'result': x
@@ -353,8 +463,10 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
 
 
     return ($: g_in.T.Local__Namespace<Annotation>): g_out.T.Local__Namespace => {
-        return map_Local__Namespace($, {
+        const res = resolve($d, $se)
+        return res.Local__Namespace($, {
             'resolved sibling namespaces': [false],
+            'parent type parameters': [false],
         })
     }
 }

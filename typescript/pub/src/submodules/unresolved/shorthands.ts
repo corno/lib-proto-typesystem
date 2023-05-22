@@ -19,12 +19,15 @@ function dict<T>($: RawDictionary<T>): AnnotatedDictionary<T> {
 
 export function ns(
     namespaces: RawDictionary<t.T.Local__Namespace.namespaces.dictionary.D<pd.SourceLocation>>,
-    typeParameters: RawDictionary<t.T.Type__Parameters.dictionary.D<pd.SourceLocation>>,
+    typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
     types: RawDictionary<t.T.Type<pd.SourceLocation>>
 ): t.T.Local__Namespace<pd.SourceLocation> {
     return {
         'namespaces': dict(namespaces),
-        'parameters': dict(typeParameters),
+        'parameters': {
+            'local': dict(typeParameters),
+            'aggregated': dict({}),
+        },
         'types': dict(types),
     }
 }
@@ -42,25 +45,31 @@ export function parentSibling(
 
 export function local(
     namespaces: RawDictionary<t.T.Local__Namespace.namespaces.dictionary.D<pd.SourceLocation>>,
-    typeParameters: RawDictionary<t.T.Type__Parameters.dictionary.D<pd.SourceLocation>>,
+    typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
     types: RawDictionary<t.T.Type<pd.SourceLocation>>
 ): t.T.Namespace__2<pd.SourceLocation> {
     return ['local', {
         'namespaces': dict(namespaces),
-        'parameters': dict(typeParameters),
+        'parameters': {
+            'local': dict(typeParameters),
+            'aggregated': dict({})
+        },
         'types': dict(types),
     }]
 }
 
 export function valueFunction(
-    typeParameters: RawDictionary<t.T.Type__Parameters.dictionary.D<pd.SourceLocation>>,
+    typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
     context: t.T.Type<pd.SourceLocation>,
     parameters: RawDictionary<t.T.Function__Declaration.parameters.dictionary.D<pd.SourceLocation>>,
     returnType: t.T.Type<pd.SourceLocation>,
 ): t.T.Type<pd.SourceLocation> {
     return ['value function', {
         'declaration': {
-            'type parameters': dict(typeParameters),
+            'type parameters': {
+                'local': dict(typeParameters),
+                'aggregated': dict({})
+            },
             'context': context,
             'parameters': dict(parameters),
         },
@@ -69,14 +78,17 @@ export function valueFunction(
 }
 
 export function addressFunction(
-    typeParameters: RawDictionary<t.T.Type__Parameters.dictionary.D<pd.SourceLocation>>,
+    typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
     context: t.T.Type<pd.SourceLocation>,
     parameters: RawDictionary<t.T.Function__Declaration.parameters.dictionary.D<pd.SourceLocation>>,
     returnType: t.T.Type<pd.SourceLocation>,
 ): t.T.Type<pd.SourceLocation> {
     return ['address function', {
         'declaration': {
-            'type parameters': dict(typeParameters),
+            'type parameters': {
+                'local': dict(typeParameters),
+                'aggregated': dict({})
+            },
             'context': context,
             'parameters': dict(parameters),
         },
@@ -85,14 +97,17 @@ export function addressFunction(
 }
 
 export function procedure(
-    typeParameters: RawDictionary<t.T.Type__Parameters.dictionary.D<pd.SourceLocation>>,
+    typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
     context: t.T.Type<pd.SourceLocation>,
     parameters: RawDictionary<t.T.Function__Declaration.parameters.dictionary.D<pd.SourceLocation>>,
     returnType: t.T.Type<pd.SourceLocation>,
 ): t.T.Type<pd.SourceLocation> {
     return ['procedure', {
         'declaration': {
-            'type parameters': dict(typeParameters),
+            'type parameters': {
+                'local': dict(typeParameters),
+                'aggregated': dict({})
+            },
             'context': context,
             'parameters': dict(parameters),
         },
@@ -125,6 +140,12 @@ export function group(
     return ['group', dict(properties)]
 }
 
+export function taggedUnion(
+    options: RawDictionary<t.T.Type.tagged__union.dictionary.D<pd.SourceLocation>>,
+): t.T.Type<pd.SourceLocation> {
+    return ['tagged union', dict(options)]
+}
+
 export function array(
     type: t.T.Type<pd.SourceLocation>,
 ): t.T.Type<pd.SourceLocation> {
@@ -145,26 +166,66 @@ export function dictionary(
 
 export function step(
     ns: string,
-    tail?: t.T.Namespace__Selection__Tail<pd.SourceLocation>,
-): t.T.Namespace__Selection__Tail<pd.SourceLocation> {
+    args?: RawDictionary<t.T.Type__Arguments.dictionary.D<pd.SourceLocation>>,
+    tail?: t.T.Namespace__Selection<pd.SourceLocation>,
+): t.T.Namespace__Selection<pd.SourceLocation> {
     return {
         'namespace': {
             'annotation': pd.getLocationInfo(1),
             'key': ns,
         },
-        'tail': tail === undefined ? [false]: [true, tail]
+        'arguments': dict(args === undefined ? {}: args),
+        'tail': tail === undefined ? [false] : [true, tail]
+    }
+}
+
+export function typeArgument(
+    type: t.T.Type<pd.SourceLocation>
+): t.T.Type__Arguments.dictionary.D<pd.SourceLocation> {
+    return {
+        'annotation': pd.getLocationInfo(1),
+        'content': {
+            'type': type
+        }
     }
 }
 
 export function externalTypeReference(
-    nsPath: t.T.Namespace__Selection__Tail<pd.SourceLocation>,
+    nsPath: t.T.Namespace__Selection<pd.SourceLocation>,
     type: string,
+
 ): t.T.Type<pd.SourceLocation> {
     return ['type reference', ['external', {
         'namespaces': nsPath,
         'type': {
             'annotation': pd.getLocationInfo(1),
             'key': type
-        }
+        },
     }]]
+}
+
+export function typeParameter(
+    typeParameter: string
+): t.T.Type<pd.SourceLocation> {
+    return ['type parameter', {
+        'annotation': pd.getLocationInfo(1),
+        'key': typeParameter
+    }]
+}
+
+export function typeReference(
+    type: string,
+    cyclic?: boolean,
+): t.T.Type<pd.SourceLocation> {
+    if (cyclic) {
+        return ['type reference', ['cyclic sibling', {
+            'annotation': pd.getLocationInfo(1),
+            'key': type
+        }]]
+    } else {
+        return ['type reference', ['sibling', {
+            'annotation': pd.getLocationInfo(1),
+            'key': type
+        }]]
+    }
 }

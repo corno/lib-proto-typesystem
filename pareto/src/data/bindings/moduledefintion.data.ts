@@ -21,13 +21,17 @@ export const $: g_project.T.ModuleDefinition<pd.SourceLocation> = {
     'glossary': {
         'root': glossary,
         'imports': d({
+            "model": tempSubmodule("resolved"),
+            "common": external("glo-pareto-common"),
         }),
     },
     'api': {
         'root': api,
         'imports': d({
+            "this": this_(),
             "main": main(),
             "resolve": submodule("resolve"),
+            "serialize": submodule("serialize"),
         }),
     },
 

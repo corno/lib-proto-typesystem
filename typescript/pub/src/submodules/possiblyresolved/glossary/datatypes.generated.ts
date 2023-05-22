@@ -3,6 +3,29 @@ import * as pt from 'pareto-core-types'
 
 export namespace N {
     
+    export namespace Aggregated_$_$Type_$_$Parameters {
+        
+        export namespace N {
+            
+            export namespace D {
+                
+                export namespace N {
+                    
+                    export namespace G {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                }
+                
+                export namespace T {}
+            }
+        }
+        
+        export namespace T {}
+    }
+    
     export namespace Function_$_$Declaration {
         
         export namespace N {
@@ -147,13 +170,20 @@ export namespace N {
         export namespace T {}
     }
     
-    export namespace Namespace_$_$Selection_$_$Tail {
+    export namespace Namespace_$_$Selection {
         
         export namespace N {
             
             export namespace G {
                 
                 export namespace N {
+                    
+                    export namespace arguments {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
                     
                     export namespace namespace {
                         
@@ -364,6 +394,13 @@ export namespace N {
                         export namespace T {}
                     }
                     
+                    export namespace type_$_$parameter {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                    
                     export namespace type_$_$reference {
                         
                         export namespace N {
@@ -462,7 +499,7 @@ export namespace N {
         export namespace T {}
     }
     
-    export namespace Type_$_$Parameters {
+    export namespace Type_$_$Arguments {
         
         export namespace N {
             
@@ -472,7 +509,61 @@ export namespace N {
                     
                     export namespace G {
                         
+                        export namespace N {
+                            
+                            export namespace _$ltype {
+                                
+                                export namespace N {}
+                                
+                                export namespace T {}
+                            }
+                        }
+                        
+                        export namespace T {}
+                    }
+                }
+                
+                export namespace T {}
+            }
+        }
+        
+        export namespace T {}
+    }
+    
+    export namespace Type_$_$Parameters {
+        
+        export namespace N {
+            
+            export namespace G {
+                
+                export namespace N {
+                    
+                    export namespace aggregated {
+                        
                         export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                    
+                    export namespace local {
+                        
+                        export namespace N {
+                            
+                            export namespace D {
+                                
+                                export namespace N {
+                                    
+                                    export namespace G {
+                                        
+                                        export namespace N {}
+                                        
+                                        export namespace T {}
+                                    }
+                                }
+                                
+                                export namespace T {}
+                            }
+                        }
                         
                         export namespace T {}
                     }
@@ -487,6 +578,15 @@ export namespace N {
 }
 
 export namespace T {
+    
+    export namespace Aggregated__Type__Parameters {
+        
+        export namespace D {}
+        
+        export type D = null
+    }
+    
+    export type Aggregated__Type__Parameters = pt.Dictionary<null>
     
     export namespace Function__Declaration {
         
@@ -574,7 +674,9 @@ export namespace T {
             }
         }]
     
-    export namespace Namespace__Selection__Tail {
+    export namespace Namespace__Selection {
+        
+        export type arguments = T.Type__Arguments
         
         export namespace namespace {
             
@@ -595,18 +697,19 @@ export namespace T {
         
         export namespace tail {
             
-            export type O = T.Namespace__Selection__Tail
+            export type O = T.Namespace__Selection
         }
         
-        export type tail = [ false ] | [ true, T.Namespace__Selection__Tail]
+        export type tail = [ false ] | [ true, T.Namespace__Selection]
     }
     
-    export type Namespace__Selection__Tail = {
+    export type Namespace__Selection = {
+        readonly 'arguments': T.Type__Arguments
         readonly 'namespace': {
             readonly 'key': string
             readonly 'referent': [ false ] | [ true, T.Local__Namespace.namespaces.D]
         }
-        readonly 'tail': [ false ] | [ true, T.Namespace__Selection__Tail]
+        readonly 'tail': [ false ] | [ true, T.Namespace__Selection]
     }
     
     export type Root = T.Local__Namespace
@@ -670,6 +773,23 @@ export namespace T {
         
         export type tagged__union = pt.Dictionary<T.Type>
         
+        export namespace type__parameter {
+            
+            export type key = string
+            
+            export namespace referent {
+                
+                export type O = T.Aggregated__Type__Parameters.D
+            }
+            
+            export type referent = [ false ] | [ true, T.Aggregated__Type__Parameters.D]
+        }
+        
+        export type type__parameter = {
+            readonly 'key': string
+            readonly 'referent': [ false ] | [ true, T.Aggregated__Type__Parameters.D]
+        }
+        
         export namespace type__reference {
             
             export namespace cyclic__sibling {
@@ -696,7 +816,7 @@ export namespace T {
             
             export namespace external {
                 
-                export type namespaces = T.Namespace__Selection__Tail
+                export type namespaces = T.Namespace__Selection
                 
                 export namespace _ltype {
                     
@@ -717,7 +837,7 @@ export namespace T {
             }
             
             export type external = {
-                readonly 'namespaces': T.Namespace__Selection__Tail
+                readonly 'namespaces': T.Namespace__Selection
                 readonly 'type': {
                     readonly 'key': string
                     readonly 'referent': [ false ] | [ true, T.Local__Namespace.types.D]
@@ -748,7 +868,7 @@ export namespace T {
                 readonly 'referent': [ false ] | [ true, () => T.Type]
             }]
             | ['external', {
-                readonly 'namespaces': T.Namespace__Selection__Tail
+                readonly 'namespaces': T.Namespace__Selection
                 readonly 'type': {
                     readonly 'key': string
                     readonly 'referent': [ false ] | [ true, T.Local__Namespace.types.D]
@@ -789,13 +909,17 @@ export namespace T {
         }]
         | ['string', null]
         | ['tagged union', pt.Dictionary<T.Type>]
+        | ['type parameter', {
+            readonly 'key': string
+            readonly 'referent': [ false ] | [ true, T.Aggregated__Type__Parameters.D]
+        }]
         | ['type reference', 
             | ['cyclic sibling', {
                 readonly 'key': string
                 readonly 'referent': [ false ] | [ true, () => T.Type]
             }]
             | ['external', {
-                readonly 'namespaces': T.Namespace__Selection__Tail
+                readonly 'namespaces': T.Namespace__Selection
                 readonly 'type': {
                     readonly 'key': string
                     readonly 'referent': [ false ] | [ true, T.Local__Namespace.types.D]
@@ -811,12 +935,71 @@ export namespace T {
             readonly 'return type': T.Type
         }]
     
-    export namespace Type__Parameters {
+    export namespace Type__Arguments {
         
-        export namespace D {}
+        export namespace D {
+            
+            export namespace constraints {
+                
+                export namespace O {
+                    
+                    export type parameter = T.Type__Parameters.local.D
+                }
+                
+                export type O = {
+                    readonly 'parameter': T.Type__Parameters.local.D
+                }
+            }
+            
+            export type constraints = [ false ] | [ true, {
+                readonly 'parameter': T.Type__Parameters.local.D
+            }]
+            
+            export namespace content {
+                
+                export type _ltype = T.Type
+            }
+            
+            export type content = {
+                readonly 'type': T.Type
+            }
+        }
         
-        export type D = null
+        export type D = {
+            readonly 'constraints': [ false ] | [ true, {
+                readonly 'parameter': T.Type__Parameters.local.D
+            }]
+            readonly 'content': {
+                readonly 'type': T.Type
+            }
+        }
     }
     
-    export type Type__Parameters = pt.Dictionary<null>
+    export type Type__Arguments = pt.Dictionary<{
+        readonly 'constraints': [ false ] | [ true, {
+            readonly 'parameter': T.Type__Parameters.local.D
+        }]
+        readonly 'content': {
+            readonly 'type': T.Type
+        }
+    }>
+    
+    export namespace Type__Parameters {
+        
+        export type aggregated = T.Aggregated__Type__Parameters
+        
+        export namespace local {
+            
+            export namespace D {}
+            
+            export type D = null
+        }
+        
+        export type local = pt.Dictionary<null>
+    }
+    
+    export type Type__Parameters = {
+        readonly 'aggregated': T.Aggregated__Type__Parameters
+        readonly 'local': pt.Dictionary<null>
+    }
 }

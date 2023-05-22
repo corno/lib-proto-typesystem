@@ -9,5 +9,6 @@ const d = pd.d
 export const $: g_project.T.ModuleDefinition.api.root<pd.SourceLocation> = {
     'algorithms': d({
         "resolve": algorithm(sfunction("resolve", {}, "Resolve"), { "Annotations": "GAnnotations" }),
+        "serializeToFileSystem": algorithm(procedure("this", {}, "SerializeToFileSystem"), { }),
     })
 }
