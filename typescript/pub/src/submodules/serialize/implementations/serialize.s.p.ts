@@ -27,7 +27,18 @@ export const $$: A.serialize = ($d) => {
             },
             $i: g_fp.SYNC.I.Line
         ) => {
-            Type__Parameters($['type parameters'], $i)
+            $d.enrichedDictionaryForEach($['type parameters'].local, { //<--- local parameters, the others are already serialized with the type
+                'onEmpty': () => {
+
+                },
+                'onNotEmpty': ($c) => {
+                    $i.snippet(`<`)
+                    $c(($) => {
+                        $i.snippet(`_T${$d.createIdentifier($.key)}${$.isLast ? `` : `, `}`)
+                    })
+                    $i.snippet(`>`)
+                }
+            })
             $i.snippet(`(`)
             $i.indent(($i) => {
                 $i.nestedLine(($i) => {
