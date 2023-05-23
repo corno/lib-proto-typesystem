@@ -378,7 +378,7 @@ function resolve<Annotation>(
             $.tail,
             //getLocalNamespace(v_namespace.referent),
             ($) => Namespace__Selection($, {
-                'resolved namespaces': $p['resolved namespaces'],
+                'resolved namespaces': selectLocalNSFromNS2(v_namespace.referent).namespaces,
                 'cyclic sibling types': $p['cyclic sibling types'],
                 'resolved sibling types': $p['resolved sibling types'],
                 'type parameters': $p['type parameters'],
