@@ -10,38 +10,33 @@ import * as g_out from "../../resolved"
 import { A, D } from "../api.generated"
 
 
-function mapResultOptional<T, RT, Result>(
-    $: pt.OptionalValue<T>,
-    res: Result,
-    a: ($: ReturningType<T, Result>) => ReturningType<RT, Result>,
-): ReturningType<pt.OptionalValue<RT>, Result> {
-    return pl.optional(
-        $,
-        ($): ReturningType<pt.OptionalValue<RT>, Result> => {
-            const out = a({
-                'content': $,
-                'result': res,
-            })
-            return {
-                'content': [true, out.content],
-                'result': out.result
-            }
-        },
-        () => ({
-            'result': res,
-            'content': [false]
-        })
-    )
-}
+// function mapResultOptional<T, RT, Result>(
+//     $: pt.OptionalValue<T>,
+//     res: Result,
+//     a: ($: ReturningType<T, Result>) => ReturningType<RT, Result>,
+// ): ReturningType<pt.OptionalValue<RT>, Result> {
+//     return pl.optional(
+//         $,
+//         ($): ReturningType<pt.OptionalValue<RT>, Result> => {
+//             const out = a({
+//                 'content': $,
+//                 'result': res,
+//             })
+//             return {
+//                 'content': [true, out.content],
+//                 'result': out.result
+//             }
+//         },
+//         () => ({
+//             'result': res,
+//             'content': [false]
+//         })
+//     )
+// }
 
 type Reference<T> = {
     'referent': T,
     'key': string
-}
-
-type ReturningType<T, RT> = {
-    'content': T,
-    'result': RT,
 }
 
 function mapOptional<T, RT>(
@@ -94,7 +89,7 @@ namespace Resolve {
             'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
             'type parameters': g_out.T.Aggregated__Type__Parameters,
         },
-    ) => ReturningType<g_out.T.Namespace__Selection, g_out.T.Local__Namespace>
+    ) => g_out.T.Namespace__Selection
 
     //export type Namespace__Selection = (
     //     $: g_in.T.Namespace__Selection<Annotation>,
@@ -184,6 +179,22 @@ function resolve<Annotation>(
         )
     }
 
+
+    function selectLocalNSFromNS2($: g_out.T.Namespace__2): g_out.T.Local__Namespace {
+        switch ($[0]) {
+            case 'local': return pl.ss($, ($) => $)
+            case 'parent sibling': return pl.ss($, ($) => selectLocalNSFromNS2($.namespace.referent))
+            default: return pl.au($[0])
+        }
+    }
+    
+    function selectNS2FromSelection($: g_out.T.Namespace__Selection): g_out.T.Namespace__2 {
+        return pl.optional(
+            $.tail,
+            ($) => selectNS2FromSelection($),
+            () => $.namespace.referent
+        )
+    }
 
     const Function__Declaration: Resolve.Function__Declaration<Annotation> = ($, $p) => {
         const $tp = Type__Parameters(
@@ -311,10 +322,10 @@ function resolve<Annotation>(
                             }
                         )
                         return ['external', {
-                            'namespaces': v_namespaces.content,
+                            'namespaces': v_namespaces,
 
                             'type': getAnnotatedEntry(
-                                v_namespaces.result.types,
+                                selectLocalNSFromNS2(selectNS2FromSelection(v_namespaces)).types,
                                 $.type,
                             ),
                         }]
@@ -361,75 +372,43 @@ function resolve<Annotation>(
     const Namespace__Selection: Resolve.Namespace__Selection<Annotation> = ($, $p) => {
         const v_namespace = getAnnotatedEntry($p['resolved namespaces'], $.namespace)
 
-        function getSubnamespaces($: g_out.T.Namespace__2): g_out.T.Local__Namespace.namespaces {
-            switch ($[0]) {
-                case 'local': return pl.ss($, ($) => $.namespaces)
-                case 'parent sibling': return pl.ss($, ($) => getSubnamespaces($.namespace.referent))
-                default: return pl.au($[0])
-            }
-        }
+        const r_subnamespaces = selectLocalNSFromNS2(v_namespace.referent).namespaces
 
-        function getLocalNamespace($: g_out.T.Namespace__2): g_out.T.Local__Namespace {
-            switch ($[0]) {
-                case 'local': return pl.ss($, ($) => $)
-                case 'parent sibling': return pl.ss($, ($) => getLocalNamespace($.namespace.referent))
-                default: return pl.au($[0])
-            }
-        }
-
-        const r_subnamespaces = getSubnamespaces(v_namespace.referent)
-
-        const v_tail = mapResultOptional(
+        const v_tail = mapOptional(
             $.tail,
-            getLocalNamespace(v_namespace.referent),
-            ($) => {
-                const xx = Namespace__Selection($.content, {
-                    'resolved namespaces': $p['resolved namespaces'],
-                    'cyclic sibling types': $p['cyclic sibling types'],
-                    'resolved sibling types': $p['resolved sibling types'],
-                    'type parameters': $p['type parameters'],
-                })
-                return {
-                    'content': xx.content,
-                    'result': xx.result
-                }
-            },
+            //getLocalNamespace(v_namespace.referent),
+            ($) => Namespace__Selection($, {
+                'resolved namespaces': $p['resolved namespaces'],
+                'cyclic sibling types': $p['cyclic sibling types'],
+                'resolved sibling types': $p['resolved sibling types'],
+                'type parameters': $p['type parameters'],
+            }),
         )
-        function findNS($: g_out.T.Namespace__2): g_out.T.Local__Namespace {
-            switch ($[0]) {
-                case 'local': return pl.ss($, ($) => $)
-                case 'parent sibling': return pl.ss($, ($) => findNS($.namespace.referent))
-                default: return pl.au($[0])
-            }
-        }
         return {
-            'content': {
-                'namespace': v_namespace,
-                'arguments': $.arguments.dictionary.__mapWithKey<g_out.T.Type__Arguments.D>(($, key) => {
-                    return {
-                        'constraints': {
-                            'parameter': getEntry(
-                                findNS(v_namespace.referent).parameters.local,
-                                key,
-                                $.annotation,
-                            )
-                        },
-                        'content': {
-                            'type': Type(
-                                $.content.type,
-                                {
-                                    'resolved namespaces': $p['resolved namespaces'],
-                                    'cyclic sibling types': $p['cyclic sibling types'],
-                                    'resolved sibling types': $p['resolved sibling types'],
-                                    'type parameters': $p['type parameters'],
-                                }
-                            )
-                        }
+            'namespace': v_namespace,
+            'arguments': $.arguments.dictionary.__mapWithKey<g_out.T.Type__Arguments.D>(($, key) => {
+                return {
+                    'constraints': {
+                        'parameter': getEntry(
+                            selectLocalNSFromNS2(v_namespace.referent).parameters.local,
+                            key,
+                            $.annotation,
+                        )
+                    },
+                    'content': {
+                        'type': Type(
+                            $.content.type,
+                            {
+                                'resolved namespaces': $p['resolved namespaces'],
+                                'cyclic sibling types': $p['cyclic sibling types'],
+                                'resolved sibling types': $p['resolved sibling types'],
+                                'type parameters': $p['type parameters'],
+                            }
+                        )
                     }
-                }),
-                'tail': v_tail.content
-            },
-            'result': v_tail.result,
+                }
+            }),
+            'tail': v_tail
         }
     }
     return {
