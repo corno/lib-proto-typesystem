@@ -405,7 +405,7 @@ export const $$: A.serialize = ($d) => {
                                                     },
                                                     () => {
                                                         //it is a type parameter that is shared by the referer and referent.
-                                                        $i.snippet(`${$d.createIdentifier($.key)}`)
+                                                        $i.snippet(`_T${$d.createIdentifier($.key)}`)
                                                     }
                                                 )
                                                 $i.snippet(`${$.isLast ? `` : `, `}`)
