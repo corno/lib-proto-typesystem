@@ -363,6 +363,22 @@ export const $$: A.serialize = ($d) => {
                                     Namespace__Selection($.namespaces, $i)
                                     $i.snippet(`${$d.createIdentifier($.type.key)}`)
 
+                                    function selectLocalNSFromNS2($: g_in.T.Namespace__2): g_in.T.Local__Namespace {
+                                        switch ($[0]) {
+                                            case 'local': return pl.ss($, ($) => $)
+                                            case 'parent sibling': return pl.ss($, ($) => selectLocalNSFromNS2($.namespace.referent))
+                                            default: return pl.au($[0])
+                                        }
+                                    }
+
+                                    function selectNS2FromSelection($: g_in.T.Namespace__Selection): g_in.T.Namespace__2 {
+                                        return pl.optional(
+                                            $.tail,
+                                            ($) => selectNS2FromSelection($),
+                                            () => $.namespace.referent
+                                        )
+                                    }
+
                                     function mergeTypeArguments($: g_in.T.Namespace__Selection): pt.Dictionary<g_in.T.Type__Arguments.D> {
                                         return $d.mergeAndIgnore({
                                             'primary': pl.optional(
@@ -373,7 +389,32 @@ export const $$: A.serialize = ($d) => {
                                             'secondary': $.arguments,
                                         })
                                     }
-                                    Type__Arguments(mergeTypeArguments($.namespaces), $p, $i)
+
+                                    const typeArguments = mergeTypeArguments($.namespaces)
+                                    $d.enrichedDictionaryForEach(selectLocalNSFromNS2(selectNS2FromSelection($.namespaces)).parameters.aggregated, {
+                                        'onEmpty': () => {
+
+                                        },
+                                        'onNotEmpty': ($c) => {
+                                            $i.snippet(`<`)
+                                            $c(($) => {
+                                                typeArguments.__getEntry(
+                                                    $.key,
+                                                    ($) => {
+                                                        Type($.content.type, $p, $i)
+                                                    },
+                                                    () => {
+                                                        //it is a type parameter that is shared by the referer and referent.
+                                                        $i.snippet(`${$d.createIdentifier($.key)}`)
+                                                    }
+                                                )
+                                                $i.snippet(`${$.isLast ? `` : `, `}`)
+                                            })
+                                            $i.snippet(`>`)
+                                        }
+                                    })
+
+                
                                 })
                                 break
                             case 'sibling':
@@ -394,28 +435,6 @@ export const $$: A.serialize = ($d) => {
                     break
                 default: pl.au($[0])
             }
-        }
-
-        const Type__Arguments = (
-            $: g_in.T.Type__Arguments,
-            $p: {
-                'type parameters': g_in.T.Type__Parameters
-            },
-            $i: g_fp.SYNC.I.Line
-        ) => {
-            $d.enrichedDictionaryForEach($, {
-                'onEmpty': () => {
-
-                },
-                'onNotEmpty': ($c) => {
-                    $i.snippet(`<`)
-                    $c(($) => {
-                        Type($.value.content.type, $p, $i)
-                        $i.snippet(`${$.isLast ? `` : `, `}`)
-                    })
-                    $i.snippet(`>`)
-                }
-            })
         }
 
         const Type__Parameters = (
