@@ -22,6 +22,9 @@ export const $$: A.serialize = ($d) => {
         }
         const Function__Declaration = (
             $: g_in.T.Function__Declaration,
+            $p: {
+                'type parameters': g_in.T.Type__Parameters
+            },
             $i: g_fp.SYNC.I.Line
         ) => {
             Type__Parameters($['type parameters'], $i)
@@ -29,7 +32,7 @@ export const $$: A.serialize = ($d) => {
             $i.indent(($i) => {
                 $i.nestedLine(($i) => {
                     $i.snippet(`$: `)
-                    Type($.context, $i)
+                    Type($.context, $p, $i)
                     $i.snippet(`,`)
                 })
                 $d.enrichedDictionaryForEach(
@@ -43,7 +46,7 @@ export const $$: A.serialize = ($d) => {
                                     $c(($) => {
                                         $i.nestedLine(($i) => {
                                             $i.snippet(`readonly ${$d.createApostrophedString($.key)}: `)
-                                            Type($.value, $i)
+                                            Type($.value, $p, $i)
                                         })
                                     })
                                 })
@@ -168,7 +171,7 @@ export const $$: A.serialize = ($d) => {
                     $i.snippet(`export type ${$d.createIdentifier(key)}`)
                     Type__Parameters($tp, $i)
                     $i.snippet(` = `)
-                    Type($, $i)
+                    Type($, { 'type parameters': $tp }, $i)
                 })
             })
 
@@ -220,21 +223,24 @@ export const $$: A.serialize = ($d) => {
 
         const Type = (
             $: g_in.T.Type,
+            $p: {
+                'type parameters': g_in.T.Type__Parameters
+            },
             $i: g_fp.SYNC.I.Line
         ) => {
             switch ($[0]) {
                 case 'address function':
                     pl.ss($, ($) => {
-                        Function__Declaration($.declaration, $i)
+                        Function__Declaration($.declaration, $p, $i)
                         $i.snippet(`_.Address<`)
-                        Type($['return type'], $i)
+                        Type($['return type'], $p, $i)
                         $i.snippet(`>`)
                     })
                     break
                 case 'array':
                     pl.ss($, ($) => {
                         $i.snippet(`_pt.Array<`)
-                        Type($, $i)
+                        Type($, $p, $i)
                         $i.snippet(`>`)
                     })
                     break
@@ -246,7 +252,7 @@ export const $$: A.serialize = ($d) => {
                 case 'dictionary':
                     pl.ss($, ($) => {
                         $i.snippet(`_pt.Dictionary<`)
-                        Type($, $i)
+                        Type($, $p, $i)
                         $i.snippet(`>`)
                     })
                     break
@@ -262,7 +268,7 @@ export const $$: A.serialize = ($d) => {
                                     $c(($) => {
                                         $i.nestedLine(($i) => {
                                             $i.snippet(`readonly ${$d.createApostrophedString($.key)}: `)
-                                            Type($.value, $i)
+                                            Type($.value, $p, $i)
                                         })
                                     })
                                 })
@@ -284,13 +290,13 @@ export const $$: A.serialize = ($d) => {
                 case 'optional':
                     pl.ss($, ($) => {
                         $i.snippet(`_pt.OptionalValue<`)
-                        Type($, $i)
+                        Type($, $p, $i)
                         $i.snippet(`>`)
                     })
                     break
                 case 'procedure':
                     pl.ss($, ($) => {
-                        Function__Declaration($.declaration, $i)
+                        Function__Declaration($.declaration, $p, $i)
                         $i.snippet(`void`)
                     })
                     break
@@ -310,7 +316,7 @@ export const $$: A.serialize = ($d) => {
                                     $c(($) => {
                                         $i.nestedLine(($i) => {
                                             $i.snippet(`| [${$d.createApostrophedString($.key)}, `)
-                                            Type($.value, $i)
+                                            Type($.value, $p, $i)
                                             $i.snippet(`]`)
                                         })
                                     })
@@ -331,6 +337,7 @@ export const $$: A.serialize = ($d) => {
                             case 'cyclic sibling':
                                 pl.ss($, ($) => {
                                     $i.snippet(`${$d.createIdentifier($.key)}`)
+                                    Type__Parameters($p['type parameters'], $i)
                                 })
                                 break
                             case 'external':
@@ -348,12 +355,13 @@ export const $$: A.serialize = ($d) => {
                                             'secondary': $.arguments,
                                         })
                                     }
-                                    Type__Arguments(mergeTypeArguments($.namespaces), $i)
+                                    Type__Arguments(mergeTypeArguments($.namespaces), $p, $i)
                                 })
                                 break
                             case 'sibling':
                                 pl.ss($, ($) => {
                                     $i.snippet(`${$d.createIdentifier($.key)}`)
+                                    Type__Parameters($p['type parameters'], $i)
                                 })
                                 break
                             default: pl.au($[0])
@@ -362,8 +370,8 @@ export const $$: A.serialize = ($d) => {
                     break
                 case 'value function':
                     pl.ss($, ($) => {
-                        Function__Declaration($.declaration, $i)
-                        Type($['return type'], $i)
+                        Function__Declaration($.declaration, $p, $i)
+                        Type($['return type'], $p, $i)
                     })
                     break
                 default: pl.au($[0])
@@ -372,6 +380,9 @@ export const $$: A.serialize = ($d) => {
 
         const Type__Arguments = (
             $: g_in.T.Type__Arguments,
+            $p: {
+                'type parameters': g_in.T.Type__Parameters
+            },
             $i: g_fp.SYNC.I.Line
         ) => {
             $d.enrichedDictionaryForEach($, {
@@ -384,7 +395,7 @@ export const $$: A.serialize = ($d) => {
 
                         $c(($) => {
                             $i.nestedLine(($i) => {
-                                Type($.value.content.type, $i)
+                                Type($.value.content.type, $p, $i)
                                 $i.snippet(`${$.isLast ? `` : `, `}`)
                             })
                         })
