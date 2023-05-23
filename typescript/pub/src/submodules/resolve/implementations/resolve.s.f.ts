@@ -216,6 +216,12 @@ function resolve<Annotation>(
     }
 
     const Local__Namespace: Resolve.Local__Namespace<Annotation> = ($, $p) => {
+        const $v_parameters = Type__Parameters(
+            $.parameters,
+            {
+                'parent type parameters': $p['parent type parameters'],
+            }
+        )
         const v_namespaces: g_out.T.Local__Namespace.namespaces = $d.resolveDictionary($.namespaces.dictionary, {
             'map': ($, $l): g_out.T.Local__Namespace.namespaces.D => {
                 return pl.cc($.value, ($) => {
@@ -225,7 +231,7 @@ function resolve<Annotation>(
                             $,
                             {
                                 'resolved sibling namespaces': [true, $l['non circular siblings']],
-                                'parent type parameters': $p['parent type parameters'],
+                                'parent type parameters': [true, $v_parameters.aggregated],
                             }
                         )])
                         case 'parent sibling': return pl.ss($, ($): g_out.T.Local__Namespace.namespaces.D => ['parent sibling', pl.cc($, ($): g_out.T.Namespace__2.parent__sibling => {
@@ -243,15 +249,9 @@ function resolve<Annotation>(
                 })
             }
         })
-        const $v_parameters = Type__Parameters(
-            $.parameters,
-            {
-                'parent type parameters': $p['parent type parameters'],
-            }
-        )
         return {
-            'namespaces': v_namespaces,
             'parameters': $v_parameters,
+            'namespaces': v_namespaces,
             'types': $d.resolveDictionary($.types.dictionary, {
                 'map': (($, $l) => Type($.value, {
                     'resolved namespaces': v_namespaces,

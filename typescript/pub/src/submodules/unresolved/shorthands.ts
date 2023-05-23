@@ -44,16 +44,16 @@ export function parentSibling(
 }
 
 export function local(
-    namespaces: RawDictionary<t.T.Local__Namespace.namespaces.dictionary.D<pd.SourceLocation>>,
     typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
+    namespaces: RawDictionary<t.T.Local__Namespace.namespaces.dictionary.D<pd.SourceLocation>>,
     types: RawDictionary<t.T.Type<pd.SourceLocation>>
 ): t.T.Namespace__2<pd.SourceLocation> {
     return ['local', {
-        'namespaces': dict(namespaces),
         'parameters': {
             'local': dict(typeParameters),
             'aggregated': dict({})
         },
+        'namespaces': dict(namespaces),
         'types': dict(types),
     }]
 }

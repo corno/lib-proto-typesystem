@@ -38,6 +38,7 @@ export const $: g_llts.T.Local__Namespace<pd.SourceLocation> = ns(
             }
         ),
         "My Namespace": local(
+            {},
             {
                 "Ref to Aunt": parentSibling("Aunt"),
                 "Aunt": local(//shadowing parent 'Aunt'
@@ -55,18 +56,15 @@ export const $: g_llts.T.Local__Namespace<pd.SourceLocation> = ns(
                 ),
             },
             {
-
-            },
-            {
                 "TypeRef": externalTypeReference(step("Ref to Aunt"), "MyString")
 
             }
         ),
         "Namespace With Type Parameter": local(
-            {},
             {
                 "T": null
             },
+            {},
             {
                 "Dictionary": dictionary(typeParameter("T")),
             }
@@ -99,7 +97,7 @@ export const $: g_llts.T.Local__Namespace<pd.SourceLocation> = ns(
             number(),
             {
                 "A Parameter": boolean(),
-                "A Type Reference": externalTypeReference(step("Namespace With Type Parameter", { "T": typeArgument(typeParameter("T"))}), "Dictionary"),
+                "A Type Reference": externalTypeReference(step("Namespace With Type Parameter", { "T": typeArgument(typeParameter("T")) }), "Dictionary"),
             },
             string()
         )
