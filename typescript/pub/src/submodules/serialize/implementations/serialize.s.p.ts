@@ -196,7 +196,7 @@ export const $$: A.serialize = ($d) => {
 
         // }
 
-        const Namespace__Selection__Tail = (
+        const Namespace__Selection = (
             $: g_in.T.Namespace__Selection,
             $i: g_fp.SYNC.I.Line
         ) => {
@@ -204,7 +204,7 @@ export const $$: A.serialize = ($d) => {
             pl.optional(
                 $.tail,
                 ($) => {
-                    Namespace__Selection__Tail($, $i)
+                    Namespace__Selection($, $i)
                 },
                 () => {
 
@@ -360,7 +360,7 @@ export const $$: A.serialize = ($d) => {
                                 break
                             case 'external':
                                 pl.ss($, ($) => {
-                                    Namespace__Selection__Tail($.namespaces, $i)
+                                    Namespace__Selection($.namespaces, $i)
                                     $i.snippet(`${$d.createIdentifier($.type.key)}`)
 
                                     function mergeTypeArguments($: g_in.T.Namespace__Selection): pt.Dictionary<g_in.T.Type__Arguments.D> {
