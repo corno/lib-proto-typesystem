@@ -378,22 +378,21 @@ function resolve<Annotation>(
                 }
             },
         )
-
+        function findNS($: g_out.T.Namespace__2): g_out.T.Local__Namespace {
+            switch ($[0]) {
+                case 'local': return pl.ss($, ($) => $)
+                case 'parent sibling': return pl.ss($, ($) => findNS($.namespace.referent))
+                default: return pl.au($[0])
+            }
+        }
         return {
             'content': {
                 'namespace': v_namespace,
-                
                 'arguments': $.arguments.dictionary.__mapWithKey<g_out.T.Type__Arguments.D>(($, key) => {
                     return {
                         'constraints': {
                             'parameter': getEntry(
-                                pl.cc(v_namespace.referent, ($) => {
-                                    switch ($[0]) {
-                                        case 'local': return pl.ss($, ($) => $.parameters.local)
-                                        case 'parent sibling': return pl.ss($, ($) => pl.panic(`FIXME: Proper error message`))
-                                        default: return pl.au($[0])
-                                    }
-                                }),
+                                findNS(v_namespace.referent).parameters.local,
                                 key,
                                 $.annotation,
                             )
