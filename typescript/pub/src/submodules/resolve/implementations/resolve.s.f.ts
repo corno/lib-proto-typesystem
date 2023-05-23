@@ -66,7 +66,7 @@ namespace Resolve {
             'resolved namespaces': g_out.T.Local__Namespace.namespaces,
             'resolved sibling types': pt.Lookup<g_out.T.Type>,
             'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
-            'type parameters': g_out.T.Type__Parameters,
+            'type parameters': g_out.T.Aggregated__Type__Parameters,
         },
     ) => g_out.T.Function__Declaration
 
@@ -92,7 +92,7 @@ namespace Resolve {
             'resolved namespaces': g_out.T.Local__Namespace.namespaces,
             'resolved sibling types': pt.Lookup<g_out.T.Type>,
             'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
-            'type parameters': g_out.T.Type__Parameters,
+            'type parameters': g_out.T.Aggregated__Type__Parameters,
         },
     ) => ReturningType<g_out.T.Namespace__Selection, g_out.T.Local__Namespace>
 
@@ -108,7 +108,7 @@ namespace Resolve {
             'resolved namespaces': g_out.T.Local__Namespace.namespaces,
             'resolved sibling types': pt.Lookup<g_out.T.Type>,
             'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
-            'type parameters': g_out.T.Type__Parameters,
+            'type parameters': g_out.T.Aggregated__Type__Parameters,
         },
     ) => g_out.T.Type
 
@@ -189,7 +189,7 @@ function resolve<Annotation>(
         const $tp = Type__Parameters(
             $['type parameters'],
             {
-                'parent type parameters': [true, $p['type parameters'].aggregated]
+                'parent type parameters': [true, $p['type parameters']]
             }
         )
         return {
@@ -200,7 +200,7 @@ function resolve<Annotation>(
                     'resolved namespaces': $p['resolved namespaces'],
                     'cyclic sibling types': $p['cyclic sibling types'],
                     'resolved sibling types': $p['resolved sibling types'],
-                    'type parameters': $tp
+                    'type parameters': $tp.aggregated
                 },
             ),
             'parameters': $.parameters.dictionary.map(($) => Type(
@@ -209,7 +209,7 @@ function resolve<Annotation>(
                     'resolved namespaces': $p['resolved namespaces'],
                     'cyclic sibling types': $p['cyclic sibling types'],
                     'resolved sibling types': $p['resolved sibling types'],
-                    'type parameters': $tp
+                    'type parameters': $tp.aggregated
                 },
             ))
         }
@@ -257,7 +257,7 @@ function resolve<Annotation>(
                     'resolved namespaces': v_namespaces,
                     'cyclic sibling types': $l['all siblings'],
                     'resolved sibling types': $l['non circular siblings'],
-                    'type parameters': $v_parameters,
+                    'type parameters': $v_parameters.aggregated,
                 }))
             })
         }
@@ -265,13 +265,21 @@ function resolve<Annotation>(
 
     const Type: Resolve.Type<Annotation> = ($, $p) => {
         switch ($[0]) {
-            case 'address function': return pl.ss($, ($) => ['address function', {
-                'declaration': Function__Declaration(
+            case 'address function': return pl.ss($, ($) => {
+                const $v_fd = Function__Declaration(
                     $.declaration,
                     $p,
-                ),
-                'return type': Type($['return type'], $p)
-            }])
+                )
+                return ['address function', {
+                    'declaration': $v_fd,
+                    'return type': Type($['return type'], {
+                        'cyclic sibling types': $p['cyclic sibling types'],
+                        'resolved namespaces': $p['resolved namespaces'],
+                        'resolved sibling types': $p['resolved sibling types'],
+                        'type parameters': $v_fd['type parameters'].aggregated
+                    })
+                }]
+            })
             case 'array': return pl.ss($, ($) => ['array', Type($, $p)])
             case 'boolean': return pl.ss($, ($) => ['boolean', null])
             case 'computed': return pl.ss($, ($) => ['computed', Type($, $p)])
@@ -288,7 +296,7 @@ function resolve<Annotation>(
             }])
             case 'string': return pl.ss($, ($) => ['string', null])
             case 'tagged union': return pl.ss($, ($) => ['tagged union', $.dictionary.map(($) => Type($, $p))])
-            case 'type parameter': return pl.ss($, ($) => ['type parameter', getAnnotatedEntry($p['type parameters'].aggregated, $)])
+            case 'type parameter': return pl.ss($, ($) => ['type parameter', getAnnotatedEntry($p['type parameters'], $)])
             case 'type reference': return pl.ss($, ($) => ['type reference', pl.cc($, ($): g_out.T.Type.type__reference => {
                 switch ($[0]) {
                     case 'cyclic sibling': return pl.ss($, ($) => ['cyclic sibling', getAnnotatedEntry($p['cyclic sibling types'], $)])
@@ -316,13 +324,21 @@ function resolve<Annotation>(
                 }
             })
             ])
-            case 'value function': return pl.ss($, ($) => ['value function', {
-                'declaration': Function__Declaration(
+            case 'value function': return pl.ss($, ($) => {
+                const $v_fd = Function__Declaration(
                     $.declaration,
                     $p,
-                ),
-                'return type': Type($['return type'], $p)
-            }])
+                )
+                return ['value function', {
+                    'declaration': $v_fd,
+                    'return type': Type($['return type'], {
+                        'cyclic sibling types': $p['cyclic sibling types'],
+                        'resolved namespaces': $p['resolved namespaces'],
+                        'resolved sibling types': $p['resolved sibling types'],
+                        'type parameters': $v_fd['type parameters'].aggregated
+                    })
+                }]
+            })
             default: return pl.au($[0])
         }
     }
