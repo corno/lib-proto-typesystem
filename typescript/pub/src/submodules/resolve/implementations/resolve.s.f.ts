@@ -372,8 +372,6 @@ function resolve<Annotation>(
     const Namespace__Selection: Resolve.Namespace__Selection<Annotation> = ($, $p) => {
         const v_namespace = getAnnotatedEntry($p['resolved namespaces'], $.namespace)
 
-        const r_subnamespaces = selectLocalNSFromNS2(v_namespace.referent).namespaces
-
         const v_tail = mapOptional(
             $.tail,
             //getLocalNamespace(v_namespace.referent),
