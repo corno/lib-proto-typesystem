@@ -68,6 +68,7 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
                 })),
                 "array": state(component(typeRef("Type", true))),
                 "boolean": state(group({})),
+                "computed": state(component(typeRef("Type", true))),
                 "dictionary": state(component(typeRef("Type", true))),
                 "group": state(dictionary(component(typeRef("Type", true)))),
                 "null": state(group({})),

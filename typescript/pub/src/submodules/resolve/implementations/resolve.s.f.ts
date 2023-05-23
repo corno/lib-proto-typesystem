@@ -274,6 +274,7 @@ function resolve<Annotation>(
             }])
             case 'array': return pl.ss($, ($) => ['array', Type($, $p)])
             case 'boolean': return pl.ss($, ($) => ['boolean', null])
+            case 'computed': return pl.ss($, ($) => ['computed', Type($, $p)])
             case 'dictionary': return pl.ss($, ($) => ['dictionary', Type($, $p)])
             case 'group': return pl.ss($, ($) => ['group', $.dictionary.map(($) => Type($, $p))])
             case 'null': return pl.ss($, ($) => ['null', null])

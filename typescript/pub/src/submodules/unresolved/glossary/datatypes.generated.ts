@@ -282,6 +282,13 @@ export namespace N {
                         export namespace T {}
                     }
                     
+                    export namespace computed {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                    
                     export namespace dictionary {
                         
                         export namespace N {}
@@ -773,6 +780,8 @@ export namespace T {
         
         export type _lboolean<GAnnotation> = null
         
+        export type computed<GAnnotation> = T.Type<GAnnotation>
+        
         export type dictionary<GAnnotation> = T.Type<GAnnotation>
         
         export namespace group {
@@ -933,6 +942,7 @@ export namespace T {
         }]
         | ['array', T.Type<GAnnotation>]
         | ['boolean', null]
+        | ['computed', T.Type<GAnnotation>]
         | ['dictionary', T.Type<GAnnotation>]
         | ['group', {
             readonly 'annotation': GAnnotation

@@ -152,6 +152,12 @@ export function array(
     return ['array', type]
 }
 
+export function computed(
+    type: t.T.Type<pd.SourceLocation>,
+): t.T.Type<pd.SourceLocation> {
+    return ['computed', type]
+}
+
 export function optional(
     type: t.T.Type<pd.SourceLocation>,
 ): t.T.Type<pd.SourceLocation> {

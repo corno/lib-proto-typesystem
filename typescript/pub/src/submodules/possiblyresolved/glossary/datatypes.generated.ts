@@ -282,6 +282,13 @@ export namespace N {
                         export namespace T {}
                     }
                     
+                    export namespace computed {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                    
                     export namespace dictionary {
                         
                         export namespace N {}
@@ -734,6 +741,8 @@ export namespace T {
         
         export type _lboolean = null
         
+        export type computed = T.Type
+        
         export type dictionary = T.Type
         
         export namespace group {
@@ -899,6 +908,7 @@ export namespace T {
         }]
         | ['array', T.Type]
         | ['boolean', null]
+        | ['computed', T.Type]
         | ['dictionary', T.Type]
         | ['group', pt.Dictionary<T.Type>]
         | ['null', null]

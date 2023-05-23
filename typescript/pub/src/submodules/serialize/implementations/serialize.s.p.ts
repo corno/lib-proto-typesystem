@@ -249,6 +249,13 @@ export const $$: A.serialize = ($d) => {
                         $i.snippet(`boolean`)
                     })
                     break
+                case 'computed':
+                    pl.ss($, ($) => {
+                        $i.snippet(`_pt.ComputedValue<`)
+                        Type($, $p, $i)
+                        $i.snippet(`>`)
+                    })
+                    break
                 case 'dictionary':
                     pl.ss($, ($) => {
                         $i.snippet(`_pt.Dictionary<`)
@@ -391,14 +398,9 @@ export const $$: A.serialize = ($d) => {
                 },
                 'onNotEmpty': ($c) => {
                     $i.snippet(`<`)
-                    $i.indent(($i) => {
-
-                        $c(($) => {
-                            $i.nestedLine(($i) => {
-                                Type($.value.content.type, $p, $i)
-                                $i.snippet(`${$.isLast ? `` : `, `}`)
-                            })
-                        })
+                    $c(($) => {
+                        Type($.value.content.type, $p, $i)
+                        $i.snippet(`${$.isLast ? `` : `, `}`)
                     })
                     $i.snippet(`>`)
                 }

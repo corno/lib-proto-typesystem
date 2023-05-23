@@ -59,8 +59,6 @@ export type Address__Function = <_TT>(
     $: number,
     $p: {
         readonly 'A Parameter': boolean
-        readonly 'A Type Reference': Namespace__With__Type__Parameter.Dictionary<
-            _TT
-        >
+        readonly 'A Type Reference': Namespace__With__Type__Parameter.Dictionary<_TT>
     }
 ) => _.Address<string>

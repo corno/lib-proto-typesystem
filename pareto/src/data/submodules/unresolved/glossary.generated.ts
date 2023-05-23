@@ -193,6 +193,12 @@ export const $: g_glossary.T.Glossary<null> = {
                         'type arguments': d({}),
                     }]],
                     "boolean": <g_glossary.T.Type<null>>['group', d({})],
+                    "computed": <g_glossary.T.Type<null>>['reference', ['type', {
+                        'context': ['local', null],
+                        'typeXX': "Type",
+                        'tailXX': a([]),
+                        'type arguments': d({}),
+                    }]],
                     "dictionary": <g_glossary.T.Type<null>>['reference', ['type', {
                         'context': ['local', null],
                         'typeXX': "Type",
@@ -530,6 +536,10 @@ export const $: g_glossary.T.Glossary<null> = {
                                         'namespaces': d({}),
                                     },
                                 }),
+                            },
+                            "computed": {
+                                'types': d({}),
+                                'namespaces': d({}),
                             },
                             "dictionary": {
                                 'types': d({}),
