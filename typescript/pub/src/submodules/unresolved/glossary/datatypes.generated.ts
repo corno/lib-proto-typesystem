@@ -302,7 +302,46 @@ export namespace N {
                             
                             export namespace D {
                                 
-                                export namespace N {}
+                                export namespace N {
+                                    
+                                    export namespace G {
+                                        
+                                        export namespace N {
+                                            
+                                            export namespace mutable {
+                                                
+                                                export namespace N {
+                                                    
+                                                    export namespace O {
+                                                        
+                                                        export namespace N {
+                                                            
+                                                            export namespace G {
+                                                                
+                                                                export namespace N {}
+                                                                
+                                                                export namespace T {}
+                                                            }
+                                                        }
+                                                        
+                                                        export namespace T {}
+                                                    }
+                                                }
+                                                
+                                                export namespace T {}
+                                            }
+                                            
+                                            export namespace _$ltype {
+                                                
+                                                export namespace N {}
+                                                
+                                                export namespace T {}
+                                            }
+                                        }
+                                        
+                                        export namespace T {}
+                                    }
+                                }
                                 
                                 export namespace T {}
                             }
@@ -790,15 +829,38 @@ export namespace T {
             
             export namespace dictionary {
                 
-                export type D<GAnnotation> = T.Type<GAnnotation>
+                export namespace D {
+                    
+                    export namespace mutable {
+                        
+                        export namespace O {}
+                        
+                        export type O<GAnnotation> = null
+                    }
+                    
+                    export type mutable<GAnnotation> = [ false ] | [ true, null]
+                    
+                    export type _ltype<GAnnotation> = T.Type<GAnnotation>
+                }
+                
+                export type D<GAnnotation> = {
+                    readonly 'mutable': [ false ] | [ true, null]
+                    readonly 'type': T.Type<GAnnotation>
+                }
             }
             
-            export type dictionary<GAnnotation> = pt.Dictionary<T.Type<GAnnotation>>
+            export type dictionary<GAnnotation> = pt.Dictionary<{
+                readonly 'mutable': [ false ] | [ true, null]
+                readonly 'type': T.Type<GAnnotation>
+            }>
         }
         
         export type group<GAnnotation> = {
             readonly 'annotation': GAnnotation
-            readonly 'dictionary': pt.Dictionary<T.Type<GAnnotation>>
+            readonly 'dictionary': pt.Dictionary<{
+                readonly 'mutable': [ false ] | [ true, null]
+                readonly 'type': T.Type<GAnnotation>
+            }>
         }
         
         export namespace _lnull {}
@@ -946,7 +1008,10 @@ export namespace T {
         | ['dictionary', T.Type<GAnnotation>]
         | ['group', {
             readonly 'annotation': GAnnotation
-            readonly 'dictionary': pt.Dictionary<T.Type<GAnnotation>>
+            readonly 'dictionary': pt.Dictionary<{
+                readonly 'mutable': [ false ] | [ true, null]
+                readonly 'type': T.Type<GAnnotation>
+            }>
         }]
         | ['null', null]
         | ['number', null]

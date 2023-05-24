@@ -188,12 +188,19 @@ export const $: g_glossary.T.Glossary<null> = {
                         'tailXX': a([]),
                         'type arguments': d({}),
                     }]],
-                    "group": <g_glossary.T.Type<null>>['dictionary', <g_glossary.T.Type<null>>['reference', ['type', {
-                        'context': ['local', null],
-                        'typeXX': "Type",
-                        'tailXX': a([]),
-                        'type arguments': d({}),
-                    }]]],
+                    "group": <g_glossary.T.Type<null>>['dictionary', <g_glossary.T.Type<null>>['group', d({
+                        "mutable": {
+                            'type': <g_glossary.T.Type<null>>['optional', <g_glossary.T.Type<null>>['group', d({})]],
+                        },
+                        "type": {
+                            'type': <g_glossary.T.Type<null>>['reference', ['type', {
+                                'context': ['local', null],
+                                'typeXX': "Type",
+                                'tailXX': a([]),
+                                'type arguments': d({}),
+                            }]],
+                        },
+                    })]],
                     "null": <g_glossary.T.Type<null>>['group', d({})],
                     "number": <g_glossary.T.Type<null>>['group', d({})],
                     "optional": <g_glossary.T.Type<null>>['reference', ['type', {
@@ -542,7 +549,31 @@ export const $: g_glossary.T.Glossary<null> = {
                                 'namespaces': d({
                                     "D": {
                                         'types': d({}),
-                                        'namespaces': d({}),
+                                        'namespaces': d({
+                                            "G": {
+                                                'types': d({}),
+                                                'namespaces': d({
+                                                    "mutable": {
+                                                        'types': d({}),
+                                                        'namespaces': d({
+                                                            "O": {
+                                                                'types': d({}),
+                                                                'namespaces': d({
+                                                                    "G": {
+                                                                        'types': d({}),
+                                                                        'namespaces': d({}),
+                                                                    },
+                                                                }),
+                                                            },
+                                                        }),
+                                                    },
+                                                    "type": {
+                                                        'types': d({}),
+                                                        'namespaces': d({}),
+                                                    },
+                                                }),
+                                            },
+                                        }),
                                     },
                                 }),
                             },

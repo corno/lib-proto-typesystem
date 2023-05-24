@@ -285,8 +285,15 @@ export const $$: A.serialize = ($d) => {
                                 $i.indent(($i) => {
                                     $c(($) => {
                                         $i.nestedLine(($i) => {
-                                            $i.snippet(`readonly ${$d.createApostrophedString($.key)}: `)
-                                            Type($.value, $p, $i)
+                                            pl.optional(
+                                                $.value.mutable,
+                                                () => {},
+                                                () => {
+                                                    $i.snippet(`readonly `)
+                                                }
+                                            )
+                                            $i.snippet(`${$d.createApostrophedString($.key)}: `)
+                                            Type($.value.type, $p, $i)
                                         })
                                     })
                                 })

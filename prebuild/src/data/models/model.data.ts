@@ -70,7 +70,10 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
                 "boolean": state(group({})),
                 "computed": state(component(typeRef("Type", true))),
                 "dictionary": state(component(typeRef("Type", true))),
-                "group": state(dictionary(component(typeRef("Type", true)))),
+                "group": state(dictionary(group({
+                    "type": prop(component(typeRef("Type", true))),
+                    "mutable": prop(optional(group({}))),
+                }))),
                 "null": state(group({})),
                 "number": state(group({})),
                 "optional": state(component(typeRef("Type", true))),

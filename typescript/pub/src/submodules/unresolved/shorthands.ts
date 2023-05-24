@@ -140,6 +140,24 @@ export function group(
     return ['group', dict(properties)]
 }
 
+export function prop(
+    type: t.T.Type<pd.SourceLocation>,
+): t.T.Type.group.dictionary.D<pd.SourceLocation> {
+    return {
+        'type': type,
+        'mutable': [false]
+    }
+}
+
+export function propMutable(
+    type: t.T.Type<pd.SourceLocation>,
+): t.T.Type.group.dictionary.D<pd.SourceLocation> {
+    return {
+        'type': type,
+        'mutable': [true, null]
+    }
+}
+
 export function taggedUnion(
     options: RawDictionary<t.T.Type.tagged__union.dictionary.D<pd.SourceLocation>>,
 ): t.T.Type<pd.SourceLocation> {
@@ -180,7 +198,7 @@ export function step(
             'annotation': pd.getLocationInfo(1),
             'key': ns,
         },
-        'arguments': dict(args === undefined ? {}: args),
+        'arguments': dict(args === undefined ? {} : args),
         'tail': tail === undefined ? [false] : [true, tail]
     }
 }

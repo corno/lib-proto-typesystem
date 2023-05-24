@@ -302,7 +302,46 @@ export namespace N {
                             
                             export namespace D {
                                 
-                                export namespace N {}
+                                export namespace N {
+                                    
+                                    export namespace G {
+                                        
+                                        export namespace N {
+                                            
+                                            export namespace mutable {
+                                                
+                                                export namespace N {
+                                                    
+                                                    export namespace O {
+                                                        
+                                                        export namespace N {
+                                                            
+                                                            export namespace G {
+                                                                
+                                                                export namespace N {}
+                                                                
+                                                                export namespace T {}
+                                                            }
+                                                        }
+                                                        
+                                                        export namespace T {}
+                                                    }
+                                                }
+                                                
+                                                export namespace T {}
+                                            }
+                                            
+                                            export namespace _$ltype {
+                                                
+                                                export namespace N {}
+                                                
+                                                export namespace T {}
+                                            }
+                                        }
+                                        
+                                        export namespace T {}
+                                    }
+                                }
                                 
                                 export namespace T {}
                             }
@@ -737,10 +776,30 @@ export namespace T {
         
         export namespace group {
             
-            export type D = T.Type
+            export namespace D {
+                
+                export namespace mutable {
+                    
+                    export namespace O {}
+                    
+                    export type O = null
+                }
+                
+                export type mutable = [ false ] | [ true, null]
+                
+                export type _ltype = T.Type
+            }
+            
+            export type D = {
+                readonly 'mutable': [ false ] | [ true, null]
+                readonly 'type': T.Type
+            }
         }
         
-        export type group = pt.Dictionary<T.Type>
+        export type group = pt.Dictionary<{
+            readonly 'mutable': [ false ] | [ true, null]
+            readonly 'type': T.Type
+        }>
         
         export namespace _lnull {}
         
@@ -880,7 +939,10 @@ export namespace T {
         | ['boolean', null]
         | ['computed', T.Type]
         | ['dictionary', T.Type]
-        | ['group', pt.Dictionary<T.Type>]
+        | ['group', pt.Dictionary<{
+            readonly 'mutable': [ false ] | [ true, null]
+            readonly 'type': T.Type
+        }>]
         | ['null', null]
         | ['number', null]
         | ['optional', T.Type]

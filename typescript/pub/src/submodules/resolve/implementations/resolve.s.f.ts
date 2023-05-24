@@ -295,7 +295,10 @@ function resolve<Annotation>(
             case 'boolean': return pl.ss($, ($) => ['boolean', null])
             case 'computed': return pl.ss($, ($) => ['computed', Type($, $p)])
             case 'dictionary': return pl.ss($, ($) => ['dictionary', Type($, $p)])
-            case 'group': return pl.ss($, ($) => ['group', $.dictionary.map(($) => Type($, $p))])
+            case 'group': return pl.ss($, ($) => ['group', $.dictionary.map(($) => ({
+                'type': Type($.type, $p),
+                'mutable': $.mutable,
+            }))])
             case 'null': return pl.ss($, ($) => ['null', null])
             case 'number': return pl.ss($, ($) => ['number', null])
             case 'optional': return pl.ss($, ($) => ['optional', Type($, $p)])

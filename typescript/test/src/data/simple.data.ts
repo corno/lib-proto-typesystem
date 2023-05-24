@@ -14,6 +14,7 @@ import {
     number,
     optional,
     parentSibling,
+    prop,
     step,
     string,
     taggedUnion,
@@ -83,8 +84,8 @@ export const $: g_llts.T.Local__Namespace<pd.SourceLocation> = ns(
         "boolean": boolean(), //should be escaped
         "Null": null_(),
         "Group": group({
-            "prop 1": string(),
-            "prop 2": number(),
+            "prop 1": prop(string()),
+            "prop 2": prop(number()),
         }),
         "Tagged Union": taggedUnion({
             "option 1": string(),
