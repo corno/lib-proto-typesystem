@@ -350,6 +350,13 @@ export namespace N {
                         export namespace T {}
                     }
                     
+                    export namespace lookup {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                    
                     export namespace _$lnull {
                         
                         export namespace N {
@@ -863,6 +870,8 @@ export namespace T {
             }>
         }
         
+        export type lookup<GAnnotation> = T.Type<GAnnotation>
+        
         export namespace _lnull {}
         
         export type _lnull<GAnnotation> = null
@@ -1013,6 +1022,7 @@ export namespace T {
                 readonly 'type': T.Type<GAnnotation>
             }>
         }]
+        | ['lookup', T.Type<GAnnotation>]
         | ['null', null]
         | ['number', null]
         | ['optional', T.Type<GAnnotation>]

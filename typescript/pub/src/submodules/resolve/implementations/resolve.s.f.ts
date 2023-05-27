@@ -299,6 +299,8 @@ function resolve<Annotation>(
                 'type': Type($.type, $p),
                 'mutable': $.mutable,
             }))])
+            case 'lookup': return pl.ss($, ($) => ['lookup', Type($, $p)])
+
             case 'null': return pl.ss($, ($) => ['null', null])
             case 'number': return pl.ss($, ($) => ['number', null])
             case 'optional': return pl.ss($, ($) => ['optional', Type($, $p)])

@@ -302,6 +302,14 @@ export const $$: A.serialize = ($d) => {
                         })
                     })
                     break
+                    
+                case 'lookup':
+                    pl.ss($, ($) => {
+                        $i.snippet(`_pt.Lookup<`)
+                        Type($, $p, $i)
+                        $i.snippet(`>`)
+                    })
+                    break
                 case 'null':
                     pl.ss($, ($) => {
                         $i.snippet(`null`)

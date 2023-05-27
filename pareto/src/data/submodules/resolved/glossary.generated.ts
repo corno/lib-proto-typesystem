@@ -201,6 +201,12 @@ export const $: g_glossary.T.Glossary<null> = {
                             }]],
                         },
                     })]],
+                    "lookup": <g_glossary.T.Type<null>>['reference', ['type', {
+                        'context': ['local', null],
+                        'typeXX': "Type",
+                        'tailXX': a([]),
+                        'type arguments': d({}),
+                    }]],
                     "null": <g_glossary.T.Type<null>>['group', d({})],
                     "number": <g_glossary.T.Type<null>>['group', d({})],
                     "optional": <g_glossary.T.Type<null>>['reference', ['type', {
@@ -576,6 +582,10 @@ export const $: g_glossary.T.Glossary<null> = {
                                         }),
                                     },
                                 }),
+                            },
+                            "lookup": {
+                                'types': d({}),
+                                'namespaces': d({}),
                             },
                             "null": {
                                 'types': d({}),

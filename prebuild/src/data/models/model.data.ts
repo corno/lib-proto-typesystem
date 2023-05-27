@@ -74,6 +74,7 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
                     "type": prop(component(typeRef("Type", true))),
                     "mutable": prop(optional(group({}))),
                 }))),
+                "lookup": state(component(typeRef("Type", true))),
                 "null": state(group({})),
                 "number": state(group({})),
                 "optional": state(component(typeRef("Type", true))),

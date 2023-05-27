@@ -350,6 +350,13 @@ export namespace N {
                         export namespace T {}
                     }
                     
+                    export namespace lookup {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                    
                     export namespace _$lnull {
                         
                         export namespace N {
@@ -801,6 +808,8 @@ export namespace T {
             readonly 'type': T.Type
         }>
         
+        export type lookup = T.Type
+        
         export namespace _lnull {}
         
         export type _lnull = null
@@ -943,6 +952,7 @@ export namespace T {
             readonly 'mutable': [ false ] | [ true, null]
             readonly 'type': T.Type
         }>]
+        | ['lookup', T.Type]
         | ['null', null]
         | ['number', null]
         | ['optional', T.Type]
