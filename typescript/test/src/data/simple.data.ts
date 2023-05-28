@@ -63,13 +63,24 @@ export const $: g_llts.T.Namespace<pd.SourceLocation> = root(
                 "My Subnamespace": namespace(
                     {},
                     {},
-                    {},
+                    {
+
+                        "My Subsubnamespace": namespace(
+                            {},
+                            {},
+                            {},
+                            {
+                                "MyBoolean": boolean()
+                            }
+                        ),
+                    },
                     {}
                 ),
             },
             {
                 "TypeRef": externalTypeReference(imprt("Aunt"), "MyString"),
                 "TypeRef2": externalTypeReference(local(step("Aunt")), "MyNumber"),
+                "TypeRef3": externalTypeReference(local(step("My Subnamespace", {}, step("My Subsubnamespace"))), "MyBoolean"),
 
             }
         ),

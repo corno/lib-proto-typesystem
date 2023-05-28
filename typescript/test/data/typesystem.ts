@@ -22,11 +22,19 @@ export namespace My__Namespace {
         export type MyNumber = number
     }
     
-    export namespace My__Subnamespace {}
+    export namespace My__Subnamespace {
+        
+        export namespace My__Subsubnamespace {
+            
+            export type MyBoolean = boolean
+        }
+    }
     
     export type TypeRef = _IAunt.MyString
     
     export type TypeRef2 = Aunt.MyNumber
+    
+    export type TypeRef3 = My__Subnamespace.My__Subsubnamespace.MyBoolean
 }
 
 export namespace Namespace__With__Type__Parameter {
