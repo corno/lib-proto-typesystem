@@ -96,8 +96,9 @@ namespace Resolve {
     export type Namespace__Selection__Tail<Annotation> = (
         $: g_in.T.Namespace__Selection__Tail<Annotation>,
         $p: {
+            'selectable namespaces': g_out.T.Namespace.namespaces,
+
             'local namespaces': g_out.T.Namespace.namespaces,
-            'context namespaces': g_out.T.Namespace.namespaces,
             'imported namespaces': pt.OptionalValue<g_out.T.Imports>,
             'resolved sibling types': pt.Lookup<g_out.T.Type>,
             'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
@@ -463,12 +464,12 @@ function resolve<Annotation>(
 
 
     const Namespace__Selection__Tail: Resolve.Namespace__Selection__Tail<Annotation> = ($, $p) => {
-        const v_namespace = getAnnotatedEntry($p['context namespaces'], $.namespace)
+        const v_namespace = getAnnotatedEntry($p['selectable namespaces'], $.namespace)
 
         const v_tail = mapOptional(
             $.tail,
             ($) => Namespace__Selection__Tail($, {
-                'context namespaces': v_namespace.referent.namespace.namespaces,
+                'selectable namespaces': v_namespace.referent.namespace.namespaces,
                 'resolved sibling types': $p['resolved sibling types'],
                 'cyclic sibling types': $p['cyclic sibling types'],
                 'imported namespaces': $p['imported namespaces'],
@@ -512,7 +513,7 @@ function resolve<Annotation>(
                             'tail': mapOptional(
                                 $.tail,
                                 ($) => Namespace__Selection__Tail($, {
-                                    'context namespaces': $p['local namespaces'],
+                                    'selectable namespaces': selectNS2FromImport( v_namespace.referent).namespaces,
                                     'local namespaces': $p['local namespaces'],
                                     'cyclic sibling types': $p['cyclic sibling types'],
                                     'imported namespaces': $p['imported namespaces'],
@@ -525,7 +526,7 @@ function resolve<Annotation>(
                     case 'local': return pl.ss($, ($) => {
                         return ['local', {
                             'namespace': Namespace__Selection__Tail($.namespace, {
-                                'context namespaces': $p['local namespaces'],
+                                'selectable namespaces': $p['local namespaces'],
                                 'local namespaces': $p['local namespaces'],
                                 'cyclic sibling types': $p['cyclic sibling types'],
                                 'imported namespaces': $p['imported namespaces'],
