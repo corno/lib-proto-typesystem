@@ -10,6 +10,13 @@ type AnnotatedDictionary<T> = {
     'dictionary': pt.Dictionary<T>
 }
 
+function ref($: string) {
+    return {
+        'annotation': pd.getLocationInfo(2),
+        'key': $,
+    }
+}
+
 function dict<T>($: RawDictionary<T>): AnnotatedDictionary<T> {
     return {
         'annotation': pd.getLocationInfo(2),
@@ -17,11 +24,30 @@ function dict<T>($: RawDictionary<T>): AnnotatedDictionary<T> {
     }
 }
 
-export function ns(
-    namespaces: RawDictionary<t.T.Local__Namespace.namespaces.dictionary.D<pd.SourceLocation>>,
+export function namespace(
+    imports: RawDictionary<t.T.Imports.dictionary.D<pd.SourceLocation>>,
     typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
+    namespaces: RawDictionary<t.T.Namespace.namespaces.dictionary.D<pd.SourceLocation>>,
     types: RawDictionary<t.T.Type<pd.SourceLocation>>
-): t.T.Local__Namespace<pd.SourceLocation> {
+): t.T.Nested__Namespace<pd.SourceLocation> {
+    return {
+        'imports': dict(imports),
+        'namespace': {
+            'namespaces': dict(namespaces),
+            'parameters': {
+                'local': dict(typeParameters),
+                'aggregated': dict({}),
+            },
+            'types': dict(types),
+        }
+    }
+}
+
+export function root(
+    typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
+    namespaces: RawDictionary<t.T.Namespace.namespaces.dictionary.D<pd.SourceLocation>>,
+    types: RawDictionary<t.T.Type<pd.SourceLocation>>
+): t.T.Namespace<pd.SourceLocation> {
     return {
         'namespaces': dict(namespaces),
         'parameters': {
@@ -32,31 +58,26 @@ export function ns(
     }
 }
 
-export function parentSibling(
+export function sibling(
     name: string
-): t.T.Namespace__2<pd.SourceLocation> {
-    return ['parent sibling', {
-        'namespace': {
-            'annotation': pd.getLocationInfo(1),
-            'key': name,
-        }
-    }]
+): t.T.Import<pd.SourceLocation> {
+    return ['sibling', ref(name)]
 }
 
-export function local(
-    typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
-    namespaces: RawDictionary<t.T.Local__Namespace.namespaces.dictionary.D<pd.SourceLocation>>,
-    types: RawDictionary<t.T.Type<pd.SourceLocation>>
-): t.T.Namespace__2<pd.SourceLocation> {
-    return ['local', {
-        'parameters': {
-            'local': dict(typeParameters),
-            'aggregated': dict({})
-        },
-        'namespaces': dict(namespaces),
-        'types': dict(types),
-    }]
-}
+// export function local(
+//     typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
+//     namespaces: RawDictionary<t.T.Local__Namespace.namespaces.dictionary.D<pd.SourceLocation>>,
+//     types: RawDictionary<t.T.Type<pd.SourceLocation>>
+// ): t.T.Namespace__2<pd.SourceLocation> {
+//     return ['local', {
+//         'parameters': {
+//             'local': dict(typeParameters),
+//             'aggregated': dict({})
+//         },
+//         'namespaces': dict(namespaces),
+//         'types': dict(types),
+//     }]
+// }
 
 export function valueFunction(
     typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
@@ -191,8 +212,8 @@ export function dictionary(
 export function step(
     ns: string,
     args?: RawDictionary<t.T.Type__Arguments.dictionary.D<pd.SourceLocation>>,
-    tail?: t.T.Namespace__Selection<pd.SourceLocation>,
-): t.T.Namespace__Selection<pd.SourceLocation> {
+    tail?: t.T.Namespace__Selection__Tail<pd.SourceLocation>,
+): t.T.Namespace__Selection__Tail<pd.SourceLocation> {
     return {
         'namespace': {
             'annotation': pd.getLocationInfo(1),
@@ -200,6 +221,34 @@ export function step(
         },
         'arguments': dict(args === undefined ? {} : args),
         'tail': tail === undefined ? [false] : [true, tail]
+    }
+}
+
+export function imprt(
+    ns: string,
+    args?: RawDictionary<t.T.Type__Arguments.dictionary.D<pd.SourceLocation>>,
+    tail?: t.T.Namespace__Selection__Tail<pd.SourceLocation>,
+): t.T.Namespace__Selection<pd.SourceLocation> {
+    return {
+        'start': ['import', {
+            'namespace': {
+                'annotation': pd.getLocationInfo(1),
+                'key': ns,
+            },
+            'arguments': dict(args === undefined ? {} : args),
+            'tail': tail === undefined ? [false] : [true, tail]
+
+        }]
+    }
+}
+export function local(
+    ns: t.T.Namespace__Selection__Tail<pd.SourceLocation>,
+): t.T.Namespace__Selection<pd.SourceLocation> {
+    return {
+        'start': ['local', {
+            'namespace': ns
+
+        }]
     }
 }
 
@@ -220,7 +269,7 @@ export function externalTypeReference(
 
 ): t.T.Type<pd.SourceLocation> {
     return ['type reference', ['external', {
-        'namespaces': nsPath,
+        'namespace path': nsPath,
         'type': {
             'annotation': pd.getLocationInfo(1),
             'key': type

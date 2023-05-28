@@ -8,13 +8,16 @@ import {
     dictionary,
     externalTypeReference,
     group,
+    imprt,
     local,
-    ns,
+    namespace,
     null_,
     number,
     optional,
-    parentSibling,
+    //parentSibling,
     prop,
+    root,
+    sibling,
     step,
     string,
     taggedUnion,
@@ -24,44 +27,54 @@ import {
 import { boolean } from '../../../pub/dist/submodules/unresolved/shorthands'
 import { typeArgument } from '../../../pub/dist/submodules/unresolved/shorthands'
 
-export const $: g_llts.T.Local__Namespace<pd.SourceLocation> = ns(
+export const $: g_llts.T.Namespace<pd.SourceLocation> = root(
+    {},
     {
-        "_ToBeEscaped": local( //starts with underscore, should be escaped
+        "_ToBeEscaped": namespace( //starts with underscore, should be escaped
+            {},
             {},
             {},
             {}
         ),
-        "Aunt": local(
+        "Aunt": namespace(
+            {},
             {},
             {},
             {
                 "MyString": string()
             }
         ),
-        "My Namespace": local(
+        "My Namespace": namespace(
+            {
+                "Aunt": sibling("Aunt"),
+            },
             {},
             {
-                "Ref to Aunt": parentSibling("Aunt"),
-                "Aunt": local(//shadowing parent 'Aunt'
+                //"Ref to Aunt": parentSibling("Aunt"),
+                "Aunt": namespace(//shadowing parent 'Aunt' in typescript
                     {},
                     {},
                     {},
+                    {
+                        "MyNumber": number()
+
+                    },
                 ),
-                "My Subnamespace": local(
-                    {
-                    },
-                    {
-                    },
-                    {
-                    }
+                "My Subnamespace": namespace(
+                    {},
+                    {},
+                    {},
+                    {}
                 ),
             },
             {
-                "TypeRef": externalTypeReference(step("Ref to Aunt"), "MyString")
+                "TypeRef": externalTypeReference(imprt("Aunt"), "MyString"),
+                "TypeRef2": externalTypeReference(local(step("Aunt")), "MyNumber"),
 
             }
         ),
-        "Namespace With Type Parameter": local(
+        "Namespace With Type Parameter": namespace(
+            {},
             {
                 "T": null
             },
@@ -69,10 +82,30 @@ export const $: g_llts.T.Local__Namespace<pd.SourceLocation> = ns(
             {
                 "Dictionary": dictionary(typeParameter("T")),
             }
-        )
-    },
-    {
+        ),
+        "Namespace With Type Parameter 2": namespace(
+            {},
+            {
+                "T2": null
+            },
+            {
 
+                "Namespace With Type Parameter 3": namespace(
+                    {},
+                    {
+                        "T3": null
+                    },
+                    {},
+                    {
+                        "Dictionary 2": dictionary(typeParameter("T2")),
+                        "Dictionary 3": dictionary(typeParameter("T3")),
+                    }
+                ),
+            },
+            {
+                "A Type Reference": externalTypeReference(local(step("Namespace With Type Parameter 3", { "T3": typeArgument(typeParameter("T2")) })), "Dictionary 3"),
+            }
+        ),
     },
     {
         "Optional String": optional(string()),
@@ -98,7 +131,7 @@ export const $: g_llts.T.Local__Namespace<pd.SourceLocation> = ns(
             number(),
             {
                 "A Parameter": boolean(),
-                "A Type Reference": externalTypeReference(step("Namespace With Type Parameter", { "T": typeArgument(typeParameter("T")) }), "Dictionary"),
+                "A Type Reference": externalTypeReference(local(step("Namespace With Type Parameter", { "T": typeArgument(typeParameter("T")) })), "Dictionary"),
             },
             string()
         )

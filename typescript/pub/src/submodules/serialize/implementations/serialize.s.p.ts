@@ -69,8 +69,17 @@ export const $$: A.serialize = ($d) => {
             })
             $i.snippet(`) => `)
         }
-        const Local__Namespace = (
-            $: g_in.T.Local__Namespace,
+        const Nested__Namespace = (
+            $: g_in.T.Nested__Namespace,
+            depth: number,
+            $i: g_fp.SYNC.I.Block
+        ) => {
+            $.imports
+            Namespace($.namespace, depth, $i)
+        }
+
+        const Namespace = (
+            $: g_in.T.Namespace,
             depth: number,
             $i: g_fp.SYNC.I.Block
         ) => {
@@ -106,35 +115,35 @@ export const $$: A.serialize = ($d) => {
 
             */
 
-            const namespacesWithSpecialChildren = $.namespaces.map<pt.Dictionary<string>>(($) => {
-                switch ($[0]) {
-                    case 'local': return pl.ss($, ($) => $d.filter($.namespaces.__mapWithKey(($, key) => {
-                        switch ($[0]) {
-                            case 'local': return pl.ss($, ($) => [false])
-                            case 'parent sibling': return pl.ss($, ($) => {
-                                return key !== $.namespace.key
-                                    ? [true, $.namespace.key] //A special parent namespace reference
-                                    : [false]
-                            })
-                            default: return pl.au($[0])
-                        }
-                    })))
-                    case 'parent sibling': return pl.ss($, ($) => pm.wrapRawDictionary({}))
-                    default: return pl.au($[0])
-                }
-            })
-            $d.dictionaryForEach(
-                $d.filter(namespacesWithSpecialChildren.map(($) => {
-                    return $d.isEmpty($)
-                        ? [false]
-                        : [true, $]
-                })),
-                ($) => {
-                    $d.dictionaryForEach($.value, ($) => {
-                        $i.line(`import _p${depth}_${$d.createIdentifier(escape($.value))} = ${$d.createIdentifier(escape($.value))}`)
-                    })
-                }
-            )
+            // const namespacesWithSpecialChildren = $.namespaces.map<pt.Dictionary<string>>(($) => {
+            //     switch ($[0]) {
+            //         case 'local': return pl.ss($, ($) => $d.filter($.namespaces.__mapWithKey(($, key) => {
+            //             switch ($[0]) {
+            //                 case 'local': return pl.ss($, ($) => [false])
+            //                 case 'parent sibling': return pl.ss($, ($) => {
+            //                     return key !== $.namespace.key
+            //                         ? [true, $.namespace.key] //A special parent namespace reference
+            //                         : [false]
+            //                 })
+            //                 default: return pl.au($[0])
+            //             }
+            //         })))
+            //         case 'parent sibling': return pl.ss($, ($) => pm.wrapRawDictionary({}))
+            //         default: return pl.au($[0])
+            //     }
+            // })
+            // $d.dictionaryForEach(
+            //     $d.filter(namespacesWithSpecialChildren.map(($) => {
+            //         return $d.isEmpty($)
+            //             ? [false]
+            //             : [true, $]
+            //     })),
+            //     ($) => {
+            //         $d.dictionaryForEach($.value, ($) => {
+            //             $i.line(`import _p${depth}_${$d.createIdentifier(escape($.value))} = ${$d.createIdentifier(escape($.value))}`)
+            //         })
+            //     }
+            // )
             // $d.filter($.namespaces.map<>(($) => {
             //     switch ($[0]) {
             //         case 'local': return pl.ss($, ($) =>
@@ -147,34 +156,30 @@ export const $$: A.serialize = ($d) => {
             //     }
             // }))
             $.namespaces.__forEach(() => false, ($, key) => {
-                switch ($[0]) {
-                    case 'local':
-                        pl.ss($, ($) => {
-                            $i.line(``)
-                            $i.nestedLine(($i) => {
-                                $i.snippet(`export namespace ${$d.createIdentifier(escape(key))} {`)
-                                $i.indent(($i) => {
-                                    Local__Namespace($, depth + 1, $i)
-                                })
-                                $i.snippet(`}`)
-                            })
-                        })
-                        break
-                    case 'parent sibling':
-                        pl.ss($, ($) => {
-                            //if the name is the same, nothing needs to be done
-                            if (key !== $.namespace.key) {
-                                $i.line(``)
-                                $i.line(`import ${$d.createIdentifier(escape(key))} = _p${depth - 1}_${$d.createIdentifier(escape($.namespace.key))}`)
-                                if ($ns.__getEntry($.namespace.key, () => true, () => false)) {//contains
-                                }
+                $.imports.__forEach(() => false, ($, key) => {
+                    switch ($[0]) {
+                        case 'parent import':
+                            pl.ss($, ($) => {
 
-                            }
-                            $.namespace.key
-                        })
-                        break
-                    default: pl.au($[0])
-                }
+                            })
+                            break
+                        case 'sibling':
+                            pl.ss($, ($) => {
+                                $i.line(``)
+                                $i.line(`import _I${$d.createIdentifier(escape(key))} = ${$d.createIdentifier(escape($.key))}`)
+                            })
+                            break
+                        default: pl.au($[0])
+                    }
+                })
+                $i.line(``)
+                $i.nestedLine(($i) => {
+                    $i.snippet(`export namespace ${$d.createIdentifier(escape(key))} {`)
+                    $i.indent(($i) => {
+                        Namespace($.namespace, depth + 1, $i)
+                    })
+                    $i.snippet(`}`)
+                })
             })
             $.types.__forEach(() => false, ($, key) => {
                 $i.line(``)
@@ -196,20 +201,41 @@ export const $$: A.serialize = ($d) => {
 
         // }
 
-        const Namespace__Selection = (
-            $: g_in.T.Namespace__Selection,
+        const Namespace__Selection__Tail = (
+            $: g_in.T.Namespace__Selection__Tail,
             $i: g_fp.SYNC.I.Line
         ) => {
             $i.snippet(`${$d.createIdentifier(escape($.namespace.key))}.`)
             pl.optional(
                 $.tail,
                 ($) => {
-                    Namespace__Selection($, $i)
+                    Namespace__Selection__Tail($, $i)
                 },
                 () => {
 
                 }
             )
+        }
+
+        const Namespace__Selection = (
+            $: g_in.T.Namespace__Selection,
+            $i: g_fp.SYNC.I.Line
+        ) => {
+            pl.cc($.start, ($) => {
+                switch ($[0]) {
+                    case 'import':
+                        pl.ss($, ($) => {
+                            $i.snippet(`_I${$d.createIdentifier(escape($.namespace.key))}.`)
+                        })
+                        break
+                    case 'local':
+                        pl.ss($, ($) => {
+                            Namespace__Selection__Tail($.namespace, $i)
+                        })
+                        break
+                    default: pl.au($[0])
+                }
+            })
         }
 
         const Root = (
@@ -229,7 +255,7 @@ export const $$: A.serialize = ($d) => {
                 })
                 $i.snippet(`}`)
             })
-            Local__Namespace($, 0, $i)
+            Namespace($, 0, $i)
         }
 
         const Type = (
@@ -287,7 +313,7 @@ export const $$: A.serialize = ($d) => {
                                         $i.nestedLine(($i) => {
                                             pl.optional(
                                                 $.value.mutable,
-                                                () => {},
+                                                () => { },
                                                 () => {
                                                     $i.snippet(`readonly `)
                                                 }
@@ -302,7 +328,7 @@ export const $$: A.serialize = ($d) => {
                         })
                     })
                     break
-                    
+
                 case 'lookup':
                     pl.ss($, ($) => {
                         $i.snippet(`_pt.Lookup<`)
@@ -375,26 +401,11 @@ export const $$: A.serialize = ($d) => {
                                 break
                             case 'external':
                                 pl.ss($, ($) => {
-                                    Namespace__Selection($.namespaces, $i)
+
+                                    Namespace__Selection($['namespace path'], $i)
                                     $i.snippet(`${$d.createIdentifier($.type.key)}`)
 
-                                    function selectLocalNSFromNS2($: g_in.T.Namespace__2): g_in.T.Local__Namespace {
-                                        switch ($[0]) {
-                                            case 'local': return pl.ss($, ($) => $)
-                                            case 'parent sibling': return pl.ss($, ($) => selectLocalNSFromNS2($.namespace.referent))
-                                            default: return pl.au($[0])
-                                        }
-                                    }
-
-                                    function selectNS2FromSelection($: g_in.T.Namespace__Selection): g_in.T.Namespace__2 {
-                                        return pl.optional(
-                                            $.tail,
-                                            ($) => selectNS2FromSelection($),
-                                            () => $.namespace.referent
-                                        )
-                                    }
-
-                                    function mergeTypeArguments($: g_in.T.Namespace__Selection): pt.Dictionary<g_in.T.Type__Arguments.D> {
+                                    function mergeTypeArguments($: g_in.T.Namespace__Selection__Tail): pt.Dictionary<g_in.T.Type__Arguments.D> {
                                         return $d.mergeAndIgnore({
                                             'primary': pl.optional(
                                                 $.tail,
@@ -404,16 +415,69 @@ export const $$: A.serialize = ($d) => {
                                             'secondary': $.arguments,
                                         })
                                     }
+                                    const mergedTypeArguments: g_in.T.Type__Arguments = pl.cc($['namespace path'].start, ($) => {
+                                        switch ($[0]) {
+                                            case 'import':
+                                                return pl.ss($, ($) => {
+                                                    return $d.mergeAndIgnore({
+                                                        'primary': pl.optional(
+                                                            $.tail,
+                                                            ($) => mergeTypeArguments($),
+                                                            () => pm.wrapRawDictionary({})
+                                                        ),
+                                                        'secondary': $.arguments,
+                                                    })
 
-                                    const typeArguments = mergeTypeArguments($.namespaces)
-                                    $d.enrichedDictionaryForEach(selectLocalNSFromNS2(selectNS2FromSelection($.namespaces)).parameters.aggregated, {
+                                                })
+                                            case 'local':
+                                                return pl.ss($, ($) => {
+                                                    return mergeTypeArguments($.namespace)
+                                                })
+                                            default: return pl.au($[0])
+                                        }
+                                    })
+
+
+                                    function selectNS2FromSelectionTail($: g_in.T.Namespace__Selection__Tail): g_in.T.Namespace {
+                                        return pl.optional(
+                                            $.tail,
+                                            ($) => selectNS2FromSelectionTail($),
+                                            () => $.namespace.referent.namespace
+                                        )
+                                    }
+                                
+                                    function selectNS2FromImport($: g_in.T.Import): g_in.T.Namespace {
+                                        switch ($[0]) {
+                                            case 'parent import': return pl.ss($, ($) => selectNS2FromImport($.referent))
+                                            case 'sibling': return pl.ss($, ($) => $.referent.namespace)
+                                            default: return pl.au($[0])
+                                        }
+                                    }
+                                
+                                    function selectNS2FromSelection($: g_in.T.Namespace__Selection): g_in.T.Namespace {
+                                        return pl.cc($.start, ($) => {
+                                            switch ($[0]) {
+                                                case 'import': return pl.ss($, ($) => pl.optional(
+                                                    $.tail,
+                                                    ($) => selectNS2FromSelectionTail($),
+                                                    () => selectNS2FromImport($.namespace.referent)
+                                                ))
+                                                case 'local': return pl.ss($, ($) => selectNS2FromSelectionTail($.namespace))
+                                                default: return pl.au($[0])
+                                            }
+                                        })
+                                    }
+                                
+
+
+                                    $d.enrichedDictionaryForEach(selectNS2FromSelection($['namespace path']).parameters.aggregated, {
                                         'onEmpty': () => {
 
                                         },
                                         'onNotEmpty': ($c) => {
                                             $i.snippet(`<`)
                                             $c(($) => {
-                                                typeArguments.__getEntry(
+                                                mergedTypeArguments.__getEntry(
                                                     $.key,
                                                     ($) => {
                                                         Type($.content.type, $p, $i)
@@ -429,7 +493,7 @@ export const $$: A.serialize = ($d) => {
                                         }
                                     })
 
-                
+
                                 })
                                 break
                             case 'sibling':

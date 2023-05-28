@@ -43,13 +43,55 @@ export const $: g_glossary.T.Glossary<null> = {
                     },
                 })]
             },
-            "Local Namespace": {
+            "Import": {
+                'parameters': d({}),
+                'type': <g_glossary.T.Type<null>>['taggedUnion', d({
+                    "parent import": <g_glossary.T.Type<null>>['group', d({
+                        "key": {
+                            'type': <g_glossary.T.Type<null>>['string', null],
+                        },
+                        "referent": {
+                            'type': <g_glossary.T.Type<null>>['reference', ['type', {
+                                'context': ['local', null],
+                                'typeXX': "Imports",
+                                'tailXX': a([
+                                    "D",
+                                ]),
+                                'type arguments': d({}),
+                            }]],
+                        },
+                    })],
+                    "sibling": <g_glossary.T.Type<null>>['group', d({
+                        "key": {
+                            'type': <g_glossary.T.Type<null>>['string', null],
+                        },
+                        "referent": {
+                            'type': <g_glossary.T.Type<null>>['reference', ['type', {
+                                'context': ['local', null],
+                                'typeXX': "Nested Namespace",
+                                'tailXX': a([]),
+                                'type arguments': d({}),
+                            }]],
+                        },
+                    })],
+                })]
+            },
+            "Imports": {
+                'parameters': d({}),
+                'type': <g_glossary.T.Type<null>>['dictionary', <g_glossary.T.Type<null>>['reference', ['type', {
+                    'context': ['local', null],
+                    'typeXX': "Import",
+                    'tailXX': a([]),
+                    'type arguments': d({}),
+                }]]]
+            },
+            "Namespace": {
                 'parameters': d({}),
                 'type': <g_glossary.T.Type<null>>['group', d({
                     "namespaces": {
                         'type': <g_glossary.T.Type<null>>['dictionary', <g_glossary.T.Type<null>>['reference', ['type', {
                             'context': ['local', null],
-                            'typeXX': "Namespace 2",
+                            'typeXX': "Nested Namespace",
                             'tailXX': a([]),
                             'type arguments': d({}),
                         }]]],
@@ -72,35 +114,61 @@ export const $: g_glossary.T.Glossary<null> = {
                     },
                 })]
             },
-            "Namespace 2": {
+            "Namespace Selection": {
                 'parameters': d({}),
-                'type': <g_glossary.T.Type<null>>['taggedUnion', d({
-                    "local": <g_glossary.T.Type<null>>['reference', ['type', {
-                        'context': ['local', null],
-                        'typeXX': "Local Namespace",
-                        'tailXX': a([]),
-                        'type arguments': d({}),
-                    }]],
-                    "parent sibling": <g_glossary.T.Type<null>>['group', d({
-                        "namespace": {
-                            'type': <g_glossary.T.Type<null>>['group', d({
-                                "key": {
-                                    'type': <g_glossary.T.Type<null>>['string', null],
-                                },
-                                "referent": {
+                'type': <g_glossary.T.Type<null>>['group', d({
+                    "start": {
+                        'type': <g_glossary.T.Type<null>>['taggedUnion', d({
+                            "import": <g_glossary.T.Type<null>>['group', d({
+                                "arguments": {
                                     'type': <g_glossary.T.Type<null>>['reference', ['type', {
                                         'context': ['local', null],
-                                        'typeXX': "Namespace 2",
+                                        'typeXX': "Type Arguments",
+                                        'tailXX': a([]),
+                                        'type arguments': d({}),
+                                    }]],
+                                },
+                                "namespace": {
+                                    'type': <g_glossary.T.Type<null>>['group', d({
+                                        "key": {
+                                            'type': <g_glossary.T.Type<null>>['string', null],
+                                        },
+                                        "referent": {
+                                            'type': <g_glossary.T.Type<null>>['reference', ['type', {
+                                                'context': ['local', null],
+                                                'typeXX': "Imports",
+                                                'tailXX': a([
+                                                    "D",
+                                                ]),
+                                                'type arguments': d({}),
+                                            }]],
+                                        },
+                                    })],
+                                },
+                                "tail": {
+                                    'type': <g_glossary.T.Type<null>>['optional', <g_glossary.T.Type<null>>['reference', ['type', {
+                                        'context': ['local', null],
+                                        'typeXX': "Namespace Selection Tail",
+                                        'tailXX': a([]),
+                                        'type arguments': d({}),
+                                    }]]],
+                                },
+                            })],
+                            "local": <g_glossary.T.Type<null>>['group', d({
+                                "namespace": {
+                                    'type': <g_glossary.T.Type<null>>['reference', ['type', {
+                                        'context': ['local', null],
+                                        'typeXX': "Namespace Selection Tail",
                                         'tailXX': a([]),
                                         'type arguments': d({}),
                                     }]],
                                 },
                             })],
-                        },
-                    })],
+                        })],
+                    },
                 })]
             },
-            "Namespace Selection": {
+            "Namespace Selection Tail": {
                 'parameters': d({}),
                 'type': <g_glossary.T.Type<null>>['group', d({
                     "arguments": {
@@ -119,7 +187,7 @@ export const $: g_glossary.T.Glossary<null> = {
                             "referent": {
                                 'type': <g_glossary.T.Type<null>>['reference', ['type', {
                                     'context': ['local', null],
-                                    'typeXX': "Local Namespace",
+                                    'typeXX': "Namespace",
                                     'tailXX': a([
                                         "namespaces",
                                         "D",
@@ -132,10 +200,31 @@ export const $: g_glossary.T.Glossary<null> = {
                     "tail": {
                         'type': <g_glossary.T.Type<null>>['optional', <g_glossary.T.Type<null>>['reference', ['type', {
                             'context': ['local', null],
-                            'typeXX': "Namespace Selection",
+                            'typeXX': "Namespace Selection Tail",
                             'tailXX': a([]),
                             'type arguments': d({}),
                         }]]],
+                    },
+                })]
+            },
+            "Nested Namespace": {
+                'parameters': d({}),
+                'type': <g_glossary.T.Type<null>>['group', d({
+                    "imports": {
+                        'type': <g_glossary.T.Type<null>>['reference', ['type', {
+                            'context': ['local', null],
+                            'typeXX': "Imports",
+                            'tailXX': a([]),
+                            'type arguments': d({}),
+                        }]],
+                    },
+                    "namespace": {
+                        'type': <g_glossary.T.Type<null>>['reference', ['type', {
+                            'context': ['local', null],
+                            'typeXX': "Namespace",
+                            'tailXX': a([]),
+                            'type arguments': d({}),
+                        }]],
                     },
                 })]
             },
@@ -143,7 +232,7 @@ export const $: g_glossary.T.Glossary<null> = {
                 'parameters': d({}),
                 'type': <g_glossary.T.Type<null>>['reference', ['type', {
                     'context': ['local', null],
-                    'typeXX': "Local Namespace",
+                    'typeXX': "Namespace",
                     'tailXX': a([]),
                     'type arguments': d({}),
                 }]]
@@ -262,7 +351,7 @@ export const $: g_glossary.T.Glossary<null> = {
                             },
                         })],
                         "external": <g_glossary.T.Type<null>>['group', d({
-                            "namespaces": {
+                            "namespace path": {
                                 'type': <g_glossary.T.Type<null>>['reference', ['type', {
                                     'context': ['local', null],
                                     'typeXX': "Namespace Selection",
@@ -278,7 +367,7 @@ export const $: g_glossary.T.Glossary<null> = {
                                     "referent": {
                                         'type': <g_glossary.T.Type<null>>['reference', ['type', {
                                             'context': ['local', null],
-                                            'typeXX': "Local Namespace",
+                                            'typeXX': "Namespace",
                                             'tailXX': a([
                                                 "types",
                                                 "D",
@@ -414,7 +503,34 @@ export const $: g_glossary.T.Glossary<null> = {
                     },
                 }),
             },
-            "Local Namespace": {
+            "Import": {
+                'types': d({}),
+                'namespaces': d({
+                    "TU": {
+                        'types': d({}),
+                        'namespaces': d({
+                            "parent import": {
+                                'types': d({}),
+                                'namespaces': d({}),
+                            },
+                            "sibling": {
+                                'types': d({}),
+                                'namespaces': d({}),
+                            },
+                        }),
+                    },
+                }),
+            },
+            "Imports": {
+                'types': d({}),
+                'namespaces': d({
+                    "D": {
+                        'types': d({}),
+                        'namespaces': d({}),
+                    },
+                }),
+            },
+            "Namespace": {
                 'types': d({}),
                 'namespaces': d({
                     "G": {
@@ -446,25 +562,58 @@ export const $: g_glossary.T.Glossary<null> = {
                     },
                 }),
             },
-            "Namespace 2": {
+            "Namespace Selection": {
                 'types': d({}),
                 'namespaces': d({
-                    "TU": {
+                    "G": {
                         'types': d({}),
                         'namespaces': d({
-                            "local": {
-                                'types': d({}),
-                                'namespaces': d({}),
-                            },
-                            "parent sibling": {
+                            "start": {
                                 'types': d({}),
                                 'namespaces': d({
-                                    "G": {
+                                    "TU": {
                                         'types': d({}),
                                         'namespaces': d({
-                                            "namespace": {
+                                            "import": {
                                                 'types': d({}),
-                                                'namespaces': d({}),
+                                                'namespaces': d({
+                                                    "G": {
+                                                        'types': d({}),
+                                                        'namespaces': d({
+                                                            "arguments": {
+                                                                'types': d({}),
+                                                                'namespaces': d({}),
+                                                            },
+                                                            "namespace": {
+                                                                'types': d({}),
+                                                                'namespaces': d({}),
+                                                            },
+                                                            "tail": {
+                                                                'types': d({}),
+                                                                'namespaces': d({
+                                                                    "O": {
+                                                                        'types': d({}),
+                                                                        'namespaces': d({}),
+                                                                    },
+                                                                }),
+                                                            },
+                                                        }),
+                                                    },
+                                                }),
+                                            },
+                                            "local": {
+                                                'types': d({}),
+                                                'namespaces': d({
+                                                    "G": {
+                                                        'types': d({}),
+                                                        'namespaces': d({
+                                                            "namespace": {
+                                                                'types': d({}),
+                                                                'namespaces': d({}),
+                                                            },
+                                                        }),
+                                                    },
+                                                }),
                                             },
                                         }),
                                     },
@@ -474,7 +623,7 @@ export const $: g_glossary.T.Glossary<null> = {
                     },
                 }),
             },
-            "Namespace Selection": {
+            "Namespace Selection Tail": {
                 'types': d({}),
                 'namespaces': d({
                     "G": {
@@ -496,6 +645,24 @@ export const $: g_glossary.T.Glossary<null> = {
                                         'namespaces': d({}),
                                     },
                                 }),
+                            },
+                        }),
+                    },
+                }),
+            },
+            "Nested Namespace": {
+                'types': d({}),
+                'namespaces': d({
+                    "G": {
+                        'types': d({}),
+                        'namespaces': d({
+                            "imports": {
+                                'types': d({}),
+                                'namespaces': d({}),
+                            },
+                            "namespace": {
+                                'types': d({}),
+                                'namespaces': d({}),
                             },
                         }),
                     },
@@ -661,7 +828,7 @@ export const $: g_glossary.T.Glossary<null> = {
                                                     "G": {
                                                         'types': d({}),
                                                         'namespaces': d({
-                                                            "namespaces": {
+                                                            "namespace path": {
                                                                 'types': d({}),
                                                                 'namespaces': d({}),
                                                             },

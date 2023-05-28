@@ -71,7 +71,52 @@ export namespace N {
         export namespace T {}
     }
     
-    export namespace Local_$_$Namespace {
+    export namespace Import {
+        
+        export namespace N {
+            
+            export namespace TU {
+                
+                export namespace N {
+                    
+                    export namespace parent_$_$import {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                    
+                    export namespace sibling {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                }
+                
+                export namespace T {}
+            }
+        }
+        
+        export namespace T {}
+    }
+    
+    export namespace Imports {
+        
+        export namespace N {
+            
+            export namespace D {
+                
+                export namespace N {}
+                
+                export namespace T {}
+            }
+        }
+        
+        export namespace T {}
+    }
+    
+    export namespace Namespace {
         
         export namespace N {
             
@@ -124,32 +169,86 @@ export namespace N {
         export namespace T {}
     }
     
-    export namespace Namespace_$_$2 {
+    export namespace Namespace_$_$Selection {
         
         export namespace N {
             
-            export namespace TU {
+            export namespace G {
                 
                 export namespace N {
                     
-                    export namespace local {
-                        
-                        export namespace N {}
-                        
-                        export namespace T {}
-                    }
-                    
-                    export namespace parent_$_$sibling {
+                    export namespace start {
                         
                         export namespace N {
                             
-                            export namespace G {
+                            export namespace TU {
                                 
                                 export namespace N {
                                     
-                                    export namespace namespace {
+                                    export namespace _$limport {
                                         
-                                        export namespace N {}
+                                        export namespace N {
+                                            
+                                            export namespace G {
+                                                
+                                                export namespace N {
+                                                    
+                                                    export namespace arguments {
+                                                        
+                                                        export namespace N {}
+                                                        
+                                                        export namespace T {}
+                                                    }
+                                                    
+                                                    export namespace namespace {
+                                                        
+                                                        export namespace N {}
+                                                        
+                                                        export namespace T {}
+                                                    }
+                                                    
+                                                    export namespace tail {
+                                                        
+                                                        export namespace N {
+                                                            
+                                                            export namespace O {
+                                                                
+                                                                export namespace N {}
+                                                                
+                                                                export namespace T {}
+                                                            }
+                                                        }
+                                                        
+                                                        export namespace T {}
+                                                    }
+                                                }
+                                                
+                                                export namespace T {}
+                                            }
+                                        }
+                                        
+                                        export namespace T {}
+                                    }
+                                    
+                                    export namespace local {
+                                        
+                                        export namespace N {
+                                            
+                                            export namespace G {
+                                                
+                                                export namespace N {
+                                                    
+                                                    export namespace namespace {
+                                                        
+                                                        export namespace N {}
+                                                        
+                                                        export namespace T {}
+                                                    }
+                                                }
+                                                
+                                                export namespace T {}
+                                            }
+                                        }
                                         
                                         export namespace T {}
                                     }
@@ -170,7 +269,7 @@ export namespace N {
         export namespace T {}
     }
     
-    export namespace Namespace_$_$Selection {
+    export namespace Namespace_$_$Selection_$_$Tail {
         
         export namespace N {
             
@@ -203,6 +302,36 @@ export namespace N {
                                 export namespace T {}
                             }
                         }
+                        
+                        export namespace T {}
+                    }
+                }
+                
+                export namespace T {}
+            }
+        }
+        
+        export namespace T {}
+    }
+    
+    export namespace Nested_$_$Namespace {
+        
+        export namespace N {
+            
+            export namespace G {
+                
+                export namespace N {
+                    
+                    export namespace imports {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                    
+                    export namespace namespace {
+                        
+                        export namespace N {}
                         
                         export namespace T {}
                     }
@@ -477,7 +606,7 @@ export namespace N {
                                                 
                                                 export namespace N {
                                                     
-                                                    export namespace namespaces {
+                                                    export namespace namespace_$_$path {
                                                         
                                                         export namespace N {}
                                                         
@@ -684,7 +813,61 @@ export namespace T {
         readonly 'type parameters': T.Type__Parameters<GAnnotation>
     }
     
-    export namespace Local__Namespace {
+    export namespace Import {
+        
+        export namespace parent__import {
+            
+            export type annotation<GAnnotation> = GAnnotation
+            
+            export type key<GAnnotation> = string
+        }
+        
+        export type parent__import<GAnnotation> = {
+            readonly 'annotation': GAnnotation
+            readonly 'key': string
+        }
+        
+        export namespace sibling {
+            
+            export type annotation<GAnnotation> = GAnnotation
+            
+            export type key<GAnnotation> = string
+        }
+        
+        export type sibling<GAnnotation> = {
+            readonly 'annotation': GAnnotation
+            readonly 'key': string
+        }
+    }
+    
+    export type Import<GAnnotation> = 
+        | ['parent import', {
+            readonly 'annotation': GAnnotation
+            readonly 'key': string
+        }]
+        | ['sibling', {
+            readonly 'annotation': GAnnotation
+            readonly 'key': string
+        }]
+    
+    export namespace Imports {
+        
+        export type annotation<GAnnotation> = GAnnotation
+        
+        export namespace dictionary {
+            
+            export type D<GAnnotation> = T.Import<GAnnotation>
+        }
+        
+        export type dictionary<GAnnotation> = pt.Dictionary<T.Import<GAnnotation>>
+    }
+    
+    export type Imports<GAnnotation> = {
+        readonly 'annotation': GAnnotation
+        readonly 'dictionary': pt.Dictionary<T.Import<GAnnotation>>
+    }
+    
+    export namespace Namespace {
         
         export namespace namespaces {
             
@@ -692,15 +875,15 @@ export namespace T {
             
             export namespace dictionary {
                 
-                export type D<GAnnotation> = T.Namespace__2<GAnnotation>
+                export type D<GAnnotation> = T.Nested__Namespace<GAnnotation>
             }
             
-            export type dictionary<GAnnotation> = pt.Dictionary<T.Namespace__2<GAnnotation>>
+            export type dictionary<GAnnotation> = pt.Dictionary<T.Nested__Namespace<GAnnotation>>
         }
         
         export type namespaces<GAnnotation> = {
             readonly 'annotation': GAnnotation
-            readonly 'dictionary': pt.Dictionary<T.Namespace__2<GAnnotation>>
+            readonly 'dictionary': pt.Dictionary<T.Nested__Namespace<GAnnotation>>
         }
         
         export type parameters<GAnnotation> = T.Type__Parameters<GAnnotation>
@@ -723,10 +906,10 @@ export namespace T {
         }
     }
     
-    export type Local__Namespace<GAnnotation> = {
+    export type Namespace<GAnnotation> = {
         readonly 'namespaces': {
             readonly 'annotation': GAnnotation
-            readonly 'dictionary': pt.Dictionary<T.Namespace__2<GAnnotation>>
+            readonly 'dictionary': pt.Dictionary<T.Nested__Namespace<GAnnotation>>
         }
         readonly 'parameters': T.Type__Parameters<GAnnotation>
         readonly 'types': {
@@ -735,43 +918,83 @@ export namespace T {
         }
     }
     
-    export namespace Namespace__2 {
+    export namespace Namespace__Selection {
         
-        export type local<GAnnotation> = T.Local__Namespace<GAnnotation>
-        
-        export namespace parent__sibling {
+        export namespace start {
             
-            export namespace namespace {
+            export namespace _limport {
                 
-                export type annotation<GAnnotation> = GAnnotation
+                export type arguments<GAnnotation> = T.Type__Arguments<GAnnotation>
                 
-                export type key<GAnnotation> = string
+                export namespace namespace {
+                    
+                    export type annotation<GAnnotation> = GAnnotation
+                    
+                    export type key<GAnnotation> = string
+                }
+                
+                export type namespace<GAnnotation> = {
+                    readonly 'annotation': GAnnotation
+                    readonly 'key': string
+                }
+                
+                export namespace tail {
+                    
+                    export type O<GAnnotation> = T.Namespace__Selection__Tail<GAnnotation>
+                }
+                
+                export type tail<GAnnotation> = [ false ] | [ true, T.Namespace__Selection__Tail<GAnnotation>]
             }
             
-            export type namespace<GAnnotation> = {
-                readonly 'annotation': GAnnotation
-                readonly 'key': string
+            export type _limport<GAnnotation> = {
+                readonly 'arguments': T.Type__Arguments<GAnnotation>
+                readonly 'namespace': {
+                    readonly 'annotation': GAnnotation
+                    readonly 'key': string
+                }
+                readonly 'tail': [ false ] | [ true, T.Namespace__Selection__Tail<GAnnotation>]
+            }
+            
+            export namespace local {
+                
+                export type namespace<GAnnotation> = T.Namespace__Selection__Tail<GAnnotation>
+            }
+            
+            export type local<GAnnotation> = {
+                readonly 'namespace': T.Namespace__Selection__Tail<GAnnotation>
             }
         }
         
-        export type parent__sibling<GAnnotation> = {
-            readonly 'namespace': {
-                readonly 'annotation': GAnnotation
-                readonly 'key': string
-            }
-        }
+        export type start<GAnnotation> = 
+            | ['import', {
+                readonly 'arguments': T.Type__Arguments<GAnnotation>
+                readonly 'namespace': {
+                    readonly 'annotation': GAnnotation
+                    readonly 'key': string
+                }
+                readonly 'tail': [ false ] | [ true, T.Namespace__Selection__Tail<GAnnotation>]
+            }]
+            | ['local', {
+                readonly 'namespace': T.Namespace__Selection__Tail<GAnnotation>
+            }]
     }
     
-    export type Namespace__2<GAnnotation> = 
-        | ['local', T.Local__Namespace<GAnnotation>]
-        | ['parent sibling', {
-            readonly 'namespace': {
-                readonly 'annotation': GAnnotation
-                readonly 'key': string
-            }
-        }]
+    export type Namespace__Selection<GAnnotation> = {
+        readonly 'start': 
+            | ['import', {
+                readonly 'arguments': T.Type__Arguments<GAnnotation>
+                readonly 'namespace': {
+                    readonly 'annotation': GAnnotation
+                    readonly 'key': string
+                }
+                readonly 'tail': [ false ] | [ true, T.Namespace__Selection__Tail<GAnnotation>]
+            }]
+            | ['local', {
+                readonly 'namespace': T.Namespace__Selection__Tail<GAnnotation>
+            }]
+    }
     
-    export namespace Namespace__Selection {
+    export namespace Namespace__Selection__Tail {
         
         export type arguments<GAnnotation> = T.Type__Arguments<GAnnotation>
         
@@ -789,22 +1012,34 @@ export namespace T {
         
         export namespace tail {
             
-            export type O<GAnnotation> = T.Namespace__Selection<GAnnotation>
+            export type O<GAnnotation> = T.Namespace__Selection__Tail<GAnnotation>
         }
         
-        export type tail<GAnnotation> = [ false ] | [ true, T.Namespace__Selection<GAnnotation>]
+        export type tail<GAnnotation> = [ false ] | [ true, T.Namespace__Selection__Tail<GAnnotation>]
     }
     
-    export type Namespace__Selection<GAnnotation> = {
+    export type Namespace__Selection__Tail<GAnnotation> = {
         readonly 'arguments': T.Type__Arguments<GAnnotation>
         readonly 'namespace': {
             readonly 'annotation': GAnnotation
             readonly 'key': string
         }
-        readonly 'tail': [ false ] | [ true, T.Namespace__Selection<GAnnotation>]
+        readonly 'tail': [ false ] | [ true, T.Namespace__Selection__Tail<GAnnotation>]
     }
     
-    export type Root<GAnnotation> = T.Local__Namespace<GAnnotation>
+    export namespace Nested__Namespace {
+        
+        export type imports<GAnnotation> = T.Imports<GAnnotation>
+        
+        export type namespace<GAnnotation> = T.Namespace<GAnnotation>
+    }
+    
+    export type Nested__Namespace<GAnnotation> = {
+        readonly 'imports': T.Imports<GAnnotation>
+        readonly 'namespace': T.Namespace<GAnnotation>
+    }
+    
+    export type Root<GAnnotation> = T.Namespace<GAnnotation>
     
     export namespace Type {
         
@@ -940,7 +1175,7 @@ export namespace T {
             
             export namespace external {
                 
-                export type namespaces<GAnnotation> = T.Namespace__Selection<GAnnotation>
+                export type namespace__path<GAnnotation> = T.Namespace__Selection<GAnnotation>
                 
                 export namespace _ltype {
                     
@@ -956,7 +1191,7 @@ export namespace T {
             }
             
             export type external<GAnnotation> = {
-                readonly 'namespaces': T.Namespace__Selection<GAnnotation>
+                readonly 'namespace path': T.Namespace__Selection<GAnnotation>
                 readonly 'type': {
                     readonly 'annotation': GAnnotation
                     readonly 'key': string
@@ -982,7 +1217,7 @@ export namespace T {
                 readonly 'key': string
             }]
             | ['external', {
-                readonly 'namespaces': T.Namespace__Selection<GAnnotation>
+                readonly 'namespace path': T.Namespace__Selection<GAnnotation>
                 readonly 'type': {
                     readonly 'annotation': GAnnotation
                     readonly 'key': string
@@ -1044,7 +1279,7 @@ export namespace T {
                 readonly 'key': string
             }]
             | ['external', {
-                readonly 'namespaces': T.Namespace__Selection<GAnnotation>
+                readonly 'namespace path': T.Namespace__Selection<GAnnotation>
                 readonly 'type': {
                     readonly 'annotation': GAnnotation
                     readonly 'key': string

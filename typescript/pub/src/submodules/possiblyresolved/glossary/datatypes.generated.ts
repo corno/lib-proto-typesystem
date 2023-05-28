@@ -71,7 +71,52 @@ export namespace N {
         export namespace T {}
     }
     
-    export namespace Local_$_$Namespace {
+    export namespace Import {
+        
+        export namespace N {
+            
+            export namespace TU {
+                
+                export namespace N {
+                    
+                    export namespace parent_$_$import {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                    
+                    export namespace sibling {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                }
+                
+                export namespace T {}
+            }
+        }
+        
+        export namespace T {}
+    }
+    
+    export namespace Imports {
+        
+        export namespace N {
+            
+            export namespace D {
+                
+                export namespace N {}
+                
+                export namespace T {}
+            }
+        }
+        
+        export namespace T {}
+    }
+    
+    export namespace Namespace {
         
         export namespace N {
             
@@ -124,32 +169,86 @@ export namespace N {
         export namespace T {}
     }
     
-    export namespace Namespace_$_$2 {
+    export namespace Namespace_$_$Selection {
         
         export namespace N {
             
-            export namespace TU {
+            export namespace G {
                 
                 export namespace N {
                     
-                    export namespace local {
-                        
-                        export namespace N {}
-                        
-                        export namespace T {}
-                    }
-                    
-                    export namespace parent_$_$sibling {
+                    export namespace start {
                         
                         export namespace N {
                             
-                            export namespace G {
+                            export namespace TU {
                                 
                                 export namespace N {
                                     
-                                    export namespace namespace {
+                                    export namespace _$limport {
                                         
-                                        export namespace N {}
+                                        export namespace N {
+                                            
+                                            export namespace G {
+                                                
+                                                export namespace N {
+                                                    
+                                                    export namespace arguments {
+                                                        
+                                                        export namespace N {}
+                                                        
+                                                        export namespace T {}
+                                                    }
+                                                    
+                                                    export namespace namespace {
+                                                        
+                                                        export namespace N {}
+                                                        
+                                                        export namespace T {}
+                                                    }
+                                                    
+                                                    export namespace tail {
+                                                        
+                                                        export namespace N {
+                                                            
+                                                            export namespace O {
+                                                                
+                                                                export namespace N {}
+                                                                
+                                                                export namespace T {}
+                                                            }
+                                                        }
+                                                        
+                                                        export namespace T {}
+                                                    }
+                                                }
+                                                
+                                                export namespace T {}
+                                            }
+                                        }
+                                        
+                                        export namespace T {}
+                                    }
+                                    
+                                    export namespace local {
+                                        
+                                        export namespace N {
+                                            
+                                            export namespace G {
+                                                
+                                                export namespace N {
+                                                    
+                                                    export namespace namespace {
+                                                        
+                                                        export namespace N {}
+                                                        
+                                                        export namespace T {}
+                                                    }
+                                                }
+                                                
+                                                export namespace T {}
+                                            }
+                                        }
                                         
                                         export namespace T {}
                                     }
@@ -170,7 +269,7 @@ export namespace N {
         export namespace T {}
     }
     
-    export namespace Namespace_$_$Selection {
+    export namespace Namespace_$_$Selection_$_$Tail {
         
         export namespace N {
             
@@ -203,6 +302,36 @@ export namespace N {
                                 export namespace T {}
                             }
                         }
+                        
+                        export namespace T {}
+                    }
+                }
+                
+                export namespace T {}
+            }
+        }
+        
+        export namespace T {}
+    }
+    
+    export namespace Nested_$_$Namespace {
+        
+        export namespace N {
+            
+            export namespace G {
+                
+                export namespace N {
+                    
+                    export namespace imports {
+                        
+                        export namespace N {}
+                        
+                        export namespace T {}
+                    }
+                    
+                    export namespace namespace {
+                        
+                        export namespace N {}
                         
                         export namespace T {}
                     }
@@ -477,7 +606,7 @@ export namespace N {
                                                 
                                                 export namespace N {
                                                     
-                                                    export namespace namespaces {
+                                                    export namespace namespace_$_$path {
                                                         
                                                         export namespace N {}
                                                         
@@ -661,14 +790,68 @@ export namespace T {
         readonly 'type parameters': T.Type__Parameters
     }
     
-    export namespace Local__Namespace {
+    export namespace Import {
+        
+        export namespace parent__import {
+            
+            export type key = string
+            
+            export namespace referent {
+                
+                export type O = T.Imports.D
+            }
+            
+            export type referent = [ false ] | [ true, T.Imports.D]
+        }
+        
+        export type parent__import = {
+            readonly 'key': string
+            readonly 'referent': [ false ] | [ true, T.Imports.D]
+        }
+        
+        export namespace sibling {
+            
+            export type key = string
+            
+            export namespace referent {
+                
+                export type O = T.Nested__Namespace
+            }
+            
+            export type referent = [ false ] | [ true, T.Nested__Namespace]
+        }
+        
+        export type sibling = {
+            readonly 'key': string
+            readonly 'referent': [ false ] | [ true, T.Nested__Namespace]
+        }
+    }
+    
+    export type Import = 
+        | ['parent import', {
+            readonly 'key': string
+            readonly 'referent': [ false ] | [ true, T.Imports.D]
+        }]
+        | ['sibling', {
+            readonly 'key': string
+            readonly 'referent': [ false ] | [ true, T.Nested__Namespace]
+        }]
+    
+    export namespace Imports {
+        
+        export type D = T.Import
+    }
+    
+    export type Imports = pt.Dictionary<T.Import>
+    
+    export namespace Namespace {
         
         export namespace namespaces {
             
-            export type D = T.Namespace__2
+            export type D = T.Nested__Namespace
         }
         
-        export type namespaces = pt.Dictionary<T.Namespace__2>
+        export type namespaces = pt.Dictionary<T.Nested__Namespace>
         
         export type parameters = T.Type__Parameters
         
@@ -680,54 +863,94 @@ export namespace T {
         export type types = pt.Dictionary<T.Type>
     }
     
-    export type Local__Namespace = {
-        readonly 'namespaces': pt.Dictionary<T.Namespace__2>
+    export type Namespace = {
+        readonly 'namespaces': pt.Dictionary<T.Nested__Namespace>
         readonly 'parameters': T.Type__Parameters
         readonly 'types': pt.Dictionary<T.Type>
     }
     
-    export namespace Namespace__2 {
+    export namespace Namespace__Selection {
         
-        export type local = T.Local__Namespace
-        
-        export namespace parent__sibling {
+        export namespace start {
             
-            export namespace namespace {
+            export namespace _limport {
                 
-                export type key = string
+                export type arguments = T.Type__Arguments
                 
-                export namespace referent {
+                export namespace namespace {
                     
-                    export type O = T.Namespace__2
+                    export type key = string
+                    
+                    export namespace referent {
+                        
+                        export type O = T.Imports.D
+                    }
+                    
+                    export type referent = [ false ] | [ true, T.Imports.D]
                 }
                 
-                export type referent = [ false ] | [ true, T.Namespace__2]
+                export type namespace = {
+                    readonly 'key': string
+                    readonly 'referent': [ false ] | [ true, T.Imports.D]
+                }
+                
+                export namespace tail {
+                    
+                    export type O = T.Namespace__Selection__Tail
+                }
+                
+                export type tail = [ false ] | [ true, T.Namespace__Selection__Tail]
             }
             
-            export type namespace = {
-                readonly 'key': string
-                readonly 'referent': [ false ] | [ true, T.Namespace__2]
+            export type _limport = {
+                readonly 'arguments': T.Type__Arguments
+                readonly 'namespace': {
+                    readonly 'key': string
+                    readonly 'referent': [ false ] | [ true, T.Imports.D]
+                }
+                readonly 'tail': [ false ] | [ true, T.Namespace__Selection__Tail]
+            }
+            
+            export namespace local {
+                
+                export type namespace = T.Namespace__Selection__Tail
+            }
+            
+            export type local = {
+                readonly 'namespace': T.Namespace__Selection__Tail
             }
         }
         
-        export type parent__sibling = {
-            readonly 'namespace': {
-                readonly 'key': string
-                readonly 'referent': [ false ] | [ true, T.Namespace__2]
-            }
-        }
+        export type start = 
+            | ['import', {
+                readonly 'arguments': T.Type__Arguments
+                readonly 'namespace': {
+                    readonly 'key': string
+                    readonly 'referent': [ false ] | [ true, T.Imports.D]
+                }
+                readonly 'tail': [ false ] | [ true, T.Namespace__Selection__Tail]
+            }]
+            | ['local', {
+                readonly 'namespace': T.Namespace__Selection__Tail
+            }]
     }
     
-    export type Namespace__2 = 
-        | ['local', T.Local__Namespace]
-        | ['parent sibling', {
-            readonly 'namespace': {
-                readonly 'key': string
-                readonly 'referent': [ false ] | [ true, T.Namespace__2]
-            }
-        }]
+    export type Namespace__Selection = {
+        readonly 'start': 
+            | ['import', {
+                readonly 'arguments': T.Type__Arguments
+                readonly 'namespace': {
+                    readonly 'key': string
+                    readonly 'referent': [ false ] | [ true, T.Imports.D]
+                }
+                readonly 'tail': [ false ] | [ true, T.Namespace__Selection__Tail]
+            }]
+            | ['local', {
+                readonly 'namespace': T.Namespace__Selection__Tail
+            }]
+    }
     
-    export namespace Namespace__Selection {
+    export namespace Namespace__Selection__Tail {
         
         export type arguments = T.Type__Arguments
         
@@ -737,35 +960,47 @@ export namespace T {
             
             export namespace referent {
                 
-                export type O = T.Local__Namespace.namespaces.D
+                export type O = T.Namespace.namespaces.D
             }
             
-            export type referent = [ false ] | [ true, T.Local__Namespace.namespaces.D]
+            export type referent = [ false ] | [ true, T.Namespace.namespaces.D]
         }
         
         export type namespace = {
             readonly 'key': string
-            readonly 'referent': [ false ] | [ true, T.Local__Namespace.namespaces.D]
+            readonly 'referent': [ false ] | [ true, T.Namespace.namespaces.D]
         }
         
         export namespace tail {
             
-            export type O = T.Namespace__Selection
+            export type O = T.Namespace__Selection__Tail
         }
         
-        export type tail = [ false ] | [ true, T.Namespace__Selection]
+        export type tail = [ false ] | [ true, T.Namespace__Selection__Tail]
     }
     
-    export type Namespace__Selection = {
+    export type Namespace__Selection__Tail = {
         readonly 'arguments': T.Type__Arguments
         readonly 'namespace': {
             readonly 'key': string
-            readonly 'referent': [ false ] | [ true, T.Local__Namespace.namespaces.D]
+            readonly 'referent': [ false ] | [ true, T.Namespace.namespaces.D]
         }
-        readonly 'tail': [ false ] | [ true, T.Namespace__Selection]
+        readonly 'tail': [ false ] | [ true, T.Namespace__Selection__Tail]
     }
     
-    export type Root = T.Local__Namespace
+    export namespace Nested__Namespace {
+        
+        export type imports = T.Imports
+        
+        export type namespace = T.Namespace
+    }
+    
+    export type Nested__Namespace = {
+        readonly 'imports': T.Imports
+        readonly 'namespace': T.Namespace
+    }
+    
+    export type Root = T.Namespace
     
     export namespace Type {
         
@@ -893,7 +1128,7 @@ export namespace T {
             
             export namespace external {
                 
-                export type namespaces = T.Namespace__Selection
+                export type namespace__path = T.Namespace__Selection
                 
                 export namespace _ltype {
                     
@@ -901,23 +1136,23 @@ export namespace T {
                     
                     export namespace referent {
                         
-                        export type O = T.Local__Namespace.types.D
+                        export type O = T.Namespace.types.D
                     }
                     
-                    export type referent = [ false ] | [ true, T.Local__Namespace.types.D]
+                    export type referent = [ false ] | [ true, T.Namespace.types.D]
                 }
                 
                 export type _ltype = {
                     readonly 'key': string
-                    readonly 'referent': [ false ] | [ true, T.Local__Namespace.types.D]
+                    readonly 'referent': [ false ] | [ true, T.Namespace.types.D]
                 }
             }
             
             export type external = {
-                readonly 'namespaces': T.Namespace__Selection
+                readonly 'namespace path': T.Namespace__Selection
                 readonly 'type': {
                     readonly 'key': string
-                    readonly 'referent': [ false ] | [ true, T.Local__Namespace.types.D]
+                    readonly 'referent': [ false ] | [ true, T.Namespace.types.D]
                 }
             }
             
@@ -945,10 +1180,10 @@ export namespace T {
                 readonly 'referent': [ false ] | [ true, () => T.Type]
             }]
             | ['external', {
-                readonly 'namespaces': T.Namespace__Selection
+                readonly 'namespace path': T.Namespace__Selection
                 readonly 'type': {
                     readonly 'key': string
-                    readonly 'referent': [ false ] | [ true, T.Local__Namespace.types.D]
+                    readonly 'referent': [ false ] | [ true, T.Namespace.types.D]
                 }
             }]
             | ['sibling', {
@@ -1001,10 +1236,10 @@ export namespace T {
                 readonly 'referent': [ false ] | [ true, () => T.Type]
             }]
             | ['external', {
-                readonly 'namespaces': T.Namespace__Selection
+                readonly 'namespace path': T.Namespace__Selection
                 readonly 'type': {
                     readonly 'key': string
-                    readonly 'referent': [ false ] | [ true, T.Local__Namespace.types.D]
+                    readonly 'referent': [ false ] | [ true, T.Namespace.types.D]
                 }
             }]
             | ['sibling', {
