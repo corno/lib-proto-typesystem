@@ -58,11 +58,8 @@ namespace Resolve {
     export type Function__Declaration<Annotation> = (
         $: g_in.T.Function__Declaration<Annotation>,
         $p: {
-            'local namespaces': g_out.T.Namespace.namespaces,
-            'imported namespaces': pt.OptionalValue<g_out.T.Imports>,
-            'resolved sibling types': pt.Lookup<g_out.T.Type>,
-            'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
-            'type parameters': g_out.T.Aggregated__Type__Parameters,
+            'reference context': ReferenceContext
+            'parent type parameters': g_out.T.Aggregated__Type__Parameters,
         },
     ) => g_out.T.Function__Declaration
 
@@ -82,14 +79,18 @@ namespace Resolve {
     //     },
     // ) => g_out.T.Namespace__2
 
+    export type ReferenceContext = {
+        'local namespaces': g_out.T.Namespace.namespaces,
+        'imported namespaces': pt.OptionalValue<g_out.T.Imports>,
+        'resolved sibling types': pt.Lookup<g_out.T.Type>,
+        'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
+        'type parameters': g_out.T.Aggregated__Type__Parameters,
+    }
+
     export type Namespace__Selection<Annotation> = (
         $: g_in.T.Namespace__Selection<Annotation>,
         $p: {
-            'local namespaces': g_out.T.Namespace.namespaces,
-            'imported namespaces': pt.OptionalValue<g_out.T.Imports>,
-            'resolved sibling types': pt.Lookup<g_out.T.Type>,
-            'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
-            'type parameters': g_out.T.Aggregated__Type__Parameters,
+            'reference context': ReferenceContext
         },
     ) => g_out.T.Namespace__Selection
 
@@ -98,11 +99,7 @@ namespace Resolve {
         $p: {
             'selectable namespaces': g_out.T.Namespace.namespaces,
 
-            'local namespaces': g_out.T.Namespace.namespaces,
-            'imported namespaces': pt.OptionalValue<g_out.T.Imports>,
-            'resolved sibling types': pt.Lookup<g_out.T.Type>,
-            'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
-            'type parameters': g_out.T.Aggregated__Type__Parameters,
+            'reference context': ReferenceContext,
         },
     ) => g_out.T.Namespace__Selection__Tail
 
@@ -115,23 +112,15 @@ namespace Resolve {
     export type Type<Annotation> = (
         $: g_in.T.Type<Annotation>,
         $p: {
-            'local namespaces': g_out.T.Namespace.namespaces,
-            'imported namespaces': pt.OptionalValue<g_out.T.Imports>,
-            'resolved sibling types': pt.Lookup<g_out.T.Type>,
-            'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
-            'type parameters': g_out.T.Aggregated__Type__Parameters,
+            'reference context': ReferenceContext
         },
     ) => g_out.T.Type
 
     export type Type__Arguments<Annotation> = (
         $: g_in.T.Type__Arguments<Annotation>,
         $p: {
-            'local namespaces': g_out.T.Namespace.namespaces,
-            'imported namespaces': pt.OptionalValue<g_out.T.Imports>,
-            'resolved sibling types': pt.Lookup<g_out.T.Type>,
-            'cyclic sibling types': pt.Lookup<() => g_out.T.Type>,
-            'available type parameters': g_out.T.Aggregated__Type__Parameters,
             'type parameters to be matched': g_out.T.Aggregated__Type__Parameters,
+            'reference context': ReferenceContext
         }
     ) => g_out.T.Type__Arguments
 
@@ -243,7 +232,7 @@ function resolve<Annotation>(
         const $tp = Type__Parameters(
             $['type parameters'],
             {
-                'parent type parameters': [true, $p['type parameters']]
+                'parent type parameters': [true, $p['parent type parameters']]
             }
         )
         return {
@@ -251,21 +240,26 @@ function resolve<Annotation>(
             'context': Type(
                 $.context,
                 {
-                    'local namespaces': $p['local namespaces'],
-                    'imported namespaces': $p['imported namespaces'],
-                    'cyclic sibling types': $p['cyclic sibling types'],
-                    'resolved sibling types': $p['resolved sibling types'],
-                    'type parameters': $tp.aggregated
+                    'reference context': {
+                        'local namespaces': $p['reference context']['local namespaces'],
+                        'imported namespaces': $p['reference context']['imported namespaces'],
+                        'cyclic sibling types': $p['reference context']['cyclic sibling types'],
+                        'resolved sibling types': $p['reference context']['resolved sibling types'],
+                        'type parameters': $tp.aggregated
+
+                    },
                 },
             ),
             'parameters': $.parameters.dictionary.map(($) => Type(
                 $,
                 {
-                    'local namespaces': $p['local namespaces'],
-                    'imported namespaces': $p['imported namespaces'],
-                    'cyclic sibling types': $p['cyclic sibling types'],
-                    'resolved sibling types': $p['resolved sibling types'],
-                    'type parameters': $tp.aggregated
+                    'reference context': {
+                        'local namespaces': $p['reference context']['local namespaces'],
+                        'imported namespaces': $p['reference context']['imported namespaces'],
+                        'cyclic sibling types': $p['reference context']['cyclic sibling types'],
+                        'resolved sibling types': $p['reference context']['resolved sibling types'],
+                        'type parameters': $tp.aggregated
+                    }
                 },
             ))
         }
@@ -323,11 +317,13 @@ function resolve<Annotation>(
             'namespaces': v_namespaces,
             'types': $d.resolveDictionary($.types.dictionary, {
                 'map': (($, $l) => Type($.value, {
-                    'local namespaces': v_namespaces,
-                    'imported namespaces': $p['imported namespaces'],
-                    'cyclic sibling types': $l['all siblings'],
-                    'resolved sibling types': $l['non circular siblings'],
-                    'type parameters': $v_parameters.aggregated,
+                    'reference context': {
+                        'local namespaces': v_namespaces,
+                        'imported namespaces': $p['imported namespaces'],
+                        'cyclic sibling types': $l['all siblings'],
+                        'resolved sibling types': $l['non circular siblings'],
+                        'type parameters': $v_parameters.aggregated,
+                    }
                 }))
             })
         }
@@ -338,16 +334,21 @@ function resolve<Annotation>(
             case 'address function': return pl.ss($, ($) => {
                 const $v_fd = Function__Declaration(
                     $.declaration,
-                    $p,
+                    {
+                        'reference context': $p['reference context'],
+                        'parent type parameters': $p['reference context']['type parameters']
+                    },
                 )
                 return ['address function', {
                     'declaration': $v_fd,
                     'return type': Type($['return type'], {
-                        'local namespaces': $p['local namespaces'],
-                        'imported namespaces': $p['imported namespaces'],
-                        'cyclic sibling types': $p['cyclic sibling types'],
-                        'resolved sibling types': $p['resolved sibling types'],
-                        'type parameters': $v_fd['type parameters'].aggregated
+                        'reference context': {
+                            'local namespaces': $p['reference context']['local namespaces'],
+                            'imported namespaces': $p['reference context']['imported namespaces'],
+                            'cyclic sibling types': $p['reference context']['cyclic sibling types'],
+                            'resolved sibling types': $p['reference context']['resolved sibling types'],
+                            'type parameters': $v_fd['type parameters'].aggregated
+                        }
                     })
                 }]
             })
@@ -367,25 +368,23 @@ function resolve<Annotation>(
             case 'procedure': return pl.ss($, ($) => ['procedure', {
                 'declaration': Function__Declaration(
                     $.declaration,
-                    $p,
+                    {
+                        'reference context': $p['reference context'],
+                        'parent type parameters': $p['reference context']['type parameters']
+                    },
                 )
             }])
             case 'string': return pl.ss($, ($) => ['string', null])
             case 'tagged union': return pl.ss($, ($) => ['tagged union', $.dictionary.map(($) => Type($, $p))])
-            case 'type parameter': return pl.ss($, ($) => ['type parameter', getAnnotatedEntry($p['type parameters'], $)])
+            case 'type parameter': return pl.ss($, ($) => ['type parameter', getAnnotatedEntry($p['reference context']['type parameters'], $)])
             case 'type reference': return pl.ss($, ($) => ['type reference', pl.cc($, ($): g_out.T.Type.type__reference => {
                 switch ($[0]) {
-                    case 'cyclic sibling': return pl.ss($, ($) => ['cyclic sibling', getAnnotatedEntry($p['cyclic sibling types'], $)])
+                    case 'cyclic sibling': return pl.ss($, ($) => ['cyclic sibling', getAnnotatedEntry($p['reference context']['cyclic sibling types'], $)])
                     case 'external': return pl.ss($, ($) => {
                         const v_namespaces = Namespace__Selection(
                             $['namespace path'],
                             {
-                                'local namespaces': $p['local namespaces'],
-                                //'context namespaces': $p['local namespaces'],
-                                'imported namespaces': $p['imported namespaces'],
-                                'cyclic sibling types': $p['cyclic sibling types'],
-                                'resolved sibling types': $p['resolved sibling types'],
-                                'type parameters': $p['type parameters'],
+                                'reference context': $p['reference context']
                             }
                         )
                         return ['external', {
@@ -397,7 +396,7 @@ function resolve<Annotation>(
                             ),
                         }]
                     })
-                    case 'sibling': return pl.ss($, ($) => ['sibling', getAnnotatedEntry($p['resolved sibling types'], $)])
+                    case 'sibling': return pl.ss($, ($) => ['sibling', getAnnotatedEntry($p['reference context']['resolved sibling types'], $)])
                     default: return pl.au($[0])
                 }
             })
@@ -405,16 +404,21 @@ function resolve<Annotation>(
             case 'value function': return pl.ss($, ($) => {
                 const $v_fd = Function__Declaration(
                     $.declaration,
-                    $p,
+                    {
+                        'reference context': $p['reference context'],
+                        'parent type parameters': $p['reference context']['type parameters']
+                    },
                 )
                 return ['value function', {
                     'declaration': $v_fd,
                     'return type': Type($['return type'], {
-                        'local namespaces': $p['local namespaces'],
-                        'imported namespaces': $p['imported namespaces'],
-                        'cyclic sibling types': $p['cyclic sibling types'],
-                        'resolved sibling types': $p['resolved sibling types'],
-                        'type parameters': $v_fd['type parameters'].aggregated
+                        'reference context': {
+                            'local namespaces': $p['reference context']['local namespaces'],
+                            'imported namespaces': $p['reference context']['imported namespaces'],
+                            'cyclic sibling types': $p['reference context']['cyclic sibling types'],
+                            'resolved sibling types': $p['reference context']['resolved sibling types'],
+                            'type parameters': $v_fd['type parameters'].aggregated
+                        }
                     })
                 }]
             })
@@ -436,11 +440,7 @@ function resolve<Annotation>(
                     'type': Type(
                         $.content.type,
                         {
-                            'resolved sibling types': $p['resolved sibling types'],
-                            'cyclic sibling types': $p['cyclic sibling types'],
-                            'imported namespaces': $p['imported namespaces'],
-                            'local namespaces': $p['local namespaces'],
-                            'type parameters': $p['available type parameters'],
+                            'reference context': $p['reference context'],
                         }
                     )
                 }
@@ -470,22 +470,14 @@ function resolve<Annotation>(
             $.tail,
             ($) => Namespace__Selection__Tail($, {
                 'selectable namespaces': v_namespace.referent.namespace.namespaces,
-                'resolved sibling types': $p['resolved sibling types'],
-                'cyclic sibling types': $p['cyclic sibling types'],
-                'imported namespaces': $p['imported namespaces'],
-                'local namespaces': $p['local namespaces'],
-                'type parameters': $p['type parameters'],
+                'reference context': $p['reference context'],
             }),
         )
         return {
             'namespace': v_namespace,
             'arguments': Type__Arguments($.arguments, {
-                'resolved sibling types': $p['resolved sibling types'],
-                'cyclic sibling types': $p['cyclic sibling types'],
-                'imported namespaces': $p['imported namespaces'],
-                'local namespaces': $p['local namespaces'],
+                'reference context': $p['reference context'],
                 'type parameters to be matched': v_namespace.referent.namespace.parameters.local,
-                'available type parameters': $p['type parameters'],
             }),
             'tail': v_tail
         }
@@ -497,28 +489,20 @@ function resolve<Annotation>(
                     case 'import': return pl.ss($, ($) => {
                         const foo = $
                         const v_namespace = mapOptional2NonOptional(
-                            $p['imported namespaces'],
+                            $p['reference context']['imported namespaces'],
                             ($) => getAnnotatedEntry($, foo.namespace)
                         )
                         return ['import', {
                             'namespace': v_namespace,
                             'arguments': Type__Arguments($.arguments, {
-                                'local namespaces': $p['local namespaces'],
-                                'cyclic sibling types': $p['cyclic sibling types'],
-                                'imported namespaces': $p['imported namespaces'],
-                                'resolved sibling types': $p['resolved sibling types'],
+                                'reference context': $p['reference context'],
                                 'type parameters to be matched': selectNS2FromImport(v_namespace.referent).parameters.local,
-                                'available type parameters': $p['type parameters']
                             }),
                             'tail': mapOptional(
                                 $.tail,
                                 ($) => Namespace__Selection__Tail($, {
-                                    'selectable namespaces': selectNS2FromImport( v_namespace.referent).namespaces,
-                                    'local namespaces': $p['local namespaces'],
-                                    'cyclic sibling types': $p['cyclic sibling types'],
-                                    'imported namespaces': $p['imported namespaces'],
-                                    'resolved sibling types': $p['resolved sibling types'],
-                                    'type parameters': $p['type parameters']
+                                    'selectable namespaces': selectNS2FromImport(v_namespace.referent).namespaces,
+                                    'reference context': $p['reference context'],
                                 })
                             ),
                         }]
@@ -526,12 +510,8 @@ function resolve<Annotation>(
                     case 'local': return pl.ss($, ($) => {
                         return ['local', {
                             'namespace': Namespace__Selection__Tail($.namespace, {
-                                'selectable namespaces': $p['local namespaces'],
-                                'local namespaces': $p['local namespaces'],
-                                'cyclic sibling types': $p['cyclic sibling types'],
-                                'imported namespaces': $p['imported namespaces'],
-                                'resolved sibling types': $p['resolved sibling types'],
-                                'type parameters': $p['type parameters']
+                                'selectable namespaces': $p['reference context']['local namespaces'],
+                                'reference context': $p['reference context'],
                             })
                         }]
                     })
