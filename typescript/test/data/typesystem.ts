@@ -13,18 +13,32 @@ export namespace Aunt {
     export type MyString = string
 }
 
-import _IAunt = Aunt
+import _IMy__Namespace_Aunt = Aunt
 
 export namespace My__Namespace {
     
+    import _IAunt = 
+    _IMy__Namespace_Aunt
+    
+    import _IAunt = My__Namespace_Aunt
+    
     export namespace Aunt {
+        
+        import _IAunt = 
+        Aunt
         
         export type MyNumber = number
     }
     
     export namespace My__Subnamespace {
         
+        import _IAunt = 
+        Aunt
+        
         export namespace My__Subsubnamespace {
+            
+            import _IAunt = 
+            Aunt
             
             export type MyBoolean = boolean
         }

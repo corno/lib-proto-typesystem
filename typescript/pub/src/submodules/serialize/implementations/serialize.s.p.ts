@@ -156,17 +156,35 @@ export const $$: A.serialize = ($d) => {
             //     }
             // }))
             $.namespaces.__forEach(() => false, ($, key) => {
+                const nsKey = key
+                const ns = $
+                function isShadowed(key: string): boolean {
+                    return ns.namespace.namespaces.__getEntry(
+                        key,
+                        () => true,
+                        () => false
+                    )
+                }
                 $.imports.__forEach(() => false, ($, key) => {
+                    function doShadowed(referencedKey: string) {
+                        if (isShadowed(key)) {
+                            $i.line(``)
+                            $i.line(`import _I${$d.createIdentifier(escape(nsKey))}_${$d.createIdentifier(escape(key))} = ${$d.createIdentifier(escape(referencedKey))}`)
+                        }
+                    }
                     switch ($[0]) {
                         case 'parent import':
                             pl.ss($, ($) => {
-
+                                if (key === $.key) {
+                                    //nothing to do
+                                } else {
+                                    doShadowed($.key)
+                                }
                             })
                             break
                         case 'sibling':
                             pl.ss($, ($) => {
-                                $i.line(``)
-                                $i.line(`import _I${$d.createIdentifier(escape(key))} = ${$d.createIdentifier(escape($.key))}`)
+                                doShadowed($.key)
                             })
                             break
                         default: pl.au($[0])
@@ -176,6 +194,54 @@ export const $$: A.serialize = ($d) => {
                 $i.nestedLine(($i) => {
                     $i.snippet(`export namespace ${$d.createIdentifier(escape(key))} {`)
                     $i.indent(($i) => {
+
+                        $.imports.__forEach(() => false, ($, key) => {
+
+                            $i.line(``)
+                            $i.line(`import _I${$d.createIdentifier(escape(key))} = `)
+                            function doPossiblyShadowed(referencedKey: string) {
+                                if (isShadowed(key)) {
+                                    $i.line(`_I${$d.createIdentifier(escape(nsKey))}_${$d.createIdentifier(escape(key))}`)
+                                } else {
+                                    $i.line(`${$d.createIdentifier(escape(referencedKey))}`)
+
+                                }
+                            }
+                            function doNonShadowed(referencedKey: string) {
+                                $i.line(`${$d.createIdentifier(escape(referencedKey))}`)
+                            }
+                            switch ($[0]) {
+                                case 'parent import':
+                                    pl.ss($, ($) => {
+                                        if (key === $.key) {
+                                            doNonShadowed($.key)
+                                        } else {
+                                            doPossiblyShadowed($.key)
+                                        }
+                                    })
+                                    break
+                                case 'sibling':
+                                    pl.ss($, ($) => {
+                                        doPossiblyShadowed($.key)
+                                    })
+                                    break
+                                default: pl.au($[0])
+                            }
+                            switch ($[0]) {
+                                case 'parent import':
+                                    pl.ss($, ($) => {
+
+                                    })
+                                    break
+                                case 'sibling':
+                                    pl.ss($, ($) => {
+                                        $i.line(``)
+                                        $i.line(`import _I${$d.createIdentifier(escape(key))} = ${$d.createIdentifier(escape(nsKey))}_${$d.createIdentifier(escape(key))}`)
+                                    })
+                                    break
+                                default: pl.au($[0])
+                            }
+                        })
                         Namespace($.namespace, depth + 1, $i)
                     })
                     $i.snippet(`}`)
@@ -226,6 +292,11 @@ export const $$: A.serialize = ($d) => {
                     case 'import':
                         pl.ss($, ($) => {
                             $i.snippet(`_I${$d.createIdentifier(escape($.namespace.key))}.`)
+                            pl.optional(
+                                $.tail,
+                                ($) => Namespace__Selection__Tail($, $i),
+                                () => { }
+                            )
                         })
                         break
                     case 'local':
@@ -445,7 +516,7 @@ export const $$: A.serialize = ($d) => {
                                             () => $.namespace.referent.namespace
                                         )
                                     }
-                                
+
                                     function selectNS2FromImport($: g_in.T.Import): g_in.T.Namespace {
                                         switch ($[0]) {
                                             case 'parent import': return pl.ss($, ($) => selectNS2FromImport($.referent))
@@ -453,7 +524,7 @@ export const $$: A.serialize = ($d) => {
                                             default: return pl.au($[0])
                                         }
                                     }
-                                
+
                                     function selectNS2FromSelection($: g_in.T.Namespace__Selection): g_in.T.Namespace {
                                         return pl.cc($.start, ($) => {
                                             switch ($[0]) {
@@ -467,7 +538,7 @@ export const $$: A.serialize = ($d) => {
                                             }
                                         })
                                     }
-                                
+
 
 
                                     $d.enrichedDictionaryForEach(selectNS2FromSelection($['namespace path']).parameters.aggregated, {
