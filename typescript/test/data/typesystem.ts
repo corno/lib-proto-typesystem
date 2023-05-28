@@ -21,18 +21,15 @@ export namespace My__Namespace {
     
     export namespace Aunt {
         
-        import _IAunt = 
         
         export type MyNumber = number
     }
     
     export namespace My__Subnamespace {
         
-        import _IAunt = 
         
         export namespace My__Subsubnamespace {
             
-            import _IAunt = 
             
             export type MyBoolean = boolean
         }
