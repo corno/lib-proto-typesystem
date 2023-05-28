@@ -196,51 +196,40 @@ export const $$: A.serialize = ($d) => {
                     $i.indent(($i) => {
 
                         $.imports.__forEach(() => false, ($, key) => {
-
                             $i.line(``)
-                            $i.line(`import _I${$d.createIdentifier(escape(key))} = `)
-                            function doPossiblyShadowed(referencedKey: string) {
-                                if (isShadowed(key)) {
-                                    $i.line(`_I${$d.createIdentifier(escape(nsKey))}_${$d.createIdentifier(escape(key))}`)
-                                } else {
-                                    $i.line(`${$d.createIdentifier(escape(referencedKey))}`)
+                            $i.nestedLine(($i) => {
+                                $i.snippet(`import _I${$d.createIdentifier(escape(key))} = `)
 
+                                function doPossiblyShadowed(referencedKey: string) {
+                                    if (isShadowed(key)) {
+                                        $i.snippet(`_I${$d.createIdentifier(escape(nsKey))}_${$d.createIdentifier(escape(key))}`)
+                                    } else {
+                                        $i.snippet(`${$d.createIdentifier(escape(referencedKey))}`)
+
+                                    }
                                 }
-                            }
-                            function doNonShadowed(referencedKey: string) {
-                                $i.line(`${$d.createIdentifier(escape(referencedKey))}`)
-                            }
-                            switch ($[0]) {
-                                case 'parent import':
-                                    pl.ss($, ($) => {
-                                        if (key === $.key) {
-                                            doNonShadowed($.key)
-                                        } else {
+                                function doNonShadowed(referencedKey: string) {
+                                    $i.snippet(`${$d.createIdentifier(escape(referencedKey))}`)
+                                }
+                                switch ($[0]) {
+                                    case 'parent import':
+                                        pl.ss($, ($) => {
+                                            if (key === $.key) {
+                                                doNonShadowed($.key)
+                                            } else {
+                                                doPossiblyShadowed($.key)
+                                            }
+                                        })
+                                        break
+                                    case 'sibling':
+                                        pl.ss($, ($) => {
                                             doPossiblyShadowed($.key)
-                                        }
-                                    })
-                                    break
-                                case 'sibling':
-                                    pl.ss($, ($) => {
-                                        doPossiblyShadowed($.key)
-                                    })
-                                    break
-                                default: pl.au($[0])
-                            }
-                            switch ($[0]) {
-                                case 'parent import':
-                                    pl.ss($, ($) => {
+                                        })
+                                        break
+                                    default: pl.au($[0])
+                                }
 
-                                    })
-                                    break
-                                case 'sibling':
-                                    pl.ss($, ($) => {
-                                        $i.line(``)
-                                        $i.line(`import _I${$d.createIdentifier(escape(key))} = ${$d.createIdentifier(escape(nsKey))}_${$d.createIdentifier(escape(key))}`)
-                                    })
-                                    break
-                                default: pl.au($[0])
-                            }
+                            })
                         })
                         Namespace($.namespace, depth + 1, $i)
                     })
