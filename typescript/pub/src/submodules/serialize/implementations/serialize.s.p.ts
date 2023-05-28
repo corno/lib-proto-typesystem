@@ -208,14 +208,11 @@ export const $$: A.serialize = ($d) => {
 
                                     }
                                 }
-                                function doNonShadowed(referencedKey: string) {
-                                    $i.snippet(`${$d.createIdentifier(escape(referencedKey))}`)
-                                }
                                 switch ($[0]) {
                                     case 'parent import':
                                         pl.ss($, ($) => {
                                             if (key === $.key) {
-                                                doNonShadowed($.key)
+                                                //nothing to do
                                             } else {
                                                 doPossiblyShadowed($.key)
                                             }
