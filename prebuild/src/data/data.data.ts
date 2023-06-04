@@ -34,15 +34,16 @@ export const $: g_pareto_lang_data_settings.T.GenerateSubmodulesParameters = {
                 })
             }
         })({
-            'imports': d({}),
+            //'imports': d({}),
             'root': {
-                'type library': d_model,
-                'root': {
-                    'annotation': pd.getLocationInfo(0),
-                    'key': "Root"
+                'type libraries': {
+                    'annotation': null,
+                    'dictionary': pd.d({
+                        "xx": d_model
+                    })
                 }
             }
-        })['type library'],
+        })['type libraries'].__unsafeGetEntry("xx"),
         'atom mappings': d({
             "identifier": ['string', null],
             "text": ['string', null],
