@@ -90,4 +90,4 @@ export type Address__Function = <_TT>(
         readonly 'A Parameter': boolean
         readonly 'A Type Reference': Namespace__With__Type__Parameter.Dictionary<_TT>
     }
-) => _.Address<string>
+) => string

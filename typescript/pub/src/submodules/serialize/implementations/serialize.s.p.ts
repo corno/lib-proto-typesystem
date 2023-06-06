@@ -323,14 +323,6 @@ export const $$: A.serialize = ($d) => {
             $i: g_fp.SYNC.I.Line
         ) => {
             switch ($[0]) {
-                case 'address function':
-                    pl.ss($, ($) => {
-                        Function__Declaration($.declaration, $p, $i)
-                        $i.snippet(`_.Address<`)
-                        Type($['return type'], $p, $i)
-                        $i.snippet(`>`)
-                    })
-                    break
                 case 'array':
                     pl.ss($, ($) => {
                         $i.snippet(`_pt.Array<`)
@@ -385,7 +377,12 @@ export const $$: A.serialize = ($d) => {
                         })
                     })
                     break
-
+                case 'initialization function':
+                    pl.ss($, ($) => {
+                        Function__Declaration($.declaration, $p, $i)
+                        Type($['return type'], $p, $i)
+                    })
+                    break
                 case 'lookup':
                     pl.ss($, ($) => {
                         $i.snippet(`_pt.Lookup<`)
@@ -414,6 +411,12 @@ export const $$: A.serialize = ($d) => {
                     pl.ss($, ($) => {
                         Function__Declaration($.declaration, $p, $i)
                         $i.snippet(`void`)
+                    })
+                    break
+                case 'selection function':
+                    pl.ss($, ($) => {
+                        Function__Declaration($.declaration, $p, $i)
+                        Type($['return type'], $p, $i)
                     })
                     break
                 case 'string':
@@ -561,12 +564,6 @@ export const $$: A.serialize = ($d) => {
                                 break
                             default: pl.au($[0])
                         }
-                    })
-                    break
-                case 'value function':
-                    pl.ss($, ($) => {
-                        Function__Declaration($.declaration, $p, $i)
-                        Type($['return type'], $p, $i)
                     })
                     break
                 default: pl.au($[0])

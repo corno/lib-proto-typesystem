@@ -133,20 +133,6 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
         ),
         "Type": globalTypeDefinition(
             stateGroup({
-                "address function": state(group({
-                    "declaration": prop(component(typeRef("Function Declaration"), {
-                        "resolved namespaces": null,
-                        "resolved sibling types": null,
-                        "cyclic sibling types": null,
-                        "type parameters": null,
-                    })),
-                    "return type": prop(component(typeRef("Type", true), {
-                        "resolved namespaces": null,
-                        "resolved sibling types": null,
-                        "cyclic sibling types": null,
-                        "type parameters": null,
-                    })),
-                })),
                 "array": state(component(typeRef("Type", true), {
                     "resolved namespaces": null,
                     "resolved sibling types": null,
@@ -175,6 +161,20 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
                     })),
                     "mutable": prop(optional(group({}))),
                 }))),
+                "initialization function": state(group({
+                    "declaration": prop(component(typeRef("Function Declaration"), {
+                        "resolved namespaces": null,
+                        "resolved sibling types": null,
+                        "cyclic sibling types": null,
+                        "type parameters": null,
+                    })),
+                    "return type": prop(component(typeRef("Type", true), {
+                        "resolved namespaces": null,
+                        "resolved sibling types": null,
+                        "cyclic sibling types": null,
+                        "type parameters": null,
+                    })),
+                })),
                 "lookup": state(component(typeRef("Type", true), {
                     "resolved namespaces": null,
                     "resolved sibling types": null,
@@ -191,6 +191,20 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
                 })),
                 "procedure": state(group({
                     "declaration": prop(component(typeRef("Function Declaration"), {
+                        "resolved namespaces": null,
+                        "resolved sibling types": null,
+                        "cyclic sibling types": null,
+                        "type parameters": null,
+                    })),
+                })),
+                "selection function": state(group({
+                    "declaration": prop(component(typeRef("Function Declaration"), {
+                        "resolved namespaces": null,
+                        "resolved sibling types": null,
+                        "cyclic sibling types": null,
+                        "type parameters": null,
+                    })),
+                    "return type": prop(component(typeRef("Type", true), {
                         "resolved namespaces": null,
                         "resolved sibling types": null,
                         "cyclic sibling types": null,
@@ -218,20 +232,6 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
                     })),
                     "sibling": state(lookupReference(typeRef("Type", true))),
                     "cyclic sibling": state(cyclicReference(typeRef("Type", true))),
-                })),
-                "value function": state(group({
-                    "declaration": prop(component(typeRef("Function Declaration"), {
-                        "resolved namespaces": null,
-                        "resolved sibling types": null,
-                        "cyclic sibling types": null,
-                        "type parameters": null,
-                    })),
-                    "return type": prop(component(typeRef("Type", true), {
-                        "resolved namespaces": null,
-                        "resolved sibling types": null,
-                        "cyclic sibling types": null,
-                        "type parameters": null,
-                    })),
                 })),
             })
         ),

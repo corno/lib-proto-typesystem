@@ -324,22 +324,6 @@ function resolve<Annotation>(
 
     const Type: Resolve.Type<Annotation> = ($, $p) => {
         switch ($[0]) {
-            case 'address function': return pl.ss($, ($) => {
-                const $v_fd = Function__Declaration(
-                    $.declaration,
-                    {
-                        'type selection context': $p['type selection context'],
-                        'parent type parameters': $p['type parameters'],
-                    },
-                )
-                return ['address function', {
-                    'declaration': $v_fd,
-                    'return type': Type($['return type'], {
-                        'type selection context': $p['type selection context'],
-                        'type parameters': $v_fd['type parameters'].aggregated
-                    })
-                }]
-            })
             case 'array': return pl.ss($, ($) => ['array', Type($, $p)])
             case 'boolean': return pl.ss($, ($) => ['boolean', null])
             case 'computed': return pl.ss($, ($) => ['computed', Type($, $p)])
@@ -348,6 +332,22 @@ function resolve<Annotation>(
                 'type': Type($.type, $p),
                 'mutable': $.mutable,
             }))])
+            case 'initialization function': return pl.ss($, ($) => {
+                const $v_fd = Function__Declaration(
+                    $.declaration,
+                    {
+                        'type selection context': $p['type selection context'],
+                        'parent type parameters': $p['type parameters'],
+                    },
+                )
+                return ['initialization function', {
+                    'declaration': $v_fd,
+                    'return type': Type($['return type'], {
+                        'type selection context': $p['type selection context'],
+                        'type parameters': $v_fd['type parameters'].aggregated
+                    })
+                }]
+            })
             case 'lookup': return pl.ss($, ($) => ['lookup', Type($, $p)])
 
             case 'null': return pl.ss($, ($) => ['null', null])
@@ -362,6 +362,22 @@ function resolve<Annotation>(
                     },
                 )
             }])
+            case 'selection function': return pl.ss($, ($) => {
+                const $v_fd = Function__Declaration(
+                    $.declaration,
+                    {
+                        'type selection context': $p['type selection context'],
+                        'parent type parameters': $p['type parameters'],
+                    },
+                )
+                return ['selection function', {
+                    'declaration': $v_fd,
+                    'return type': Type($['return type'], {
+                        'type selection context': $p['type selection context'],
+                        'type parameters': $v_fd['type parameters'].aggregated
+                    })
+                }]
+            })
             case 'string': return pl.ss($, ($) => ['string', null])
             case 'tagged union': return pl.ss($, ($) => ['tagged union', $.dictionary.map(($) => Type($, $p))])
             case 'type parameter': return pl.ss($, ($) => ['type parameter', getAnnotatedEntry($p['type parameters'], $)])
@@ -390,22 +406,6 @@ function resolve<Annotation>(
                 }
             })
             ])
-            case 'value function': return pl.ss($, ($) => {
-                const $v_fd = Function__Declaration(
-                    $.declaration,
-                    {
-                        'type selection context': $p['type selection context'],
-                        'parent type parameters': $p['type parameters'],
-                    },
-                )
-                return ['value function', {
-                    'declaration': $v_fd,
-                    'return type': Type($['return type'], {
-                        'type selection context': $p['type selection context'],
-                        'type parameters': $v_fd['type parameters'].aggregated
-                    })
-                }]
-            })
             default: return pl.au($[0])
         }
     }

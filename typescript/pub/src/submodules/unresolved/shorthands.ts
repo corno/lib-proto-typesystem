@@ -79,13 +79,13 @@ export function sibling(
 //     }]
 // }
 
-export function valueFunction(
+export function initializationFunction(
     typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
     context: t.T.Type<pd.SourceLocation>,
     parameters: RawDictionary<t.T.Function__Declaration.parameters.dictionary.D<pd.SourceLocation>>,
     returnType: t.T.Type<pd.SourceLocation>,
 ): t.T.Type<pd.SourceLocation> {
-    return ['value function', {
+    return ['initialization function', {
         'declaration': {
             'type parameters': {
                 'local': dict(typeParameters),
@@ -98,13 +98,13 @@ export function valueFunction(
     }]
 }
 
-export function addressFunction(
+export function selectionFunction(
     typeParameters: RawDictionary<t.T.Type__Parameters.local.dictionary.D<pd.SourceLocation>>,
     context: t.T.Type<pd.SourceLocation>,
     parameters: RawDictionary<t.T.Function__Declaration.parameters.dictionary.D<pd.SourceLocation>>,
     returnType: t.T.Type<pd.SourceLocation>,
 ): t.T.Type<pd.SourceLocation> {
-    return ['address function', {
+    return ['selection function', {
         'declaration': {
             'type parameters': {
                 'local': dict(typeParameters),

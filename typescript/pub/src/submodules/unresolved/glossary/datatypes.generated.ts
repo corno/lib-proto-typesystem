@@ -359,36 +359,6 @@ export namespace N {
                 
                 export namespace N {
                     
-                    export namespace address_$_$function {
-                        
-                        export namespace N {
-                            
-                            export namespace G {
-                                
-                                export namespace N {
-                                    
-                                    export namespace declaration {
-                                        
-                                        export namespace N {}
-                                        
-                                        export namespace T {}
-                                    }
-                                    
-                                    export namespace return_$_$type {
-                                        
-                                        export namespace N {}
-                                        
-                                        export namespace T {}
-                                    }
-                                }
-                                
-                                export namespace T {}
-                            }
-                        }
-                        
-                        export namespace T {}
-                    }
-                    
                     export namespace array {
                         
                         export namespace N {}
@@ -479,6 +449,36 @@ export namespace N {
                         export namespace T {}
                     }
                     
+                    export namespace initialization_$_$function {
+                        
+                        export namespace N {
+                            
+                            export namespace G {
+                                
+                                export namespace N {
+                                    
+                                    export namespace declaration {
+                                        
+                                        export namespace N {}
+                                        
+                                        export namespace T {}
+                                    }
+                                    
+                                    export namespace return_$_$type {
+                                        
+                                        export namespace N {}
+                                        
+                                        export namespace T {}
+                                    }
+                                }
+                                
+                                export namespace T {}
+                            }
+                        }
+                        
+                        export namespace T {}
+                    }
+                    
                     export namespace lookup {
                         
                         export namespace N {}
@@ -532,6 +532,36 @@ export namespace N {
                                 export namespace N {
                                     
                                     export namespace declaration {
+                                        
+                                        export namespace N {}
+                                        
+                                        export namespace T {}
+                                    }
+                                }
+                                
+                                export namespace T {}
+                            }
+                        }
+                        
+                        export namespace T {}
+                    }
+                    
+                    export namespace selection_$_$function {
+                        
+                        export namespace N {
+                            
+                            export namespace G {
+                                
+                                export namespace N {
+                                    
+                                    export namespace declaration {
+                                        
+                                        export namespace N {}
+                                        
+                                        export namespace T {}
+                                    }
+                                    
+                                    export namespace return_$_$type {
                                         
                                         export namespace N {}
                                         
@@ -629,36 +659,6 @@ export namespace N {
                                     }
                                     
                                     export namespace sibling {
-                                        
-                                        export namespace N {}
-                                        
-                                        export namespace T {}
-                                    }
-                                }
-                                
-                                export namespace T {}
-                            }
-                        }
-                        
-                        export namespace T {}
-                    }
-                    
-                    export namespace value_$_$function {
-                        
-                        export namespace N {
-                            
-                            export namespace G {
-                                
-                                export namespace N {
-                                    
-                                    export namespace declaration {
-                                        
-                                        export namespace N {}
-                                        
-                                        export namespace T {}
-                                    }
-                                    
-                                    export namespace return_$_$type {
                                         
                                         export namespace N {}
                                         
@@ -1043,18 +1043,6 @@ export namespace T {
     
     export namespace Type {
         
-        export namespace address__function {
-            
-            export type declaration<GAnnotation> = T.Function__Declaration<GAnnotation>
-            
-            export type return__type<GAnnotation> = T.Type<GAnnotation>
-        }
-        
-        export type address__function<GAnnotation> = {
-            readonly 'declaration': T.Function__Declaration<GAnnotation>
-            readonly 'return type': T.Type<GAnnotation>
-        }
-        
         export type array<GAnnotation> = T.Type<GAnnotation>
         
         export namespace _lboolean {}
@@ -1105,6 +1093,18 @@ export namespace T {
             }>
         }
         
+        export namespace initialization__function {
+            
+            export type declaration<GAnnotation> = T.Function__Declaration<GAnnotation>
+            
+            export type return__type<GAnnotation> = T.Type<GAnnotation>
+        }
+        
+        export type initialization__function<GAnnotation> = {
+            readonly 'declaration': T.Function__Declaration<GAnnotation>
+            readonly 'return type': T.Type<GAnnotation>
+        }
+        
         export type lookup<GAnnotation> = T.Type<GAnnotation>
         
         export namespace _lnull {}
@@ -1124,6 +1124,18 @@ export namespace T {
         
         export type procedure<GAnnotation> = {
             readonly 'declaration': T.Function__Declaration<GAnnotation>
+        }
+        
+        export namespace selection__function {
+            
+            export type declaration<GAnnotation> = T.Function__Declaration<GAnnotation>
+            
+            export type return__type<GAnnotation> = T.Type<GAnnotation>
+        }
+        
+        export type selection__function<GAnnotation> = {
+            readonly 'declaration': T.Function__Declaration<GAnnotation>
+            readonly 'return type': T.Type<GAnnotation>
         }
         
         export namespace _lstring {}
@@ -1227,25 +1239,9 @@ export namespace T {
                 readonly 'annotation': GAnnotation
                 readonly 'key': string
             }]
-        
-        export namespace value__function {
-            
-            export type declaration<GAnnotation> = T.Function__Declaration<GAnnotation>
-            
-            export type return__type<GAnnotation> = T.Type<GAnnotation>
-        }
-        
-        export type value__function<GAnnotation> = {
-            readonly 'declaration': T.Function__Declaration<GAnnotation>
-            readonly 'return type': T.Type<GAnnotation>
-        }
     }
     
     export type Type<GAnnotation> = 
-        | ['address function', {
-            readonly 'declaration': T.Function__Declaration<GAnnotation>
-            readonly 'return type': T.Type<GAnnotation>
-        }]
         | ['array', T.Type<GAnnotation>]
         | ['boolean', null]
         | ['computed', T.Type<GAnnotation>]
@@ -1257,12 +1253,20 @@ export namespace T {
                 readonly 'type': T.Type<GAnnotation>
             }>
         }]
+        | ['initialization function', {
+            readonly 'declaration': T.Function__Declaration<GAnnotation>
+            readonly 'return type': T.Type<GAnnotation>
+        }]
         | ['lookup', T.Type<GAnnotation>]
         | ['null', null]
         | ['number', null]
         | ['optional', T.Type<GAnnotation>]
         | ['procedure', {
             readonly 'declaration': T.Function__Declaration<GAnnotation>
+        }]
+        | ['selection function', {
+            readonly 'declaration': T.Function__Declaration<GAnnotation>
+            readonly 'return type': T.Type<GAnnotation>
         }]
         | ['string', null]
         | ['tagged union', {
@@ -1290,10 +1294,6 @@ export namespace T {
                 readonly 'key': string
             }]
         ]
-        | ['value function', {
-            readonly 'declaration': T.Function__Declaration<GAnnotation>
-            readonly 'return type': T.Type<GAnnotation>
-        }]
     
     export namespace Type__Arguments {
         

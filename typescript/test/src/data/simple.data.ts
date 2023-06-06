@@ -3,7 +3,7 @@ import * as pd from 'pareto-core-data'
 import * as g_llts from "../../../pub/dist/submodules/unresolved"
 
 import {
-    addressFunction,
+    selectionFunction,
     array,
     dictionary,
     externalTypeReference,
@@ -135,7 +135,7 @@ export const $: g_llts.T.Namespace<pd.SourceLocation> = root(
             "option 1": string(),
             "option 2": number(),
         }),
-        "Address Function": addressFunction(
+        "Address Function": selectionFunction(
             {
                 "T": null
             },
