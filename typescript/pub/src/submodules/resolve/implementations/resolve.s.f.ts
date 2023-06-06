@@ -325,7 +325,16 @@ function resolve<Annotation>(
     const Type: Resolve.Type<Annotation> = ($, $p) => {
         switch ($[0]) {
             case 'array': return pl.ss($, ($) => ['array', Type($, $p)])
-            case 'boolean': return pl.ss($, ($) => ['boolean', null])
+            case 'atom': return pl.ss($, ($) => ['atom', pl.cc($, ($): g_out.T.Type.atom => {
+                switch ($[0]) {
+                    case 'boolean': return pl.ss($, ($) => ['boolean', null])
+
+                    case 'null': return pl.ss($, ($) => ['null', null])
+                    case 'number': return pl.ss($, ($) => ['number', null])
+                    case 'string': return pl.ss($, ($) => ['string', null])
+                    default: return pl.au($[0])
+                }
+            })])
             case 'computed': return pl.ss($, ($) => ['computed', Type($, $p)])
             case 'dictionary': return pl.ss($, ($) => ['dictionary', Type($, $p)])
             case 'group': return pl.ss($, ($) => ['group', $.dictionary.map(($) => ({
@@ -349,9 +358,6 @@ function resolve<Annotation>(
                 }]
             })
             case 'lookup': return pl.ss($, ($) => ['lookup', Type($, $p)])
-
-            case 'null': return pl.ss($, ($) => ['null', null])
-            case 'number': return pl.ss($, ($) => ['number', null])
             case 'optional': return pl.ss($, ($) => ['optional', Type($, $p)])
             case 'procedure': return pl.ss($, ($) => ['procedure', {
                 'declaration': Function__Declaration(
@@ -378,7 +384,6 @@ function resolve<Annotation>(
                     })
                 }]
             })
-            case 'string': return pl.ss($, ($) => ['string', null])
             case 'tagged union': return pl.ss($, ($) => ['tagged union', $.dictionary.map(($) => Type($, $p))])
             case 'type parameter': return pl.ss($, ($) => ['type parameter', getAnnotatedEntry($p['type parameters'], $)])
             case 'type reference': return pl.ss($, ($) => ['type reference', pl.cc($, ($): g_out.T.Type.type__reference => {

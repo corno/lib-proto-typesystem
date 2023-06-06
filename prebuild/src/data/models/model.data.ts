@@ -133,13 +133,18 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
         ),
         "Type": globalTypeDefinition(
             stateGroup({
+                "atom": state(stateGroup({
+                    "boolean": state(group({})),
+                    "null": state(group({})),
+                    "number": state(group({})),
+                    "string": state(group({})),
+                })),
                 "array": state(component(typeRef("Type", true), {
                     "resolved namespaces": null,
                     "resolved sibling types": null,
                     "cyclic sibling types": null,
                     "type parameters": null,
                 })),
-                "boolean": state(group({})),
                 "computed": state(component(typeRef("Type", true), {
                     "resolved namespaces": null,
                     "resolved sibling types": null,
@@ -181,8 +186,6 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
                     "cyclic sibling types": null,
                     "type parameters": null,
                 })),
-                "null": state(group({})),
-                "number": state(group({})),
                 "optional": state(component(typeRef("Type", true), {
                     "resolved namespaces": null,
                     "resolved sibling types": null,
@@ -211,7 +214,6 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = typeLibr
                         "type parameters": null,
                     })),
                 })),
-                "string": state(group({})),
                 "tagged union": state(dictionary(component(typeRef("Type", true), {
                     "resolved namespaces": null,
                     "resolved sibling types": null,

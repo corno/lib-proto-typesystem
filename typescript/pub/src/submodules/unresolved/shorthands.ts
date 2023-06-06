@@ -137,22 +137,22 @@ export function procedure(
 
 export function null_(
 ): t.T.Type<pd.SourceLocation> {
-    return ['null', null]
+    return ['atom', ['null', null]]
 }
 
 export function string(
 ): t.T.Type<pd.SourceLocation> {
-    return ['string', null]
+    return ['atom', ['string', null]]
 }
 
 export function number(
 ): t.T.Type<pd.SourceLocation> {
-    return ['number', null]
+    return ['atom', ['number', null]]
 }
 
 export function boolean(
 ): t.T.Type<pd.SourceLocation> {
-    return ['boolean', null]
+    return ['atom', ['boolean', null]]
 }
 
 export function group(

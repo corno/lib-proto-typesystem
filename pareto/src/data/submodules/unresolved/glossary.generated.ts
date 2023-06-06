@@ -256,7 +256,12 @@ export const $: g_glossary.T.Glossary<null> = {
                         'tailXX': a([]),
                         'type arguments': d({}),
                     }]],
-                    "boolean": <g_glossary.T.Type<null>>['group', d({})],
+                    "atom": <g_glossary.T.Type<null>>['taggedUnion', d({
+                        "boolean": <g_glossary.T.Type<null>>['group', d({})],
+                        "null": <g_glossary.T.Type<null>>['group', d({})],
+                        "number": <g_glossary.T.Type<null>>['group', d({})],
+                        "string": <g_glossary.T.Type<null>>['group', d({})],
+                    })],
                     "computed": <g_glossary.T.Type<null>>['reference', ['type', {
                         'context': ['local', null],
                         'typeXX': "Type",
@@ -313,8 +318,6 @@ export const $: g_glossary.T.Glossary<null> = {
                         'tailXX': a([]),
                         'type arguments': d({}),
                     }]],
-                    "null": <g_glossary.T.Type<null>>['group', d({})],
-                    "number": <g_glossary.T.Type<null>>['group', d({})],
                     "optional": <g_glossary.T.Type<null>>['reference', ['type', {
                         'context': ['local', null],
                         'typeXX': "Type",
@@ -349,7 +352,6 @@ export const $: g_glossary.T.Glossary<null> = {
                             }]],
                         },
                     })],
-                    "string": <g_glossary.T.Type<null>>['group', d({})],
                     "tagged union": <g_glossary.T.Type<null>>['group', d({
                         "annotation": {
                             'type': <g_glossary.T.Type<null>>['reference', ['glossary parameterXX', "Annotation"]],
@@ -683,12 +685,49 @@ export const $: g_glossary.T.Glossary<null> = {
                                 'types': d({}),
                                 'namespaces': d({}),
                             },
-                            "boolean": {
+                            "atom": {
                                 'types': d({}),
                                 'namespaces': d({
-                                    "G": {
+                                    "TU": {
                                         'types': d({}),
-                                        'namespaces': d({}),
+                                        'namespaces': d({
+                                            "boolean": {
+                                                'types': d({}),
+                                                'namespaces': d({
+                                                    "G": {
+                                                        'types': d({}),
+                                                        'namespaces': d({}),
+                                                    },
+                                                }),
+                                            },
+                                            "null": {
+                                                'types': d({}),
+                                                'namespaces': d({
+                                                    "G": {
+                                                        'types': d({}),
+                                                        'namespaces': d({}),
+                                                    },
+                                                }),
+                                            },
+                                            "number": {
+                                                'types': d({}),
+                                                'namespaces': d({
+                                                    "G": {
+                                                        'types': d({}),
+                                                        'namespaces': d({}),
+                                                    },
+                                                }),
+                                            },
+                                            "string": {
+                                                'types': d({}),
+                                                'namespaces': d({
+                                                    "G": {
+                                                        'types': d({}),
+                                                        'namespaces': d({}),
+                                                    },
+                                                }),
+                                            },
+                                        }),
                                     },
                                 }),
                             },
@@ -755,24 +794,6 @@ export const $: g_glossary.T.Glossary<null> = {
                                 'types': d({}),
                                 'namespaces': d({}),
                             },
-                            "null": {
-                                'types': d({}),
-                                'namespaces': d({
-                                    "G": {
-                                        'types': d({}),
-                                        'namespaces': d({}),
-                                    },
-                                }),
-                            },
-                            "number": {
-                                'types': d({}),
-                                'namespaces': d({
-                                    "G": {
-                                        'types': d({}),
-                                        'namespaces': d({}),
-                                    },
-                                }),
-                            },
                             "optional": {
                                 'types': d({}),
                                 'namespaces': d({}),
@@ -806,15 +827,6 @@ export const $: g_glossary.T.Glossary<null> = {
                                                 'namespaces': d({}),
                                             },
                                         }),
-                                    },
-                                }),
-                            },
-                            "string": {
-                                'types': d({}),
-                                'namespaces': d({
-                                    "G": {
-                                        'types': d({}),
-                                        'namespaces': d({}),
                                     },
                                 }),
                             },

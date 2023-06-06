@@ -330,9 +330,31 @@ export const $$: A.serialize = ($d) => {
                         $i.snippet(`>`)
                     })
                     break
-                case 'boolean':
+                case 'atom':
                     pl.ss($, ($) => {
-                        $i.snippet(`boolean`)
+                        switch ($[0]) {
+                            case 'boolean':
+                                pl.ss($, ($) => {
+                                    $i.snippet(`boolean`)
+                                })
+                                break
+                            case 'null':
+                                pl.ss($, ($) => {
+                                    $i.snippet(`null`)
+                                })
+                                break
+                            case 'number':
+                                pl.ss($, ($) => {
+                                    $i.snippet(`number`)
+                                })
+                                break
+                            case 'string':
+                                pl.ss($, ($) => {
+                                    $i.snippet(`string`)
+                                })
+                                break
+                            default: pl.au($[0])
+                        }
                     })
                     break
                 case 'computed':
@@ -390,16 +412,6 @@ export const $$: A.serialize = ($d) => {
                         $i.snippet(`>`)
                     })
                     break
-                case 'null':
-                    pl.ss($, ($) => {
-                        $i.snippet(`null`)
-                    })
-                    break
-                case 'number':
-                    pl.ss($, ($) => {
-                        $i.snippet(`number`)
-                    })
-                    break
                 case 'optional':
                     pl.ss($, ($) => {
                         $i.snippet(`_pt.OptionalValue<`)
@@ -417,11 +429,6 @@ export const $$: A.serialize = ($d) => {
                     pl.ss($, ($) => {
                         Function__Declaration($.declaration, $p, $i)
                         Type($['return type'], $p, $i)
-                    })
-                    break
-                case 'string':
-                    pl.ss($, ($) => {
-                        $i.snippet(`string`)
                     })
                     break
                 case 'tagged union':

@@ -366,13 +366,74 @@ export namespace N {
                         export namespace T {}
                     }
                     
-                    export namespace _$lboolean {
+                    export namespace atom {
                         
                         export namespace N {
                             
-                            export namespace G {
+                            export namespace TU {
                                 
-                                export namespace N {}
+                                export namespace N {
+                                    
+                                    export namespace _$lboolean {
+                                        
+                                        export namespace N {
+                                            
+                                            export namespace G {
+                                                
+                                                export namespace N {}
+                                                
+                                                export namespace T {}
+                                            }
+                                        }
+                                        
+                                        export namespace T {}
+                                    }
+                                    
+                                    export namespace _$lnull {
+                                        
+                                        export namespace N {
+                                            
+                                            export namespace G {
+                                                
+                                                export namespace N {}
+                                                
+                                                export namespace T {}
+                                            }
+                                        }
+                                        
+                                        export namespace T {}
+                                    }
+                                    
+                                    export namespace _$lnumber {
+                                        
+                                        export namespace N {
+                                            
+                                            export namespace G {
+                                                
+                                                export namespace N {}
+                                                
+                                                export namespace T {}
+                                            }
+                                        }
+                                        
+                                        export namespace T {}
+                                    }
+                                    
+                                    export namespace _$lstring {
+                                        
+                                        export namespace N {
+                                            
+                                            export namespace G {
+                                                
+                                                export namespace N {}
+                                                
+                                                export namespace T {}
+                                            }
+                                        }
+                                        
+                                        export namespace T {}
+                                    }
+                                }
                                 
                                 export namespace T {}
                             }
@@ -486,36 +547,6 @@ export namespace N {
                         export namespace T {}
                     }
                     
-                    export namespace _$lnull {
-                        
-                        export namespace N {
-                            
-                            export namespace G {
-                                
-                                export namespace N {}
-                                
-                                export namespace T {}
-                            }
-                        }
-                        
-                        export namespace T {}
-                    }
-                    
-                    export namespace _$lnumber {
-                        
-                        export namespace N {
-                            
-                            export namespace G {
-                                
-                                export namespace N {}
-                                
-                                export namespace T {}
-                            }
-                        }
-                        
-                        export namespace T {}
-                    }
-                    
                     export namespace optional {
                         
                         export namespace N {}
@@ -568,21 +599,6 @@ export namespace N {
                                         export namespace T {}
                                     }
                                 }
-                                
-                                export namespace T {}
-                            }
-                        }
-                        
-                        export namespace T {}
-                    }
-                    
-                    export namespace _$lstring {
-                        
-                        export namespace N {
-                            
-                            export namespace G {
-                                
-                                export namespace N {}
                                 
                                 export namespace T {}
                             }
@@ -986,9 +1002,30 @@ export namespace T {
         
         export type array = T.Type
         
-        export namespace _lboolean {}
+        export namespace atom {
+            
+            export namespace _lboolean {}
+            
+            export type _lboolean = null
+            
+            export namespace _lnull {}
+            
+            export type _lnull = null
+            
+            export namespace _lnumber {}
+            
+            export type _lnumber = null
+            
+            export namespace _lstring {}
+            
+            export type _lstring = null
+        }
         
-        export type _lboolean = null
+        export type atom = 
+            | ['boolean', null]
+            | ['null', null]
+            | ['number', null]
+            | ['string', null]
         
         export type computed = T.Type
         
@@ -1035,14 +1072,6 @@ export namespace T {
         
         export type lookup = T.Type
         
-        export namespace _lnull {}
-        
-        export type _lnull = null
-        
-        export namespace _lnumber {}
-        
-        export type _lnumber = null
-        
         export type optional = T.Type
         
         export namespace procedure {
@@ -1065,10 +1094,6 @@ export namespace T {
             readonly 'declaration': T.Function__Declaration
             readonly 'return type': T.Type
         }
-        
-        export namespace _lstring {}
-        
-        export type _lstring = null
         
         export namespace tagged__union {
             
@@ -1166,7 +1191,12 @@ export namespace T {
     
     export type Type = 
         | ['array', T.Type]
-        | ['boolean', null]
+        | ['atom', 
+            | ['boolean', null]
+            | ['null', null]
+            | ['number', null]
+            | ['string', null]
+        ]
         | ['computed', T.Type]
         | ['dictionary', T.Type]
         | ['group', pt.Dictionary<{
@@ -1178,8 +1208,6 @@ export namespace T {
             readonly 'return type': T.Type
         }]
         | ['lookup', T.Type]
-        | ['null', null]
-        | ['number', null]
         | ['optional', T.Type]
         | ['procedure', {
             readonly 'declaration': T.Function__Declaration
@@ -1188,7 +1216,6 @@ export namespace T {
             readonly 'declaration': T.Function__Declaration
             readonly 'return type': T.Type
         }]
-        | ['string', null]
         | ['tagged union', pt.Dictionary<T.Type>]
         | ['type parameter', {
             readonly 'key': string
