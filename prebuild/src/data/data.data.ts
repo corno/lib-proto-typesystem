@@ -5,6 +5,8 @@ import * as pl from 'pareto-core-lib'
 import * as g_pareto_lang_data_settings from "lib-pareto-lang-data/dist/submodules/2submodules"
 import * as g_pareto_lang_data from "lib-pareto-lang-data"
 
+import * as xxx from "lib-pareto-lang-data/dist/split"
+
 import { $ as d_model } from "./models/model.data"
 
 const d = pd.d
@@ -39,7 +41,7 @@ export const $: g_pareto_lang_data_settings.T.GenerateSubmodulesParameters = {
                 'type libraries': {
                     'annotation': null,
                     'dictionary': pd.d({
-                        "xx": d_model
+                        "xx": xxx.split(d_model)
                     })
                 }
             }
